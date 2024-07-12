@@ -2,14 +2,20 @@ body {
     background-color: #f8f9fa;
     font-family: Arial, sans-serif;
 }
-
+/* titulos */
+.color-blue{
+    color: #004E98;
+    font-weight: bolder;
+    font-size: 2.1rem;
+}
+/* logo en el header */
 .img-logo {
     width: 65%;
     height: auto; 
     max-width: 100%;
     padding-bottom: 5%;
 }
-
+/* botón de login */
 .button_login {
     border: 1px solid #004E98;
     border-radius: 8px;
@@ -32,7 +38,7 @@ body {
     color: #fff;
     border-color: #1768B5;
 }
-
+/* divisores */
 .linea {
     height: 1px;
     background-color: #E7E7E7;

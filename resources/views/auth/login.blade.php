@@ -10,7 +10,10 @@
                         <div class="col-md-8 offset-md-2 text-center">
                             <br>
                             <br>
-                            <img class="img-logo" src="{{ asset('images/ecolab_blue1.png') }}">
+                            {{-- <img class="img-logo" src="{{ asset('images/ecolab_blue1.png') }}"> --}}
+                            
+                            <p class="color-blue">¡Bienvenido de nuevo!</p>
+                            <p>Por favor, ingresa tu información en los campos</p>
                         </div>
                     </div>
                     <form method="POST" action="{{ route('login') }}">
@@ -18,7 +21,7 @@
 
                         <div class="row mb-3">
                             <div class="col-md-8 offset-md-2">
-                                <p class="text-center">Bienvenido de nuevo!</p>
+                                
                                 <input id="email" type="email"
                                     class="form-control @error('email') is-invalid @enderror" name="email"
                                     value="{{ old('email') }}" required autocomplete="email" autofocus
@@ -50,7 +53,7 @@
                             <div class="col-md-8 offset-md-2 text-center">
                                 {{-- <br> --}}
                                 <button type="submit" class="button_login">
-                                    {{ __('INICIAR SESIÓN') }}
+                                    {{ __('INICIAR') }}
                                 </button>
                             </div>
                             <div class="col-md-8 offset-md-2 d-flex justify-content-between align-items-center">
@@ -73,7 +76,7 @@
 
                         <div class="row mb-3">
                             <div class="col-md-8 offset-md-2 d-flex justify-content-between align-items-center">
-                                <p>¿No tienes cuenta?</p>
+                                <label>¿No tienes cuenta?</label>
                                 <a class="btn btn-link" href="{{ route('register') }}">{{ __('Regístrate') }}</a>
                             </div>
                         </div>
