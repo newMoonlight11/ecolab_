@@ -3,25 +3,6 @@ body {
     font-family: Arial, sans-serif;
 }
 
-.card_outside {
-    background-color: #fff;
-    border-radius: 62px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.card_inside{
-    border-radius: 62px;
-}
-
-.form-control{
-    border-radius: 62px;
-}
-
-.form-control::placeholder {
-    color: #4f4f4f;
-    opacity: 0.5;
-}
-
 .img-logo {
     width: 65%;
     height: auto; 
@@ -31,14 +12,14 @@ body {
 
 .button_login {
     border: 1px solid #004E98;
-    border-radius: 22px;
+    border-radius: 8px;
     background-color: #004E98;
     color: #ffffff;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     font-weight: bold;
     padding: 8px 20px;
-    width: 100%; /* Ajustar el botón para que ocupe el ancho completo */
+    width: 100%; 
 }
 .button_login:hover,
 .button_login:focus { 
@@ -50,4 +31,10 @@ body {
     background-color: #1768B5;
     color: #fff;
     border-color: #1768B5;
+}
+
+.linea {
+    height: 1px;
+    background-color: #E7E7E7;
+    /* margin-left: 5px;  */
 }
