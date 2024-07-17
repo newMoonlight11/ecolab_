@@ -5,25 +5,26 @@
 @endsection
 
 @section('content')
-    <section class="content container-fluid">
-        <div class="">
-            <div class="col-md-12">
+    <section class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card bg-white">
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-8 offset-md-2 text-center">
+                                <br>
+                                <p class="color-blue">Editar</p>
+                            </div>
+                            <form method="POST" action="{{ route('users.update', $user->id) }}" role="form"
+                                enctype="multipart/form-data">
+                                {{ method_field('PATCH') }}
+                                @csrf
 
-                <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">{{ __('Update') }} User</span>
-                    </div>
-                    <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('users.update', $user->id) }}"  role="form" enctype="multipart/form-data">
-                            {{ method_field('PATCH') }}
-                            @csrf
-
-                            @include('user.form')
-
-                        </form>
+                                @include('user.form')
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
 @endsection

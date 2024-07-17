@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="card">
+            <div class="card bg-white">
                 <div class="card-body">
                     <div class="row mb-3">
                         <div class="col-md-8 offset-md-2 text-center">

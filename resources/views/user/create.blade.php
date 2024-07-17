@@ -5,15 +5,17 @@
 @endsection
 
 @section('content')
-    <section class="content container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-
-                <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">{{ __('Create') }} User</span>
+    <section class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card bg-white">
+                    <div class="row mb-3">
+                        <div class="col-md-8 offset-md-2 text-center">
+                            <br>
+                            <p class="color-blue">Crear</p>
+                        </div>
                     </div>
-                    <div class="card-body bg-white">
+                    <div class="card-body">
                         <form method="POST" action="{{ route('users.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
 
