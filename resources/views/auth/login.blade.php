@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="card bg-white">
+            <div class="card bg-white border-0 rounded-4">
                 <div class="card-body">
                     <div class="row mb-3">
                         <div class="col-md-8 offset-md-2 text-center">
@@ -23,7 +23,7 @@
                             <div class="col-md-8 offset-md-2">
                                 
                                 <input id="email" type="email"
-                                    class="form-control @error('email') is-invalid @enderror" name="email"
+                                    class="form-control bg-white rounded-4 @error('email') is-invalid @enderror" name="email"
                                     value="{{ old('email') }}" required autocomplete="email" autofocus
                                     placeholder="{{ __('Correo electrónico') }}">
 
@@ -38,7 +38,7 @@
                         <div class="row mb-3">
                             <div class="col-md-8 offset-md-2">
                                 <input id="password" type="password"
-                                    class="form-control @error('password') is-invalid @enderror" name="password"
+                                    class="form-control bg-white rounded-4 @error('password') is-invalid @enderror" name="password"
                                     required autocomplete="current-password" placeholder="{{ __('Contraseña') }}">
 
                                 @error('password')
@@ -52,7 +52,7 @@
                         <div class="row mb-3">
                             <div class="col-md-8 offset-md-2 text-center">
                                 {{-- <br> --}}
-                                <button type="submit" class="button_login">
+                                <button type="submit" class="button_login rounded-4">
                                     {{ __('INICIAR') }}
                                 </button>
                             </div>

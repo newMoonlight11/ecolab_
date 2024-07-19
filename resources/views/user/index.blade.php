@@ -8,61 +8,89 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-
-                            <span id="card_title">
-                                {{ __('Users') }}
-                            </span>
-
-                             <div class="float-right">
-                                <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Create New') }}
-                                </a>
-                              </div>
-                        </div>
-                    </div>
+                <div class="card border-0">
                     @if ($message = Session::get('success'))
                         <div class="alert alert-success m-4">
                             <p>{{ $message }}</p>
                         </div>
                     @endif
+                    <div class="card-body">
+                        <br>
+                        <h1 class="text-center">Usuarios</h1>
+                        <br>
 
-                    <div class="card-body bg-white">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
-                                <thead class="thead">
-                                    <tr>
-                                        <th>#</th>
-                                        
-									<th >Nombre</th>
-									<th >Correo electrónico</th>
+                        <form method="GET" action="{{ route('reactivos.index') }}">
+                            <div class="row mb-4">
+                                <div class="d-flex justify-content-between flex-wrap gap-2">
+                                    <div class="col-md-4 text-center">
+                                        <p>Nombre</p>
+                                        <input type="text" name="name" class="form-control bg-white rounded-4"
+                                            style="text-align: center;" placeholder="---"
+                                            value="{{ request()->get('name') }}">
+                                    </div>
+                                    <div class="col-md-4 text-center">
+                                        <p>Correo electrónico</p>
+                                        <input type="text" name="email" class="form-control bg-white rounded-4"
+                                            style="text-align: center;" placeholder="---"
+                                            value="{{ request()->get('email') }}">
+                                    </div>
+                                    <div class="col-md-1 text-center">
+                                        <p>Filtrar</p>
+                                        <button type="submit" class="btn btn-primary rounded-3 btn-xxl"><i
+                                                class="bi bi-sort-down-alt"></i></button>
+                                    </div>
+                                    <div class="col-md-1 text center">
+                                        <p>Agregar</p>
+                                        <a href="{{ route('reactivos.create') }}" class="btn btn-primary rounded-3 btn-xxl"
+                                            data-placement="center"><i class="bi bi-plus-circle"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
 
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($users as $user)
+                    <div class="card-body border-0 rounded-4 bg-white">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead>
                                         <tr>
-                                            <td>{{ ++$i }}</td>
-                                            
-										<td >{{ $user->name }}</td>
-										<td >{{ $user->email }}</td>
+                                            <th>#</th>
 
-                                            <td>
-                                                <form action="{{ route('users.destroy', $user->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('users.show', $user->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Mostrar') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('users.edit', $user->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="event.preventDefault(); confirm('¿Estás seguro de eliminarlo?') ? this.closest('form').submit() : false;"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
-                                                </form>
-                                            </td>
+                                            <th>Nombre</th>
+                                            <th>Correo electrónico</th>
+
+                                            <th></th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($users as $user)
+                                            <tr>
+                                                <td>{{ ++$i }}</td>
+
+                                                <td>{{ $user->name }}</td>
+                                                <td>{{ $user->email }}</td>
+
+                                                <td>
+                                                    <form action="{{ route('users.destroy', $user->id) }}" method="POST">
+                                                        <a class="btn btn-md "
+                                                            href="{{ route('users.show', $user->id) }}"><i
+                                                                class="bi bi-search text-primary"></i></a>
+                                                        <a class="btn btn-md"
+                                                            href="{{ route('users.edit', $user->id) }}"><i
+                                                                class="bi bi-pencil text-pop"></i></a>
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-md"
+                                                            onclick="event.preventDefault(); confirm('¿Estás seguro de eliminarlo?') ? this.closest('form').submit() : false;"><i
+                                                                class="bi bi-trash text-danger"></i></button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

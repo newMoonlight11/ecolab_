@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="card bg-white">
+            <div class="card bg-white border-0 rounded-4">
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
@@ -17,7 +17,7 @@
                                 <p>Por favor, ingresa tu información en los campos</p>
                             </div>
                             <div class="col-md-8 offset-md-2">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="{{ __('Nombre') }}">
+                                <input id="name" type="text" class="form-control bg-white rounded-4 @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="{{ __('Nombre') }}">
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -29,7 +29,7 @@
 
                         <div class="row mb-3">
                             <div class="col-md-8 offset-md-2">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="{{ __('Correo electrónico') }}">
+                                <input id="email" type="email" class="form-control bg-white rounded-4 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="{{ __('Correo electrónico') }}">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -41,7 +41,7 @@
 
                         <div class="row mb-3">
                             <div class="col-md-8 offset-md-2">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="{{ __('Contraseña') }}">
+                                <input id="password" type="password" class="form-control bg-white rounded-4 @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="{{ __('Contraseña') }}">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -53,14 +53,14 @@
 
                         <div class="row mb-3">
                             <div class="col-md-8 offset-md-2">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="{{ __('Confirma la contraseña') }}">
+                                <input id="password-confirm" type="password" class="form-control bg-white rounded-4" name="password_confirmation" required autocomplete="new-password" placeholder="{{ __('Confirma la contraseña') }}">
                             </div>
                         </div>
 
-                        <div class="row mb-0">
+                        <div class="row mb-3">
                             <div class="col-md-8 offset-md-2 text-center">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('REGISTRARSE') }}
+                                <button type="submit" class="btn btn-primary rounded-4 w-100">
+                                    {{ __('REGÍSTRATE') }}
                                 </button>
                                 <br>
                                 <br>
