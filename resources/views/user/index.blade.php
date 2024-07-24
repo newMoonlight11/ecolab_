@@ -19,7 +19,7 @@
                         <h1 class="text-center">Usuarios</h1>
                         <br>
 
-                        <form method="GET" action="{{ route('reactivos.index') }}">
+                        <form method="GET" action="{{ route('users.index') }}">
                             <div class="row mb-4">
                                 <div class="d-flex justify-content-between flex-wrap gap-2">
                                     <div class="col-md-4 text-center">
@@ -37,12 +37,12 @@
                                     <div class="col-md-1 text-center">
                                         <p>Filtrar</p>
                                         <button type="submit" class="btn btn-primary rounded-3 btn-xxl"><i
-                                                class="bi bi-sort-down-alt"></i></button>
+                                                class="bi bi-sort-down-alt fs-5"></i></button>
                                     </div>
                                     <div class="col-md-1 text center">
                                         <p>Agregar</p>
-                                        <a href="{{ route('reactivos.create') }}" class="btn btn-primary rounded-3 btn-xxl"
-                                            data-placement="center"><i class="bi bi-plus-circle"></i></a>
+                                        <a href="{{ route('users.create') }}" class="btn btn-primary rounded-3 btn-xxl"
+                                            data-placement="center"><i class="bi bi-plus-circle fs-5"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -52,7 +52,7 @@
                     <div class="card-body border-0 rounded-4 bg-white">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-striped table-hover">
+                                <table class="table table-hover">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -75,15 +75,15 @@
                                                     <form action="{{ route('users.destroy', $user->id) }}" method="POST">
                                                         <a class="btn btn-md "
                                                             href="{{ route('users.show', $user->id) }}"><i
-                                                                class="bi bi-search text-primary"></i></a>
+                                                                class="bi bi-search text-primary fs-5"></i></a>
                                                         <a class="btn btn-md"
                                                             href="{{ route('users.edit', $user->id) }}"><i
-                                                                class="bi bi-pencil text-pop"></i></a>
+                                                                class="bi bi-pencil text-pop fs-5"></i></a>
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-md"
                                                             onclick="event.preventDefault(); confirm('¿Estás seguro de eliminarlo?') ? this.closest('form').submit() : false;"><i
-                                                                class="bi bi-trash text-danger"></i></button>
+                                                                class="bi bi-trash text-danger fs-5"></i></button>
                                                     </form>
                                                 </td>
                                             </tr>

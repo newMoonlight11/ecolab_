@@ -8,24 +8,20 @@
     <section class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card bg-white">
-                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-                        <div class="float-left">
-                            <span class="card-title">{{ __('Mostrar') }} usuario</span>
-                        </div>
-                        <div class="float-right">
-                            <a class="btn btn-primary btn-sm" href="{{ route('users.index') }}"> {{ __('Regresar') }}</a>
-                        </div>
-                    </div>
-
+                <div class="card bg-white border-0 rounded-4">
                     <div class="card-body">
-                        
+                        <div class="d-flex justify-content-end">
+                            <a class="btn" href="{{ route('users.index') }}"> <i class="bi bi-arrow-left-circle-fill fs-4 text-primary"></i></a>
+                        </div>
+                        <h3 class="text-center">Usuarios</h3>
+                        <br>
+                        <br>
                                 <div class="form-group mb-2 mb20">
-                                    <strong>Name:</strong>
+                                    <strong>Nombre:</strong>
                                     {{ $user->name }}
                                 </div>
                                 <div class="form-group mb-2 mb20">
-                                    <strong>Email:</strong>
+                                    <strong>Correo electrónico:</strong>
                                     {{ $user->email }}
                                 </div>
 

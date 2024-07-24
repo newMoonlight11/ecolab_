@@ -8,14 +8,12 @@
     <section class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card bg-white">
-                    <div class="row mb-3">
-                        <div class="col-md-8 offset-md-2 text-center">
-                            <br>
-                            <p class="color-blue">Crear</p>
-                        </div>
-                    </div>
+                <div class="card bg-white border-0 rounded-4">
                     <div class="card-body">
+                        <div class="d-flex justify-content-end">
+                            <a class="btn" href="{{ route('users.index') }}"> <i class="bi bi-arrow-left-circle-fill fs-4 text-primary"></i></a>
+                        </div>
+                        <h3 class="text-center">Crear usuario</h3>
                         <form method="POST" action="{{ route('users.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
 

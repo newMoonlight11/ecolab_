@@ -52,7 +52,7 @@
                         <div class="row mb-3">
                             <div class="col-md-8 offset-md-2 text-center">
                                 {{-- <br> --}}
-                                <button type="submit" class="button_login rounded-4">
+                                <button type="submit" class="btn btn-primary rounded-4 w-75">
                                     {{ __('INICIAR') }}
                                 </button>
                             </div>

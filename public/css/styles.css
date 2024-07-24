@@ -1,6 +1,6 @@
 body {
     background-color: #f8f9fa;
-    font-family: Arial, sans-serif;
+    font-family: 'Pontano Sans', sans-serif;
 }
 /* titulos */
 .color-blue{
@@ -15,29 +15,7 @@ body {
     max-width: 100%;
     padding-bottom: 5%;
 }
-/* botón de login */
-.button_login {
-    border: 1px solid #004E98;
-    border-radius: 8px;
-    background-color: #004E98;
-    color: #ffffff;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-    font-weight: bold;
-    padding: 8px 20px;
-    width: 100%; 
-}
-.button_login:hover,
-.button_login:focus { 
-    background-color: #1768B5;
-    color: #fff;
-    border-color: #1768B5;
-}
-.button_login:active {
-    background-color: #1768B5;
-    color: #fff;
-    border-color: #1768B5;
-}
+
 /* divisores */
 .linea {
     height: 1px;

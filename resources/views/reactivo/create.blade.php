@@ -5,15 +5,15 @@
 @endsection
 
 @section('content')
-    <section class="content container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-
-                <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">{{ __('Create') }} Reactivo</span>
-                    </div>
-                    <div class="card-body bg-white">
+    <section class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card bg-white border-0 rounded-4">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-end">
+                            <a class="btn" href="{{ route('reactivos.index') }}"> <i class="bi bi-arrow-left-circle-fill fs-4 text-primary"></i></a>
+                        </div>
+                        <h3 class="text-center">Crear reactivo</h3>
                         <form method="POST" action="{{ route('reactivos.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
 
