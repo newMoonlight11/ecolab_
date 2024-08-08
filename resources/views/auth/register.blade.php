@@ -98,7 +98,7 @@
     <!-- Modal -->
     <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content border-0 rounded-4 px-3">
+            <div class="modal-content border-0 rounded-4 px-3 bg-white">
                 <div class="modal-header">
                     <h5 class="modal-title text-primary text-center w-100 fs-3" id="termsModalLabel">Términos y Condiciones</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

@@ -56,21 +56,17 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-
                                             <th>Nombre</th>
                                             <th>Correo electrónico</th>
-
-                                            <th></th>
+                                            <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($users as $user)
                                             <tr>
                                                 <td>{{ ++$i }}</td>
-
                                                 <td>{{ $user->name }}</td>
                                                 <td>{{ $user->email }}</td>
-
                                                 <td>
                                                     <form action="{{ route('users.destroy', $user->id) }}" method="POST">
                                                         <a class="btn btn-md "

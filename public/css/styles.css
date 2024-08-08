@@ -1,6 +1,9 @@
 body {
     background-color: #f8f9fa;
-    font-family: 'Pontano Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
+    font-smooth: antialiased;
+    -webkit-font-smoothing: antialiased; 
+    -moz-osx-font-smoothing: grayscale; 
 }
 /* titulos */
 .color-blue{
@@ -21,4 +24,49 @@ body {
     height: 1px;
     background-color: #E7E7E7;
     /* margin-left: 5px;  */
+}
+
+/* Asegúrate de que los botones de acción estén en línea */
+.table td .btn {
+    display: inline-flex;
+    align-items: center;
+    /* margin-right: 5px; Espacio entre botones */
+}
+
+/* Asegúrate de que el formulario no agregue margenes o padding innecesarios */
+.table td form {
+    display: flex;
+    /* gap: 5px; Espacio entre los botones dentro del formulario */
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 0.25rem;
+}
+
+.page-item {
+    margin: 0 5px;
+}
+
+.page-item .page-link {
+    border: none;
+    color: #0056b3;
+    padding: 0.5rem 0.75rem;
+    border-radius: 25%;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.page-item.active .page-link {
+    background-color: #0056b3;
+    color: white;
+    border: none;
+}
+
+.page-item .page-link:hover {
+    background-color: #0056b3;
+    color: white;
 }

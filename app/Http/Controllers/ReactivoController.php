@@ -38,7 +38,7 @@ class ReactivoController extends Controller
             $query->where('familia', 'like', '%' . $request->input('familia') . '%');
         }
         
-        $reactivos = Reactivo::paginate();
+        $reactivos = Reactivo::paginate(10);
 
         return view('reactivo.index', compact('reactivos'))
             ->with('i', ($request->input('page', 1) - 1) * $reactivos->perPage());

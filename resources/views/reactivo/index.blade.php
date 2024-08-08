@@ -56,7 +56,8 @@
                                     </div>
                                     <div class="col-md-1 text-center">
                                         <p>Filtrar</p>
-                                        <button type="submit" class="btn btn-primary rounded-3 btn-xxl"><i class="bi bi-sort-down-alt fs-5"></i></button>
+                                        <button type="submit" class="btn btn-primary rounded-3 btn-xxl"><i
+                                                class="bi bi-sort-down-alt fs-5"></i></button>
                                     </div>
                                     <div class="col-md-1 text center">
                                         <p>Agregar</p>
@@ -74,38 +75,41 @@
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th class="col-md-1">#</th>
                                             <th>Nombre</th>
                                             <th>Fecha de vencimiento</th>
-                                            <th>Cantidad</th>
-                                            <th>Laboratorio</th>
+                                            <th class="col-md-1">Cantidad</th>
+                                            <th class="col-md-1">Laboratorio</th>
                                             <th>Familia</th>
-                                            <th>Acciones</th>
+                                            <th class="col-sm-1">Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($reactivos as $reactivo)
                                             <tr>
-                                                <td>{{ ++$i }}</td>
+                                                <td class="col-md-1">{{ ++$i }}</td>
                                                 <td>{{ $reactivo->nombre }}</td>
                                                 <td>{{ $reactivo->fecha_vencimiento }}</td>
-                                                <td>{{ $reactivo->cantidad }}</td>
-                                                <td>{{ $reactivo->laboratorio }}</td>
+                                                <td class="col-md-1">{{ $reactivo->cantidad }}</td>
+                                                <td class="col-md-1">{{ $reactivo->laboratorio }}</td>
                                                 <td>{{ $reactivo->familia }}</td>
-                                                <td>
+                                                <td class="col-sm-1">
                                                     <form action="{{ route('reactivos.destroy', $reactivo->id) }}"
-                                                        method="POST">
-                                                        <a class="btn btn-md"
-                                                            href="{{ route('reactivos.show', $reactivo->id) }}"><i
-                                                                class="bi bi-search text-primary fs-5"></i></a>
-                                                        <a class="btn btn-md"
-                                                            href="{{ route('reactivos.edit', $reactivo->id) }}"><i
-                                                                class="bi bi-pencil text-pop fs-5"></i></a>
+                                                        method="POST" class="d-inline">
+                                                        <a class="btn btn-sm"
+                                                            href="{{ route('reactivos.show', $reactivo->id) }}">
+                                                            <i class="bi bi-search text-primary fs-5"></i>
+                                                        </a>
+                                                        <a class="btn btn-sm"
+                                                            href="{{ route('reactivos.edit', $reactivo->id) }}">
+                                                            <i class="bi bi-pencil text-pop fs-5"></i>
+                                                        </a>
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-md"
-                                                            onclick="event.preventDefault(); confirm('¿Estás seguro de eliminarlo?') ? this.closest('form').submit() : false;"><i
-                                                                class="bi bi-trash text-danger fs-5"></i></button>
+                                                        <button type="submit" class="btn btn-sm"
+                                                            onclick="event.preventDefault(); confirm('¿Estás seguro de eliminarlo?') ? this.closest('form').submit() : false;">
+                                                            <i class="bi bi-trash text-danger fs-5"></i>
+                                                        </button>
                                                     </form>
                                                 </td>
                                             </tr>
@@ -115,8 +119,9 @@
                             </div>
                         </div>
                     </div>
+                    <br>
                 </div>
-                {!! $reactivos->withQueryString()->links() !!}
+                {!! $reactivos->appends(request()->except('page'))->links('pagination::bootstrap-4') !!}
             </div>
         </div>
     @endsection
