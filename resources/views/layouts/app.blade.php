@@ -24,7 +24,7 @@
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{-- {{ config('app.name', 'Ecolab') }} --}}
-                    <img src="images/ecolab_blue1.png" alt="Ecolab" style="height: 25px;">
+                    <img src="{{asset('images/ecolab_blue1.png')}}" alt="Ecolab" style="height: 25px;">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
