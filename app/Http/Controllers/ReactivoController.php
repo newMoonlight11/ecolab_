@@ -15,34 +15,39 @@ class ReactivoController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request): View
-    {
-        $query = Reactivo::query();
+{
+    // Inicia una consulta base
+    $query = Reactivo::query();
 
-        if ($request->filled('nombre')) {
-            $query->where('nombre', 'like', '%' . $request->input('nombre') . '%');
-        }
-
-        if ($request->filled('fecha_vencimiento')) {
-            $query->whereDate('fecha_vencimiento', $request->input('fecha_vencimiento'));
-        }
-
-        if ($request->filled('cantidad')) {
-            $query->where('cantidad', $request->input('cantidad'));
-        }
-
-        if ($request->filled('laboratorio')) {
-            $query->where('laboratorio', 'like', '%' . $request->input('laboratorio') . '%');
-        }
-
-        if ($request->filled('familia')) {
-            $query->where('familia', 'like', '%' . $request->input('familia') . '%');
-        }
-        
-        $reactivos = Reactivo::paginate(10);
-
-        return view('reactivo.index', compact('reactivos'))
-            ->with('i', ($request->input('page', 1) - 1) * $reactivos->perPage());
+    // Aplica los filtros si están presentes en la solicitud
+    if ($request->filled('nombre')) {
+        $query->where('nombre', 'like', '%' . $request->input('nombre') . '%');
     }
+
+    if ($request->filled('fecha_vencimiento')) {
+        $query->whereDate('fecha_vencimiento', $request->input('fecha_vencimiento'));
+    }
+
+    if ($request->filled('cantidad')) {
+        $query->where('cantidad', $request->input('cantidad'));
+    }
+
+    if ($request->filled('laboratorio')) {
+        $query->where('laboratorio', 'like', '%' . $request->input('laboratorio') . '%');
+    }
+
+    if ($request->filled('familia')) {
+        $query->where('familia', 'like', '%' . $request->input('familia') . '%');
+    }
+
+    // Paginación de los resultados de la consulta filtrada
+    $reactivos = $query->paginate(10);
+
+    // Retorna la vista con los reactivos filtrados y paginados
+    return view('reactivo.index', compact('reactivos'))
+        ->with('i', ($request->input('page', 1) - 1) * $reactivos->perPage());
+}
+
 
     /**
      * Show the form for creating a new resource.
