@@ -96,10 +96,13 @@
                                                 <td class="col-sm-1">
                                                     <form action="{{ route('reactivos.destroy', $reactivo->id) }}"
                                                         method="POST" class="d-inline">
-                                                        <a class="btn btn-sm"
+                                                        {{-- <a class="btn btn-sm"
                                                             href="{{ route('reactivos.show', $reactivo->id) }}">
                                                             <i class="bi bi-search text-primary fs-5"></i>
-                                                        </a>
+                                                        </a> --}}
+                                                        <button type="button" class="btn btn-link" data-bs-toggle="modal"
+                                                            data-bs-target="#termsModal"><i
+                                                                class="bi bi-search text-primary fs-5"></i></button>
                                                         <a class="btn btn-sm"
                                                             href="{{ route('reactivos.edit', $reactivo->id) }}">
                                                             <i class="bi bi-pencil text-pop fs-5"></i>
