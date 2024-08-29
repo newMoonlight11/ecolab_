@@ -28,6 +28,10 @@ return new class extends Migration
 
             $table->unsignedBigInteger('familia_id');
             $table->foreign('familia_id')->references('id')->on('familias');
+
+            //MARCA
+            $table->unsignedBigInteger('marca_id');
+            $table->foreign('marca_id')->references('id')->on('marca');
         });
     }
 
