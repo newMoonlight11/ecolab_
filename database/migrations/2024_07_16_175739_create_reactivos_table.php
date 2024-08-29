@@ -19,6 +19,10 @@ return new class extends Migration
             //$table->string('laboratorio'); // Laboratorio en el que se encuentra
             //$table->string('familia'); // Familia a la que pertenece
             $table->string('img_reactivo');
+            $table->string('numero_cas');
+            $table->string('referencia_fabricante');
+            $table->string('lote');
+            $table->string('num_registro_invima');
 
             $table->timestamps();
 

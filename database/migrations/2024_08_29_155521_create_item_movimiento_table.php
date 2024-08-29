@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('item_movimiento', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+
+            $table->unsignedBigInteger('movimiento_id');
+            $table->foreign('movimiento_id')->references('id')->on('movimientos');
         });
     }
 

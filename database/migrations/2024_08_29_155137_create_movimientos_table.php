@@ -16,6 +16,9 @@ return new class extends Migration
             $table->date('fecha_movimiento');
             $table->text('descripcion');
             $table->timestamps();
+
+            $table->unsignedBigInteger('tipo_movimiento');
+            $table->foreign('tipo_movimiento')->references('id')->on('tipo_movimiento');
         });
     }
 
