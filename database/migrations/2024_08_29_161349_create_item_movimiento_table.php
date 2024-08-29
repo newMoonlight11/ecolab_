@@ -15,6 +15,12 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
 
+            $table->integer('cantidad');
+
+
+            $table->unsignedBigInteger('reactivo_id');
+            $table->foreign('reactivo_id')->references('id')->on('reactivos');
+
             $table->unsignedBigInteger('movimiento_id');
             $table->foreign('movimiento_id')->references('id')->on('movimientos');
         });
