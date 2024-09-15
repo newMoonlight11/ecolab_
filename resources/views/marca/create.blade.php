@@ -1,28 +1,19 @@
-@extends('layouts.app')
+@extends('layouts.create')
 
-@section('template_title')
-    {{ __('Create') }} Marca
+@section('title', 'Crear Marca')
+
+@section('back_route')
+    {{ route('marcas.index') }}
 @endsection
 
-@section('content')
-    <section class="content container-fluid">
-        <div class="row">
-            <div class="col-md-12">
+@section('heading', 'Crear Marca')
 
-                <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">{{ __('Create') }} Marca</span>
-                    </div>
-                    <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('marcas.store') }}"  role="form" enctype="multipart/form-data">
-                            @csrf
-
-                            @include('marca.form')
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+@section('form_action')
+    {{ route('marcas.store') }}
 @endsection
+
+@section('form_content')
+    @include('marca.form')
+@endsection
+
+

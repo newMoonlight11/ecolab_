@@ -69,3 +69,45 @@
         </div>
     </div>
 @endsection
+
+
+{{-- @extends('layouts.index_layout')
+
+@section('title', 'Marcas')
+
+@section('heading', 'Inventario de Marcas')
+
+@section('back_route', route('marcas.index'))
+
+@section('create_route', route('marcas.create'))
+
+@section('filters')
+    <div class="col-md-2 text-center">
+        <p>Nombre</p>
+        <input type="text" name="nombre" class="form-control bg-white rounded-4"
+            style="text-align: center;" placeholder="---" value="{{ request()->get('nombre') }}">
+    </div>
+@endsection
+
+@section('table_header')
+    <th class="col-md-1">#</th>
+    <th>Nombre</th>
+@endsection
+
+@section('table_content', function($item) {
+    return "
+        <td>{$item->nombre}</td>
+    ";
+})
+
+@section('items', $marcas)
+
+@section('destroy_route', route('marcas.destroy', $item->id))
+
+@section('show_route', route('marcas.show', $item->id))
+
+@section('edit_route', route('marcas.edit', $item->id))
+
+@section('pagination')
+    {!! $$marcas->appends(request()->except('page'))->links('pagination::bootstrap-4') !!}
+@endsection --}}

@@ -1,29 +1,17 @@
-@extends('layouts.app')
+@extends('layouts.edit')
 
-@section('template_title')
-    {{ __('Update') }} Marca
+@section('title', 'Editar Marca')
+
+@section('back_route')
+    {{ route('marcas.index') }}
 @endsection
 
-@section('content')
-    <section class="content container-fluid">
-        <div class="">
-            <div class="col-md-12">
+@section('heading', 'Editar Marca')
 
-                <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">{{ __('Update') }} Marca</span>
-                    </div>
-                    <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('marcas.update', $marca->id) }}"  role="form" enctype="multipart/form-data">
-                            {{ method_field('PATCH') }}
-                            @csrf
+@section('form_action')
+    {{ route('marcas.update', $marca->id) }}
+@endsection
 
-                            @include('marca.form')
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+@section('form_content')
+    @include('marca.form')
 @endsection
