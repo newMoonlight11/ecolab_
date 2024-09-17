@@ -1,0 +1,48 @@
+/* Ejemplo de CSS personalizado */
+.bg-bground {
+    background-color: #f8fafc; /* Ajustamos el fondo similar al de la imagen */
+}
+
+.form-control {
+    border-radius: 20px;
+    padding: 10px;
+    font-size: 1rem;
+}
+
+button.btn-primary {
+    border-radius: 20px;
+    padding: 10px 40px;
+}
+
+label {
+    margin-bottom: 0.5rem;
+}
+
+.container-form {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+button.btn-toggle {
+    background-color: white;
+    color: #007bff; /* Azul de Bootstrap */
+    border: 2px solid #007bff;
+    border-radius: 20px;
+    padding: 10px 30px;
+    transition: all 0.3s ease;
+}
+
+/* Cuando el cursor pasa por encima */
+button.btn-toggle:hover {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+/* Cuando el botón está activo o seleccionado */
+button.btn-toggle.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
