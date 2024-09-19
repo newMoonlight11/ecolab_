@@ -17,7 +17,6 @@ class MarcaController extends Controller
     public function index(Request $request): View
     {
         $marcas = Marca::paginate();
-
         return view('marca.index', compact('marcas'))
             ->with('i', ($request->input('page', 1) - 1) * $marcas->perPage());
     }
