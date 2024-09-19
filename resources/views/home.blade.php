@@ -1,30 +1,34 @@
 @extends('layouts.app')
 
+
 @section('content')
+    Te bamo bami
+@endsection
+{{-- @section('content')
     <div class="container">
         <br>
         <br>
-        <h1 class="text-center">Estadísticas de Reactivos</h1>
+        <h1 class="text-center">Estadísticas de reactivos</h1>
         <br>
-        <h3 class="text-center">Total de Reactivos: {{ $totalReactivos }}</h3>
+        <h3 class="text-center">Total de reactivos: {{ $totalReactivos }}</h3>
         <div class="d-flex justify-content-between flex-wrap gap-2">
             <div class="card border-0 rounded-4 bg-white p-5 col-md-7">
-                <h4>Reactivos por Laboratorio</h4>
+                <h4>Reactivos por laboratorio</h4>
                 <canvas id="reactivosPorLaboratorioChart"></canvas>
             </div>
 
             <div class="card border-0 rounded-4 bg-white p-5 col-md-4">
-                <h4>Reactivos por Familia</h4>
+                <h4>Reactivos por familia</h4>
                 <canvas id="reactivosPorFamiliaChart"></canvas>
             </div>
 
             <div class="card border-0 rounded-4 bg-white p-5 col-md-6">
-                <h4>Reactivos por Vencer (próximos 30 días)</h4>
+                <h4>Reactivos por vencer (próximos 30 días)</h4>
                 <canvas id="reactivosPorVencerChart"></canvas>
             </div>
 
             <div class="card border-0 rounded-4 bg-white p-5 col-md-5">
-                <h4>Reactivos con Baja Cantidad (menos de 10 unidades)</h4>
+                <h4>Reactivos con baja cantidad (menos de 10 unidades)</h4>
                 <canvas id="reactivosConBajaCantidadChart"></canvas>
             </div>
         </div>
@@ -143,4 +147,4 @@
             }
         });
     </script>
-@endsection
+@endsection --}}

@@ -25,7 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // Consultas para estadísticas
+        return view('home');
+        /* // Consultas para estadísticas
 
         // Número total de reactivos
         $totalReactivos = Reactivo::count();
@@ -64,6 +65,6 @@ class HomeController extends Controller
             'reactivosConBajaCantidad',
             'laboratorios', 'totalesLaboratorio',
             'familias', 'totalesFamilia'
-        ));
+        )); */
     }
 }
