@@ -45,7 +45,9 @@
                 <td>{{ $marca->nombre }}</td>
                 <td class="text-end">
                     <form action="{{ route('marcas.destroy', $marca->id) }}" method="POST" class="d-inline">
-                        <a class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#marcaModal">
+                        <a class="btn btn-sm" href="javascript:void(0)"
+                            onclick="mostrarModalMarca({{ json_encode($marca) }})" data-bs-toggle="modal"
+                            data-bs-target="#marcaModal">
                             <i class="bi bi-search text-primary fs-5"></i>
                         </a>
                         <a class="btn btn-sm" href="{{ route('marcas.edit', $marca->id) }}">
@@ -74,7 +76,8 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0 rounded-4 px-3 bg-white">
             <div class="modal-header">
-                <h5 class="modal-title text-primary text-center w-100 fs-3" id="marcaModalLabel">Detalles de la marca</h5>
+                <h5 class="modal-title text-primary text-center w-100 fs-3" id="marcaModalLabel">Detalles de la marca
+                </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -91,7 +94,11 @@
 <script>
     function mostrarModalMarca(marca) {
         document.getElementById('modalNombre').textContent = marca.nombre;
-        var reactivoModal = new bootstrap.Modal(document.getElementById('marcaModal'));
+        var marcaModal = new bootstrap.Modal(document.getElementById('marcaModal'));
+        document.getElementById('marcaModal').addEventListener('hidden.bs.modal', function(event) {
+            document.body.classList.remove('modal-open');
+            document.querySelector('.modal-backdrop')?.remove();
+        });
         marcaModal.show();
     }
 </script>
