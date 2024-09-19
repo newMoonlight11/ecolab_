@@ -1,28 +1,17 @@
-@extends('layouts.app')
+@extends('layouts.create')
 
-@section('template_title')
-    {{ __('Create') }} Unidad
+@section('title', 'Crear Unidad')
+
+@section('back_route')
+    {{ route('unidads.index') }}
 @endsection
 
-@section('content')
-    <section class="content container-fluid">
-        <div class="row">
-            <div class="col-md-12">
+@section('heading', 'Crear Unidad')
 
-                <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">{{ __('Create') }} Unidad</span>
-                    </div>
-                    <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('unidads.store') }}"  role="form" enctype="multipart/form-data">
-                            @csrf
+@section('form_action')
+    {{ route('unidads.store') }}
+@endsection
 
-                            @include('unidad.form')
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+@section('form_content')
+    @include('unidad.form')
 @endsection

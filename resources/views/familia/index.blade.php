@@ -76,7 +76,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0 rounded-4 px-3 bg-white">
             <div class="modal-header">
-                <h5 class="modal-title text-primary text-center w-100 fs-3" id="familiaModalLabel">Detalles de la marca
+                <h5 class="modal-title text-primary text-center w-100 fs-3" id="familiaModalLabel">Detalles de la familia
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
