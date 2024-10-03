@@ -51,7 +51,6 @@
 @section('table_header')
     <th class="col-md-1">#</th>
     <th>Nombre</th>
-    <th>Img Reactivo</th>
     <th>Numero Cas</th>
     <th>Referencia Fabricante</th>
     <th>Lote</th>
@@ -69,9 +68,7 @@
         @foreach ($reactivos as $reactivo)
             <tr>
                 <td>{{ ++$i }}</td>
-
                 <td>{{ $reactivo->nombre }}</td>
-                <td>{{ $reactivo->img_reactivo }}</td>
                 <td>{{ $reactivo->numero_cas }}</td>
                 <td>{{ $reactivo->referencia_fabricante }}</td>
                 <td>{{ $reactivo->lote }}</td>
