@@ -7,44 +7,43 @@
 @section('filter_content')
     <form method="GET" action="{{ route('reactivos.index') }}">
         <div class="row mb-4">
-            <div class="d-flex justify-content-between flex-wrap gap-4">
-                <div class="col-1 text-center">
+            <div class="d-flex justify-content-between flex-wrap gap-3">
+                <div class="text-center">
                     <p>Nombre</p>
                     <input type="text" name="nombre" class="form-control bg-white rounded-4" style="text-align: center;"
                         placeholder="---" value="{{ request()->get('nombre') }}">
                 </div>
-                <div class="col-1 text-center">
+                <div class="text-center">
                     <p># CAS</p>
                     <input type="text" name="numero_cas" class="form-control bg-white rounded-4"
                         style="text-align: center;" placeholder="---" value="{{ request()->get('numero_cas') }}">
                 </div>
-                <div class="col-1 text-center">
+                <div class="text-center">
                     <p>Ref. de fabricante</p>
                     <input type="text" name="referencia_fabricante" class="form-control bg-white rounded-4"
                         style="text-align: center;" placeholder="---" value="{{ request()->get('referencia_fabricante') }}">
                 </div>
-                <div class="col-1 text-center">
+                <div class="text-center">
                     <p>Lote</p>
                     <input type="text" name="lote" class="form-control bg-white rounded-4" style="text-align: center;"
                         placeholder="---" value="{{ request()->get('lote') }}">
                 </div>
-                <div class="col-1 text-center">
+                <div class="text-center">
                     <p># Registro Invima</p>
                     <input type="text" name="num_registro_invima" class="form-control bg-white rounded-4"
                         style="text-align: center;" placeholder="---" value="{{ request()->get('num_registro_invima') }}">
                 </div>
-            </div>
-            <div class="col-1 text-center">
-                <p>Filtrar</p>
-                <button type="submit" class="btn btn-primary rounded-3 btn-xxl"><i
-                        class="bi bi-sort-down-alt fs-5"></i></button>
-            </div>
-            <div class="col-1 text-center">
-                <p>Agregar</p>
-                <a href="{{ route('reactivos.create') }}" class="btn btn-primary rounded-3 btn-xxl"
-                    data-placement="center"><i class="bi bi-plus-circle fs-5"></i></a>
-            </div>
-        </div>
+                <div class="text-center">
+                    <p>Filtrar</p>
+                    <button type="submit" class="btn btn-primary rounded-3 btn-xxl"><i
+                            class="bi bi-sort-down-alt fs-5"></i></button>
+                </div>
+                <div class="text-center">
+                    <p>Agregar</p>
+                    <a href="{{ route('reactivos.create') }}" class="btn btn-primary rounded-3 btn-xxl"
+                        data-placement="center"><i class="bi bi-plus-circle fs-5"></i></a>
+                </div>
+            </div> 
         </div>
     </form>
 @endsection
