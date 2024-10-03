@@ -18,7 +18,7 @@ class ReactivoController extends Controller
      */
     public function index(Request $request): View
     {
-        $query = Reactivo::query();
+        $query = Reactivo::with(['familia', 'marca']);
 
         // Aplica los filtros si están presentes en la solicitud
         if ($request->filled('nombre')) {
