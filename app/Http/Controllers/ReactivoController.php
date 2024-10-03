@@ -41,7 +41,7 @@ class ReactivoController extends Controller
             $query->where('num_registro_invima', 'like', '%' . $request->input('num_registro_invima') . '%');
         }
 
-        $reactivos = Reactivo::with(['familia', 'marca'])->paginate(10);
+        $reactivos = $query->paginate(10);
         return view('reactivo.index', compact('reactivos'))
             ->with('i', ($request->input('page', 1) - 1) * 10);
         // $reactivos = Reactivo::paginate();
