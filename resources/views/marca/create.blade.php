@@ -13,7 +13,6 @@
 @endsection
 
 @section('form_content')
+    @csrf
     @include('marca.form')
 @endsection
-
-

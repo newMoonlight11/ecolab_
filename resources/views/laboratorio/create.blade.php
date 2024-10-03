@@ -13,6 +13,6 @@
 @endsection
 
 @section('form_content')
+    @csrf
     @include('laboratorio.form')
 @endsection
-

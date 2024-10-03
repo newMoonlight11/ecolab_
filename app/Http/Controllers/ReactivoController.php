@@ -18,9 +18,12 @@ class ReactivoController extends Controller
      */
     public function index(Request $request): View
     {
-        $reactivos = Reactivo::paginate();
+        $reactivos = Reactivo::with(['familia', 'marca'])->paginate(10);
         return view('reactivo.index', compact('reactivos'))
-            ->with('i', ($request->input('page', 1) - 1) * $reactivos->perPage());
+            ->with('i', ($request->input('page', 1) - 1) * 10);
+        // $reactivos = Reactivo::paginate();
+        // return view('reactivo.index', compact('reactivos'))
+        //     ->with('i', ($request->input('page', 1) - 1) * $reactivos->perPage());
     }
 
     /**

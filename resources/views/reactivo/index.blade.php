@@ -7,7 +7,7 @@
 @section('filter_content')
     <form method="GET" action="{{ route('reactivos.index') }}">
         <div class="row mb-4">
-            <div class="d-flex justify-content-between flex-wrap gap-2">
+            <div class="d-flex justify-content-between flex-wrap gap-4">
                 <div class="col-1 text-center">
                     <p>Nombre</p>
                     <input type="text" name="nombre" class="form-control bg-white rounded-4" style="text-align: center;"
@@ -15,13 +15,13 @@
                 </div>
                 <div class="col-1 text-center">
                     <p># CAS</p>
-                    <input type="text" name="numero_cas" class="form-control bg-white rounded-4" style="text-align: center;"
-                        placeholder="---" value="{{ request()->get('numero_cas') }}">
+                    <input type="text" name="numero_cas" class="form-control bg-white rounded-4"
+                        style="text-align: center;" placeholder="---" value="{{ request()->get('numero_cas') }}">
                 </div>
                 <div class="col-1 text-center">
-                    <p>Referencia de fabricante</p>
-                    <input type="text" name="referencia_fabricante" class="form-control bg-white rounded-4" style="text-align: center;"
-                        placeholder="---" value="{{ request()->get('referencia_fabricante') }}">
+                    <p>Ref. de fabricante</p>
+                    <input type="text" name="referencia_fabricante" class="form-control bg-white rounded-4"
+                        style="text-align: center;" placeholder="---" value="{{ request()->get('referencia_fabricante') }}">
                 </div>
                 <div class="col-1 text-center">
                     <p>Lote</p>
@@ -30,21 +30,21 @@
                 </div>
                 <div class="col-1 text-center">
                     <p># Registro Invima</p>
-                    <input type="text" name="num_registro_invima" class="form-control bg-white rounded-4" style="text-align: center;"
-                        placeholder="---" value="{{ request()->get('num_registro_invima') }}">
-                </div>
-                </div>
-                <div class="col-1 text-center">
-                    <p>Filtrar</p>
-                    <button type="submit" class="btn btn-primary rounded-3 btn-xxl"><i
-                            class="bi bi-sort-down-alt fs-5"></i></button>
-                </div>
-                <div class="col-1 text-center">
-                    <p>Agregar</p>
-                    <a href="{{ route('reactivos.create') }}" class="btn btn-primary rounded-3 btn-xxl"
-                        data-placement="center"><i class="bi bi-plus-circle fs-5"></i></a>
+                    <input type="text" name="num_registro_invima" class="form-control bg-white rounded-4"
+                        style="text-align: center;" placeholder="---" value="{{ request()->get('num_registro_invima') }}">
                 </div>
             </div>
+            <div class="col-1 text-center">
+                <p>Filtrar</p>
+                <button type="submit" class="btn btn-primary rounded-3 btn-xxl"><i
+                        class="bi bi-sort-down-alt fs-5"></i></button>
+            </div>
+            <div class="col-1 text-center">
+                <p>Agregar</p>
+                <a href="{{ route('reactivos.create') }}" class="btn btn-primary rounded-3 btn-xxl"
+                    data-placement="center"><i class="bi bi-plus-circle fs-5"></i></a>
+            </div>
+        </div>
         </div>
     </form>
 @endsection
@@ -77,8 +77,8 @@
                 <td>{{ $reactivo->referencia_fabricante }}</td>
                 <td>{{ $reactivo->lote }}</td>
                 <td>{{ $reactivo->num_registro_invima }}</td>
-                <td>{{ $reactivo->familia_id }}</td>
-                <td>{{ $reactivo->marca_id }}</td>
+                <td>{{ $reactivo->familia ? $reactivo->familia->nombre : 'Sin familia' }}</td>
+                <td>{{ $reactivo->marca ? $reactivo->marca->nombre : 'Sin marca' }}</td>
 
                 <td class="text-end">
                     <form action="{{ route('reactivos.destroy', $reactivo->id) }}" method="POST" class="d-inline">
@@ -113,7 +113,8 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0 rounded-4 px-3 bg-white">
             <div class="modal-header">
-                <h5 class="modal-title text-primary text-center w-100 fs-3" id="reactivoModalLabel">Detalles del reactivo
+                <h5 class="modal-title text-primary text-center w-100 fs-3" id="reactivoModalLabel">Detalles del
+                    reactivo
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -121,18 +122,25 @@
                 <div class="form-group mb-2 mb20">
                     <strong>Nombre:</strong>
                     <span id="modalNombre"></span>
+                    <br>
                     <strong># CAS:</strong>
                     <span id="modalNumeroCas"></span>
+                    <br>
                     <strong>Referencia de fabricante:</strong>
                     <span id="modalReferenciaFabricante"></span>
+                    <br>
                     <strong>Lote:</strong>
                     <span id="modalLote"></span>
+                    <br>
                     <strong>Registro Invima:</strong>
                     <span id="modalRegistroInvima"></span>
+                    <br>
                     <strong>Familia:</strong>
                     <span id="modalFamilia"></span>
+                    <br>
                     <strong>Marca:</strong>
                     <span id="modalMarca"></span>
+                    <br>
                 </div>
             </div>
         </div>

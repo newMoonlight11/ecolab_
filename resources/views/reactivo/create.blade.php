@@ -13,5 +13,6 @@
 @endsection
 
 @section('form_content')
+    @csrf
     @include('reactivo.form')
 @endsection
