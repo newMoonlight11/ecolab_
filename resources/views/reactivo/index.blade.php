@@ -55,8 +55,8 @@
     <th>Referencia Fabricante</th>
     <th>Lote</th>
     <th>Num Registro Invima</th>
-    <th>Familia Id</th>
-    <th>Marca Id</th>
+    <th>Familia</th>
+    <th>Marca</th>
 @endsection
 
 @section('table_content')
