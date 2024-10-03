@@ -19,6 +19,30 @@ class ReactivoController extends Controller
     public function index(Request $request): View
     {
         $reactivos = Reactivo::with(['familia', 'marca'])->paginate(10);
+        $query = Reactivo::query();
+
+        // Aplica los filtros si están presentes en la solicitud
+        if ($request->filled('nombre')) {
+            $query->where('nombre', 'like', '%' . $request->input('nombre') . '%');
+        }
+
+        if ($request->filled('numero_cas')) {
+            $query->where('numero_cas', 'like', '%' . $request->input('numero_cas') . '%');
+        }
+
+        if ($request->filled('referencia_fabricante')) {
+            $query->where('referencia_fabricante', 'like', '%' . $request->input('referencia_fabricante') . '%');
+        }
+        
+        if ($request->filled('lote')) {
+            $query->where('lote', 'like', '%' . $request->input('lote') . '%');
+        }
+
+        if ($request->filled('num_registro_invima')) {
+            $query->where('num_registro_invima', 'like', '%' . $request->input('num_registro_invima') . '%');
+        }
+
+        $reactivos = Reactivo::with(['familia', 'marca'])->paginate(10);
         return view('reactivo.index', compact('reactivos'))
             ->with('i', ($request->input('page', 1) - 1) * 10);
         // $reactivos = Reactivo::paginate();
