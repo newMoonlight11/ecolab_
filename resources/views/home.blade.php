@@ -188,9 +188,9 @@
         const reactivosPorLaboratorioChart = new Chart(ctxLaboratorio, {
             type: 'bar',
             data: {
-                labels: ['Laboratorio 1', 'Laboratorio 2', 'Laboratorio 3', 'Laboratorio 4'], // Laboratorios sintéticos
+                labels: ['E-BIO', 'Histopatología', 'Microbiología', 'Instituto Caldas'], // Laboratorios sintéticos
                 datasets: [{
-                    label: 'Reactivos por Laboratorio',
+                    label: 'Reactivos por laboratorio',
                     data: [45, 25, 60, 20], // Totales sintéticos por laboratorio
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgba(54, 162, 235, 1)',
@@ -211,9 +211,9 @@
         const reactivosPorFamiliaChart = new Chart(ctxFamilia, {
             type: 'pie',
             data: {
-                labels: ['Familia A', 'Familia B', 'Familia C', 'Familia D'], // Familias sintéticas
+                labels: ['Alcoholes', 'Ácidos', 'Bases', 'Sales inorgánicas y orgánicas'], // Familias sintéticas
                 datasets: [{
-                    label: 'Reactivos por Familia',
+                    label: 'Reactivos por familia',
                     data: [40, 30, 50, 30], // Totales sintéticos por familia
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
@@ -249,9 +249,9 @@
         const reactivosPorVencerChart = new Chart(ctxPorVencer, {
             type: 'bar',
             data: {
-                labels: ['Reactivo A', 'Reactivo B', 'Reactivo C'], // Reactivos sintéticos
+                labels: ['Ácido Clorhídrico', 'Tiocianato de amonio', 'Hidróxido de potasio'], // Reactivos sintéticos
                 datasets: [{
-                    label: 'Reactivos por Vencer',
+                    label: 'Reactivos por vencer',
                     data: [5, 7, 3], // Cantidades sintéticas de reactivos próximos a vencer
                     backgroundColor: 'rgba(255, 159, 64, 0.2)',
                     borderColor: 'rgba(255, 159, 64, 1)',
@@ -272,9 +272,9 @@
         const reactivosConBajaCantidadChart = new Chart(ctxBajaCantidad, {
             type: 'bar',
             data: {
-                labels: ['Reactivo X', 'Reactivo Y', 'Reactivo Z'], // Reactivos sintéticos
+                labels: ['Ácido acético', 'Cloruro de magnesio', 'Nitrato de plata'], // Reactivos sintéticos
                 datasets: [{
-                    label: 'Reactivos con Baja Cantidad',
+                    label: 'Reactivos con baja cantidad',
                     data: [8, 9, 6], // Cantidades sintéticas de reactivos con baja cantidad
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgba(255, 99, 132, 1)',
