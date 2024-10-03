@@ -22,11 +22,13 @@ class ReactivoRequest extends FormRequest
     public function rules(): array
     {
         return [
-			'nombre' => 'required|string',
-			'fecha_vencimiento' => 'required',
-			'cantidad' => 'required',
-			'laboratorio' => 'required|string',
-			'familia' => 'required|string',
+            'nombre' => 'required|string|max:255',
+            'numero_cas' => 'required|string|max:255',
+            'referencia_fabricante' => 'required|string|max:255',
+            'lote' => 'required|string|max:255',
+            'num_registro_invima' => 'required|string|max:255',
+            'familia_id' => 'required|exists:familias,id',  // Validación de existencia
+            'marca_id' => 'required|exists:marca,id',       // Validación de existencia    
         ];
     }
 }

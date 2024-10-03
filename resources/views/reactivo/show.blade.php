@@ -1,39 +1,58 @@
 @extends('layouts.app')
 
 @section('template_title')
-    {{ $reactivo->name ?? __('Show') . ' ' . __('Reactivo') }}
+    {{ $reactivo->name ?? __('Show') . " " . __('Reactivo') }}
 @endsection
 
 @section('content')
-    <section class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card bg-white border-0 rounded-4">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-end">
-                            <a class="btn" href="{{ route('reactivos.index') }}"> <i class="bi bi-arrow-left-circle-fill fs-4 text-primary"></i></a>
+    <section class="content container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div class="float-left">
+                            <span class="card-title">{{ __('Show') }} Reactivo</span>
                         </div>
-                        <h3 class="text-center">Inventario</h3>
-                        <div class="form-group mb-2 mb20">
-                            <strong>Nombre:</strong>
-                            {{ $reactivo->nombre }}
+                        <div class="float-right">
+                            <a class="btn btn-primary btn-sm" href="{{ route('reactivos.index') }}"> {{ __('Back') }}</a>
                         </div>
-                        <div class="form-group mb-2 mb20">
-                            <strong>Fecha Vencimiento:</strong>
-                            {{ $reactivo->fecha_vencimiento }}
-                        </div>
-                        <div class="form-group mb-2 mb20">
-                            <strong>Cantidad:</strong>
-                            {{ $reactivo->cantidad }}
-                        </div>
-                        <div class="form-group mb-2 mb20">
-                            <strong>Laboratorio:</strong>
-                            {{ $reactivo->laboratorio }}
-                        </div>
-                        <div class="form-group mb-2 mb20">
-                            <strong>Familia:</strong>
-                            {{ $reactivo->familia }}
-                        </div>
+                    </div>
+
+                    <div class="card-body bg-white">
+                        
+                                <div class="form-group mb-2 mb20">
+                                    <strong>Nombre:</strong>
+                                    {{ $reactivo->nombre }}
+                                </div>
+                                <div class="form-group mb-2 mb20">
+                                    <strong>Img Reactivo:</strong>
+                                    {{ $reactivo->img_reactivo }}
+                                </div>
+                                <div class="form-group mb-2 mb20">
+                                    <strong>Numero Cas:</strong>
+                                    {{ $reactivo->numero_cas }}
+                                </div>
+                                <div class="form-group mb-2 mb20">
+                                    <strong>Referencia Fabricante:</strong>
+                                    {{ $reactivo->referencia_fabricante }}
+                                </div>
+                                <div class="form-group mb-2 mb20">
+                                    <strong>Lote:</strong>
+                                    {{ $reactivo->lote }}
+                                </div>
+                                <div class="form-group mb-2 mb20">
+                                    <strong>Num Registro Invima:</strong>
+                                    {{ $reactivo->num_registro_invima }}
+                                </div>
+                                <div class="form-group mb-2 mb20">
+                                    <strong>Familia Id:</strong>
+                                    {{ $reactivo->familia_id }}
+                                </div>
+                                <div class="form-group mb-2 mb20">
+                                    <strong>Marca Id:</strong>
+                                    {{ $reactivo->marca_id }}
+                                </div>
+
                     </div>
                 </div>
             </div>

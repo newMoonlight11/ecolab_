@@ -6,6 +6,8 @@ use App\Models\Reactivo;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\ReactivoRequest;
+use App\Models\Familia;
+use App\Models\Marca;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -15,39 +17,11 @@ class ReactivoController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request): View
-{
-    // Inicia una consulta base
-    $query = Reactivo::query();
-
-    // Aplica los filtros si están presentes en la solicitud
-    if ($request->filled('nombre')) {
-        $query->where('nombre', 'like', '%' . $request->input('nombre') . '%');
+    {
+        $reactivos = Reactivo::paginate();
+        return view('reactivo.index', compact('reactivos'))
+            ->with('i', ($request->input('page', 1) - 1) * $reactivos->perPage());
     }
-
-    if ($request->filled('fecha_vencimiento')) {
-        $query->whereDate('fecha_vencimiento', $request->input('fecha_vencimiento'));
-    }
-
-    if ($request->filled('cantidad')) {
-        $query->where('cantidad', $request->input('cantidad'));
-    }
-
-    if ($request->filled('laboratorio')) {
-        $query->where('laboratorio', 'like', '%' . $request->input('laboratorio') . '%');
-    }
-
-    if ($request->filled('familia')) {
-        $query->where('familia', 'like', '%' . $request->input('familia') . '%');
-    }
-
-    // Paginación de los resultados de la consulta filtrada
-    $reactivos = $query->paginate(10);
-
-    // Retorna la vista con los reactivos filtrados y paginados
-    return view('reactivo.index', compact('reactivos'))
-        ->with('i', ($request->input('page', 1) - 1) * $reactivos->perPage());
-}
-
 
     /**
      * Show the form for creating a new resource.
@@ -55,8 +29,10 @@ class ReactivoController extends Controller
     public function create(): View
     {
         $reactivo = new Reactivo();
+        $familias = Familia::all();
+        $marcas = Marca::all();
 
-        return view('reactivo.create', compact('reactivo'));
+        return view('reactivo.create', compact('reactivo', 'familias', 'marcas'));
     }
 
     /**
@@ -73,11 +49,17 @@ class ReactivoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id): View
+    public function show($id)
     {
-        $reactivo = Reactivo::find($id);
+        $reactivo = Reactivo::with(['familia', 'marca'])->find($id);
+        //$reactivo = Reactivo::find($id);
 
-        return view('reactivo.show', compact('reactivo'));
+        if (!$reactivo) {
+            return response()->json(['error' => 'Reactivo no encontrado'], 404);
+        }
+
+        // Devolver el reactivo con las relaciones al front-end (JSON)
+        return response()->json($reactivo);
     }
 
     /**
