@@ -23,7 +23,7 @@
                     <input type="text" name="referencia_fabricante" class="form-control bg-white rounded-4"
                         style="text-align: center;" placeholder="---" value="{{ request()->get('referencia_fabricante') }}">
                 </div>
-                <div class="text-center">
+                <div class="col-md-1 text-center">
                     <p>Lote</p>
                     <input type="text" name="lote" class="form-control bg-white rounded-4" style="text-align: center;"
                         placeholder="---" value="{{ request()->get('lote') }}">
@@ -67,7 +67,7 @@
     @else
         @foreach ($reactivos as $reactivo)
             <tr>
-                <td>{{ ++$i }}</td>
+                <td class="col-sm-1">{{ ++$i }}</td>
                 <td>{{ $reactivo->nombre }}</td>
                 <td>{{ $reactivo->numero_cas }}</td>
                 <td>{{ $reactivo->referencia_fabricante }}</td>

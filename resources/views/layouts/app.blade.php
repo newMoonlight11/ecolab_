@@ -16,10 +16,63 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-</head>
+  </head>
+  <style>
+    /* Estilo del botón */
+.dropbtn {
+  background-color: #ffffff;
+  color: black;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Contenedor del dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Estilo del contenido del dropdown (links) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links dentro del dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Cambia el color al pasar el mouse sobre los links */
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+/* Mostrar el dropdown cuando se hace hover en el botón */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Cambia el color del botón al hacer hover */
+.dropdown:hover .dropbtn {
+  background-color: #f1f1f1;
+}
+
+  </style>
 
 <body>
-    <div id="app">
+    <div >
+        
+          
         @include('layouts.navbar')
         <main class="py-4 bg-bground">
             @yield('content')

@@ -94,8 +94,10 @@ class ReactivoController extends Controller
     public function edit($id): View
     {
         $reactivo = Reactivo::find($id);
+        $familias = Familia::all();
+        $marcas = Marca::all();
 
-        return view('reactivo.edit', compact('reactivo'));
+        return view('reactivo.edit', compact('reactivo', 'familias', 'marcas'));
     }
 
     /**
