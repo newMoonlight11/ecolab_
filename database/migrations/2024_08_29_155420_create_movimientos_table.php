@@ -19,6 +19,9 @@ return new class extends Migration
 
             $table->unsignedBigInteger('tipo_movimiento');
             $table->foreign('tipo_movimiento')->references('id')->on('tipo_movimiento');
+
+            $table->unsignedBigInteger('usuario_id');
+            $table->foreign('usuario_id')->references('id')->on('users');
         });
     }
 
