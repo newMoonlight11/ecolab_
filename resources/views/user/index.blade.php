@@ -24,6 +24,11 @@
                             class="bi bi-sort-down-alt fs-5"></i></button>
                 </div>
                 <div class="col-md-1 text-center">
+                    <p>Roles</p>
+                    <a href="{{ route('roles.index') }}" class="btn btn-primary rounded-3 btn-xxl"
+                        data-placement="center"><i class="bi bi-people fs-5"></i></a>
+                </div>
+                <div class="col-md-1 text-center">
                     <p>Agregar</p>
                     <a href="{{ route('users.create') }}" class="btn btn-primary rounded-3 btn-xxl"
                         data-placement="center"><i class="bi bi-plus-circle fs-5"></i></a>
