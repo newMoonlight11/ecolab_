@@ -17,4 +17,9 @@ class Unidad extends Model
     {
         return $this->hasMany(StockReactivo::class, 'unidad_id');
     }
+
+    public function stockResiduos()
+    {
+        return $this->hasMany(ResiduoLaboratorio::class, 'unidad_id');
+    }
 }
