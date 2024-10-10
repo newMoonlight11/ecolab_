@@ -17,4 +17,9 @@ class Laboratorio extends Model
     {
         return $this->hasMany(StockReactivo::class, 'laboratorio_id');
     }
+
+    public function stockResiduos()
+    {
+        return $this->hasMany(ResiduoLaboratorio::class, 'laboratorio_id');
+    }
 }
