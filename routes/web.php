@@ -7,7 +7,7 @@ use App\Http\Controllers\LaboratorioController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\UnidadController;
 use App\Http\Controllers\PaginasController;
-
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -24,5 +24,8 @@ Route::resource('familias', FamiliaController::class);
 Route::resource('laboratorios', LaboratorioController::class);
 Route::resource('marcas', MarcaController::class);
 Route::resource('unidads', UnidadController::class);
+
+//crud de roles
+Route::resource('roles', RoleController::class);
 
 Route::get('/prestamos', [PaginasController::class, 'prestamos']);
