@@ -25,7 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        // return view('home');
         /* // Consultas para estadísticas
 
         // Número total de reactivos
@@ -66,5 +66,35 @@ class HomeController extends Controller
             'laboratorios', 'totalesLaboratorio',
             'familias', 'totalesFamilia'
         )); */
+
+        $data = [
+            'total_reactivos' => 250,
+            'total_laboratorios' => 7,
+            'total_marcas' => 130,
+            'total_familias' => 100,
+            'total_residuos' => 122,
+            'reactivos_stock' => [ // Datos para el gráfico de barras
+                'jul' => [80, 50, 30],
+                'ago' => [70, 40, 20],
+                'sep' => [60, 30, 10],
+            ],
+            'residuos_generados' => [90, 80, 70, 85, 75, 60], // Datos para gráfico de líneas
+            'categorias_populares' => [
+                'Alcoholes' => 40,
+                'Ácidos orgánicos' => 25,
+                'Acetatos' => 20,
+                'Sulfatos' => 10,
+                'Nitratos' => 5,
+            ],
+            'compras_reactivos' => [100, 90, 80, 85, 75, 60], // Datos de compras
+            'reactivos_a_vencer' => [
+                'Potasio permanganato' => 9,
+                'Nitrato de plata' => 7,
+                'Amonio sulfato' => 5,
+                'Sacarosa' => 4,
+                'Cloroformo' => 3,
+            ],
+        ];
+        return view('home', compact('data'));
     }
 }

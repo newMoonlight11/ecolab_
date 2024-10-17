@@ -1,29 +1,18 @@
-@extends('layouts.app')
+@extends('layouts.edit')
 
-@section('template_title')
-    {{ __('Update') }} Tipo Movimiento
+@section('title', 'Editar Tipo Movimiento')
+
+@section('back_route')
+    {{ route('tipo_movimiento.index') }}
 @endsection
 
-@section('content')
-    <section class="content container-fluid">
-        <div class="">
-            <div class="col-md-12">
+@section('heading', 'Editar Tipo Movimiento')
 
-                <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">{{ __('Update') }} Tipo Movimiento</span>
-                    </div>
-                    <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('tipo_movimiento.update', $tipoMovimiento->id) }}"  role="form" enctype="multipart/form-data">
-                            {{ method_field('PATCH') }}
-                            @csrf
-
-                            @include('tipo-movimiento.form')
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+@section('form_action')
+    {{ route('tipo_movimiento.update', $tipoMovimiento->id) }}
 @endsection
+
+@section('form_content')
+    @include('tipo-movimiento.form')
+@endsection
+

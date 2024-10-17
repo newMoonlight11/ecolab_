@@ -10,6 +10,8 @@ use App\Http\Controllers\MovimientoController;
 use App\Http\Controllers\UnidadController;
 use App\Http\Controllers\PaginasController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\StockReactivoController;
+use App\Http\Controllers\TipoMovimientoController;
 use Illuminate\Support\Facades\Route;
 
 

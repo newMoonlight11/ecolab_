@@ -14,7 +14,7 @@
                             <span class="card-title">{{ __('Show') }} Item Movimiento</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary btn-sm" href="{{ route('item_movimientos.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-primary btn-sm" href="{{ route('item_movimiento.index') }}"> {{ __('Back') }}</a>
                         </div>
                     </div>
 
