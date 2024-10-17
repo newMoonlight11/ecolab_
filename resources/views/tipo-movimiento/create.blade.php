@@ -1,28 +1,18 @@
-@extends('layouts.app')
+@extends('layouts.create')
 
-@section('template_title')
-    {{ __('Create') }} Tipo Movimiento
+@section('title', 'Crear Tipo Movimiento')
+
+@section('back_route')
+    {{ route('tipo_movimiento.index') }}
 @endsection
 
-@section('content')
-    <section class="content container-fluid">
-        <div class="row">
-            <div class="col-md-12">
+@section('heading', 'Crear Tipo Movimiento')
 
-                <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">{{ __('Create') }} Tipo Movimiento</span>
-                    </div>
-                    <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('tipo_movimiento.store') }}"  role="form" enctype="multipart/form-data">
-                            @csrf
+@section('form_action')
+    {{ route('tipo_movimiento.store') }}
+@endsection
 
-                            @include('tipo-movimiento.form')
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+@section('form_content')
+    @csrf
+    @include('tipo-movimiento.form')
 @endsection

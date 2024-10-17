@@ -1,28 +1,20 @@
-@extends('layouts.app')
-
-@section('template_title')
-    {{ __('Create') }} Item Movimiento
 @endsection
 
-@section('content')
-    <section class="content container-fluid">
-        <div class="row">
-            <div class="col-md-12">
+@extends('layouts.create')
 
-                <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">{{ __('Create') }} Item Movimiento</span>
-                    </div>
-                    <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('item_movimiento.store') }}"  role="form" enctype="multipart/form-data">
-                            @csrf
+@section('title', 'Crear Item Movimiento')
 
-                            @include('item-movimiento.form')
+@section('back_route')
+    {{ route('item_movimiento.index') }}
+@endsection
 
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+@section('heading', 'Crear Item Movimiento')
+
+@section('form_action')
+    {{ route('item_movimiento.store') }}
+@endsection
+
+@section('form_content')
+    @csrf
+    @include('item-movimiento.form')
 @endsection

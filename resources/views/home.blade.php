@@ -249,7 +249,8 @@
         const reactivosPorVencerChart = new Chart(ctxPorVencer, {
             type: 'bar',
             data: {
-                labels: ['Ácido Clorhídrico', 'Tiocianato de amonio', 'Hidróxido de potasio'], // Reactivos sintéticos
+                labels: ['Ácido Clorhídrico', 'Tiocianato de amonio',
+                'Hidróxido de potasio'], // Reactivos sintéticos
                 datasets: [{
                     label: 'Reactivos por vencer',
                     data: [5, 7, 3], // Cantidades sintéticas de reactivos próximos a vencer
@@ -292,4 +293,145 @@
     </script>
 @endsection
 
+{{-- @section('content')
+<div class="container">
+    <div class="row">
+        <!-- Estadísticas -->
+        <div class="col-md-12 mb-3">
+            <h2>Analíticas</h2>
+            <h5>Periodo: Julio - Septiembre 2024</h5>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total reactivos</h5>
+                    <p class="card-text">{{ $data['total_reactivos'] }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total laboratorios</h5>
+                    <p class="card-text">{{ $data['total_laboratorios'] }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total marcas</h5>
+                    <p class="card-text">{{ $data['total_marcas'] }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total familias</h5>
+                    <p class="card-text">{{ $data['total_familias'] }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total residuos</h5>
+                    <p class="card-text">{{ $data['total_residuos'] }}</p>
+                </div>
+            </div>
+        </div>
 
+        <!-- Gráficos -->
+        <div class="col-md-6">
+            <h4>Reactivos en stock</h4>
+            <canvas id="stockChart"></canvas>
+        </div>
+        <div class="col-md-6">
+            <h4>Residuos generados</h4>
+            <canvas id="residuosChart"></canvas>
+        </div>
+
+        <!-- Otras métricas -->
+        <div class="col-md-6">
+            <h4>Categorías populares</h4>
+            <canvas id="categoriasChart"></canvas>
+        </div>
+        <div class="col-md-6">
+            <h4>Compras de reactivos</h4>
+            <canvas id="comprasChart"></canvas>
+        </div>
+        <div class="col-md-6">
+            <h4>Reactivos que van a vencer</h4>
+            <ul>
+                @foreach ($data['reactivos_a_vencer'] as $nombre => $dias)
+                    <li>{{ $nombre }} - {{ $dias }} días</li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Gráfico de Reactivos en Stock
+    const stockCtx = document.getElementById('stockChart').getContext('2d');
+    new Chart(stockCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Jul', 'Ago', 'Sep'],
+            datasets: [{
+                label: 'Existentes',
+                data: [{{ implode(',', $data['reactivos_stock']['jul']) }}, {{ implode(',', $data['reactivos_stock']['ago']) }}, {{ implode(',', $data['reactivos_stock']['sep']) }}],
+                backgroundColor: '#007bff',
+            }]
+        }
+    });
+
+    // Gráfico de Residuos generados
+    const residuosCtx = document.getElementById('residuosChart').getContext('2d');
+    new Chart(residuosCtx, {
+        type: 'line',
+        data: {
+            labels: ['Jul', 'Ago', 'Sep'],
+            datasets: [{
+                label: 'Residuos',
+                data: [{{ implode(',', $data['residuos_generados']) }}],
+                borderColor: '#007bff',
+                fill: false
+            }]
+        }
+    });
+
+    // Gráfico de Categorías populares
+    const categoriasCtx = document.getElementById('categoriasChart').getContext('2d');
+    new Chart(categoriasCtx, {
+        type: 'pie',
+        data: {
+            labels: {!! json_encode(array_keys($data['categorias_populares'])) !!},
+            datasets: [{
+                data: {!! json_encode(array_values($data['categorias_populares'])) !!},
+                backgroundColor: ['#007bff', '#17a2b8', '#ffc107', '#28a745', '#dc3545']
+            }]
+        }
+    });
+
+    // Gráfico de Compras de Reactivos
+    const comprasCtx = document.getElementById('comprasChart').getContext('2d');
+    new Chart(comprasCtx, {
+        type: 'line',
+        data: {
+            labels: ['Jul', 'Ago', 'Sep'],
+            datasets: [{
+                label: 'Compras',
+                data: [{{ implode(',', $data['compras_reactivos']) }}],
+                borderColor: '#ffc107',
+                fill: false
+            }]
+        }
+    });
+</script>
+@endsection
+ --}}

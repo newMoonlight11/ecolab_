@@ -6,6 +6,7 @@ use App\Models\Movimiento;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\MovimientoRequest;
+use App\Models\TipoMovimiento;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -28,8 +29,9 @@ class MovimientoController extends Controller
     public function create(): View
     {
         $movimiento = new Movimiento();
+        $tipoMovimientos = TipoMovimiento::all();
 
-        return view('movimiento.create', compact('movimiento'));
+        return view('movimiento.create', compact('movimiento', 'tipoMovimientos'));
     }
 
     /**
