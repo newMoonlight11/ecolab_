@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClaseResiduoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReactivoController;
 use App\Http\Controllers\FamiliaController;
@@ -9,7 +10,11 @@ use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\MovimientoController;
 use App\Http\Controllers\UnidadController;
 use App\Http\Controllers\PaginasController;
+use App\Http\Controllers\ResiduoController;
+use App\Http\Controllers\ResiduoLaboratorioController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\StockReactivoController;
+use App\Http\Controllers\TipoMovimientoController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -39,6 +44,8 @@ Route::resource('movimientos', MovimientoController::class);
 Route::resource('tipo_movimiento', TipoMovimientoController::class);
 Route::resource('item_movimiento', ItemMovimientoController::class);
 Route::resource('stock_reactivos', StockReactivoController::class);
-
+Route::resource('clase-residuos', ClaseResiduoController::class);
+Route::resource('residuos', ResiduoController::class);
+Route::resource('residuo-laboratorios', ResiduoLaboratorioController::class);
 
 Route::get('/prestamos', [PaginasController::class, 'prestamos']);
