@@ -32,7 +32,7 @@ class ReactivoController extends Controller
         if ($request->filled('referencia_fabricante')) {
             $query->where('referencia_fabricante', 'like', '%' . $request->input('referencia_fabricante') . '%');
         }
-        
+
         if ($request->filled('lote')) {
             $query->where('lote', 'like', '%' . $request->input('lote') . '%');
         }
@@ -69,7 +69,7 @@ class ReactivoController extends Controller
         Reactivo::create($request->validated());
 
         return Redirect::route('reactivos.index')
-            ->with('success', 'Reactivo created successfully.');
+            ->with('success', 'Reactivo creado satisfactoriamente.');
     }
 
     /**
@@ -108,7 +108,7 @@ class ReactivoController extends Controller
         $reactivo->update($request->validated());
 
         return Redirect::route('reactivos.index')
-            ->with('success', 'Reactivo updated successfully');
+            ->with('success', 'Reactivo actualizado satisfactoriamente');
     }
 
     public function destroy($id): RedirectResponse
@@ -116,6 +116,6 @@ class ReactivoController extends Controller
         Reactivo::find($id)->delete();
 
         return Redirect::route('reactivos.index')
-            ->with('success', 'Reactivo deleted successfully');
+            ->with('success', 'Reactivo eliminado satisfactoriamente');
     }
 }

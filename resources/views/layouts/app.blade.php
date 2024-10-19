@@ -11,7 +11,7 @@
     <!-- Fonts -->
     {{-- <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet"> --}}
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 
     <!-- Scripts -->
@@ -71,8 +71,8 @@
 
 <body>
     <div >
-        
-          
+
+
         @include('layouts.navbar')
         <main class="py-4 bg-bground">
             @yield('content')

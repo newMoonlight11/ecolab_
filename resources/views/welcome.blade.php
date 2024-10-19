@@ -554,7 +554,7 @@
         .bg-gradient-to-b {
             background-image: linear-gradient(to bottom, var(--tw-gradient-stops))
         }
-
+   
         .from-transparent {
             --tw-gradient-from: transparent var(--tw-gradient-from-position);
             --tw-gradient-to: rgb(0 0 0 / 0) var(--tw-gradient-to-position);

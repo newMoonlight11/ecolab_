@@ -31,8 +31,8 @@
 @section('table_header')
     <th class="col-md-1">#</th>
     <th >Cantidad</th>
-    <th >Reactivo Id</th>
-	<th >Movimiento Id</th>
+    <th >Reactivo</th>
+	<th >Movimiento</th>
 @endsection
 
 @section('table_content')

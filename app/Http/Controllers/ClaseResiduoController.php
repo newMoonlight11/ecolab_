@@ -16,6 +16,7 @@ class ClaseResiduoController extends Controller
      */
     public function index(Request $request): View
     {
+
         $claseResiduos = ClaseResiduo::paginate();
 
         return view('clase-residuo.index', compact('claseResiduos'))

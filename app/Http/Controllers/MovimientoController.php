@@ -17,10 +17,19 @@ class MovimientoController extends Controller
      */
     public function index(Request $request): View
     {
-        $movimientos = Movimiento::paginate();
+        $query = Movimiento::with(['tipoMovimientos']);
 
+        if($request->filled('tipo_movimiento')) {
+            $query->Where('tipo_movimiento', 'like', '%', $request->input('tipo_movimiento') . '%');
+        }
+
+        if($request->filled('fecha_movimiento')) {
+            $query->Where('fecha_movimiento', 'like', '%', $request->input('fecha_movimiento') . '%');
+        }
+
+        $movimientos = $query->paginate(10);
         return view('movimiento.index', compact('movimientos'))
-            ->with('i', ($request->input('page', 1) - 1) * $movimientos->perPage());
+            ->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
     /**
@@ -42,7 +51,7 @@ class MovimientoController extends Controller
         Movimiento::create($request->validated());
 
         return Redirect::route('movimientos.index')
-            ->with('success', 'Movimiento created successfully.');
+            ->with('success', 'Movimiento creado satisfactoriamente.');
     }
 
     /**
@@ -50,9 +59,13 @@ class MovimientoController extends Controller
      */
     public function show($id): View
     {
-        $movimiento = Movimiento::find($id);
+        $movimiento = Movimiento::with(['tipoMovimientos'])->find($id);
 
-        return view('movimiento.show', compact('movimiento'));
+        if ($movimiento){
+            return response()->json(['error' => 'Movimiento no encontrado'], 404);
+        }
+
+        return response()->json($movimiento);
     }
 
     /**
@@ -61,8 +74,9 @@ class MovimientoController extends Controller
     public function edit($id): View
     {
         $movimiento = Movimiento::find($id);
+        $tipoMovimientos = TipoMovimiento::all();
 
-        return view('movimiento.edit', compact('movimiento'));
+        return view('movimiento.edit', compact('movimiento', 'tipoMovimientos'));
     }
 
     /**
@@ -73,7 +87,7 @@ class MovimientoController extends Controller
         $movimiento->update($request->validated());
 
         return Redirect::route('movimientos.index')
-            ->with('success', 'Movimiento updated successfully');
+            ->with('success', 'Movimiento actualizado satisfactoriamente');
     }
 
     public function destroy($id): RedirectResponse
@@ -81,6 +95,6 @@ class MovimientoController extends Controller
         Movimiento::find($id)->delete();
 
         return Redirect::route('movimientos.index')
-            ->with('success', 'Movimiento deleted successfully');
+            ->with('success', 'Movimiento eliminado satisfactoriamente');
     }
 }

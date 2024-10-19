@@ -24,8 +24,9 @@ class MovimientoRequest extends FormRequest
         return [
             'fecha_movimiento' => 'required|date',  // Validar como fecha
             'descripcion' => 'required|string',     // El campo 'text' no tiene límite de longitud
-            'tipo_movimiento' => 'required|exists:tipo_movimiento,id',  // Verificar si el campo es singular
+            'tipo_movimiento' => 'required|exists:tipo_movimiento',  // Verificar si el campo es singular
             'usuario_id' => 'required|exists:users,id',                 // Validación de existencia
         ];
+        
     }
 }
