@@ -1,28 +1,18 @@
-@extends('layouts.app')
+@extends('layouts.create')
 
-@section('template_title')
-    {{ __('Create') }} Residuo
+@section('title', 'Crear residuo')
+
+@section('back_route')
+    {{ route('residuos.index') }}
 @endsection
 
-@section('content')
-    <section class="content container-fluid">
-        <div class="row">
-            <div class="col-md-12">
+@section('heading', 'Crear residuo')
 
-                <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">{{ __('Create') }} Residuo</span>
-                    </div>
-                    <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('residuos.store') }}"  role="form" enctype="multipart/form-data">
-                            @csrf
+@section('form_action')
+    {{ route('residuos.store') }}
+@endsection
 
-                            @include('residuo.form')
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+@section('form_content')
+    @csrf
+    @include('residuo.form')
 @endsection

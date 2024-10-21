@@ -15,12 +15,12 @@ class Residuo extends Model
         'nombre', 'clase_residuo_id'
     ];
 
-    public function clase_residuo()
+    public function claseResiduo()
     {
         return $this->belongsTo(ClaseResiduo::class, 'clase_residuo_id');
     }
 
-    public function stockResiduos()
+    public function ResiduoLaboratorios()
     {
         return $this->hasMany(ResiduoLaboratorio::class, 'residuo_id');
     }

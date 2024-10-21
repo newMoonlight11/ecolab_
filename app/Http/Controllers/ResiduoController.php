@@ -6,6 +6,7 @@ use App\Models\Residuo;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\ResiduoRequest;
+use App\Models\ClaseResiduo;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -16,10 +17,16 @@ class ResiduoController extends Controller
      */
     public function index(Request $request): View
     {
-        $residuos = Residuo::paginate();
+        $query = Residuo::with(['claseResiduo']);
 
+        // Aplica los filtros si están presentes en la solicitud
+        if ($request->filled('nombre')) {
+            $query->where('nombre', 'like', '%' . $request->input('nombre') . '%');
+        }
+
+        $residuos = $query->paginate(10);
         return view('residuo.index', compact('residuos'))
-            ->with('i', ($request->input('page', 1) - 1) * $residuos->perPage());
+            ->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
     /**
@@ -28,8 +35,9 @@ class ResiduoController extends Controller
     public function create(): View
     {
         $residuo = new Residuo();
+        $claseResiduos = ClaseResiduo::all();
 
-        return view('residuo.create', compact('residuo'));
+        return view('residuo.create', compact('residuo', 'claseResiduos'));
     }
 
     /**
@@ -40,17 +48,22 @@ class ResiduoController extends Controller
         Residuo::create($request->validated());
 
         return Redirect::route('residuos.index')
-            ->with('success', 'Residuo created successfully.');
+            ->with('success', 'Residuo creado satisfactoriamente.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id): View
+    public function show($id)
     {
-        $residuo = Residuo::find($id);
+        $residuo = Residuo::with(['claseResiduo'])->find($id);
 
-        return view('residuo.show', compact('residuo'));
+        if (!$residuo) {
+            return response()->json(['error' => 'Residuo no encontrado'], 404);
+        }
+
+        // Devolver el reactivo con las relaciones al front-end (JSON)
+        return response()->json($residuo);
     }
 
     /**
@@ -59,8 +72,9 @@ class ResiduoController extends Controller
     public function edit($id): View
     {
         $residuo = Residuo::find($id);
+        $claseResiduos = ClaseResiduo::all();
 
-        return view('residuo.edit', compact('residuo'));
+        return view('residuo.edit', compact('residuo', 'claseResiduos'));
     }
 
     /**
@@ -71,7 +85,7 @@ class ResiduoController extends Controller
         $residuo->update($request->validated());
 
         return Redirect::route('residuos.index')
-            ->with('success', 'Residuo updated successfully');
+            ->with('success', 'Residuo actualizado satisfactoriamente');
     }
 
     public function destroy($id): RedirectResponse
@@ -79,6 +93,6 @@ class ResiduoController extends Controller
         Residuo::find($id)->delete();
 
         return Redirect::route('residuos.index')
-            ->with('success', 'Residuo deleted successfully');
+            ->with('success', 'Residuo eliminado satisfactoriamente');
     }
 }
