@@ -23,6 +23,18 @@ class MovimientoController extends Controller
     {
         $query = Movimiento::with(['tipoMovimiento', 'user']);
 
+        if ($request->filled('tipo_movimiento')) {
+            $query->Where('tipo_movimiento', 'like', '%', $request->input('tipo_movimiento') . '%');
+        }
+
+        if ($request->filled('fecha_movimiento')) {
+            $query->Where('fecha_movimiento', 'like', '%', $request->input('fecha_movimiento') . '%');
+        }
+
+        if ($request->filled('usuario_id')) {
+            $query->Where('usuario_id', 'like', '%', $request->input('usuario_id') . '%');
+        }
+
         $movimientos = $query->paginate(10);
         return view('movimiento.index', compact('movimientos'))
             ->with('i', ($request->input('page', 1) - 1) * 10);
@@ -63,7 +75,7 @@ class MovimientoController extends Controller
     {
         $movimiento = Movimiento::with(['tipoMovimiento'])->find($id);
 
-        if (!$movimiento){
+        if (!$movimiento) {
             return response()->json(['error' => 'Movimiento no encontrado'], 404);
         }
 

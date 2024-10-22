@@ -20,7 +20,7 @@
                 </div>
                 <div class="text-center">
                     <p>Usuario</p>
-                    <input type="date" name="username" class="form-control bg-white rounded-4"
+                    <input type="text" name="username" class="form-control bg-white rounded-4"
                         style="text-align: center;" placeholder="---" value="{{ request()->get('name') }}">
                 </div>
                 <div class="text-center">
@@ -122,7 +122,7 @@
     function mostrarModalMovimiento(movimiento) {
         document.getElementById('modalFecha').textContent = movimiento.fecha_movimiento;
         document.getElementById('modalDescripcion').textContent = movimiento.descripcion;
-        document.getElementById('modalTipoMovimiento').textContent = movimiento.tipoMovimiento ? movimiento.tipoMovimiento.nombre : 'Sin tipo de movimiento';
+        document.getElementById('modalTipoMovimiento').textContent = movimiento.tipo_movimiento ? movimiento.tipo_movimiento.nombre : 'Sin tipo de movimiento';
         document.getElementById('modalUsuario').textContent = movimiento.user ? movimiento.user.name : 'Sin usuario';
         var movimientoModal = new bootstrap.Modal(document.getElementById('movimientoModal'));
         document.getElementById('movimientoModal').addEventListener('hidden.bs.modal', function(event) {
