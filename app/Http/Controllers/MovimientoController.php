@@ -59,11 +59,15 @@ class MovimientoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id): View
+    public function show($id)
     {
-        $movimiento = Movimiento::find($id);
+        $movimiento = Movimiento::with(['tipoMovimientos'])->find($id);
 
-        return view('movimiento.show', compact('movimiento'));
+        if ($movimiento){
+            return response()->json(['error' => 'Movimiento no encontrado'], 404);
+        }
+
+        return response()->json($movimiento);
     }
 
     /**
