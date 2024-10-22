@@ -17,7 +17,7 @@ class MovimientoController extends Controller
      */
     public function index(Request $request): View
     {
-        $query = Movimiento::with(['tipoMovimientos']);
+        $query = Movimiento::with(['tipoMovimiento']);
 
         if($request->filled('tipo_movimiento')) {
             $query->Where('tipo_movimiento', 'like', '%', $request->input('tipo_movimiento') . '%');
@@ -57,11 +57,11 @@ class MovimientoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id): View
+    public function show($id)
     {
-        $movimiento = Movimiento::with(['tipoMovimientos'])->find($id);
+        $movimiento = Movimiento::with(['tipoMovimiento'])->find($id);
 
-        if ($movimiento){
+        if (!$movimiento){
             return response()->json(['error' => 'Movimiento no encontrado'], 404);
         }
 
