@@ -72,7 +72,6 @@ class MovimientoController extends Controller
      * Display the specified resource.
      */
     public function show($id)
-    public function show($id)
     {
         $movimiento = Movimiento::with(['tipoMovimiento'])->find($id);
 
