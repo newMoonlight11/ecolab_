@@ -11,11 +11,16 @@ class Movimiento extends Model
 
     protected $table = 'movimientos';
 
-    protected $fillable = ['fecha_movimiento', 'descripcion', 'tipo_movimiento'];
+    protected $fillable = ['fecha_movimiento', 'descripcion', 'tipo_movimiento', 'usuario_id'];
 
     public function tipoMovimiento()
     {
         return $this->belongsTo(TipoMovimiento::class, 'tipo_movimiento');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'usuario_id');
     }
 
     public function items()

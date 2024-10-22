@@ -16,4 +16,3 @@
     @csrf
     @include('movimiento.form')
 @endsection
-

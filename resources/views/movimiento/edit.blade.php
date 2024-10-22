@@ -15,3 +15,4 @@
 @section('form_content')
     @include('movimiento.form')
 @endsection
+

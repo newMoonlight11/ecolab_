@@ -1,5 +1,3 @@
-@endsection
-
 @extends('layouts.create')
 
 @section('title', 'Crear Item Movimiento')
