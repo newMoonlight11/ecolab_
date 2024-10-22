@@ -1,79 +1,3 @@
-{{-- @extends('layouts.app')
-
-@section('template_title')
-    Movimientos
-@endsection
-
-@section('content')
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-
-                            <span id="card_title">
-                                {{ __('Movimientos') }}
-                            </span>
-
-                             <div class="float-right">
-                                <a href="{{ route('movimientos.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Create New') }}
-                                </a>
-                              </div>
-                        </div>
-                    </div>
-                    @if ($message = Session::get('success'))
-                        <div class="alert alert-success m-4">
-                            <p>{{ $message }}</p>
-                        </div>
-                    @endif
-
-                    <div class="card-body bg-white">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
-                                <thead class="thead">
-                                    <tr>
-                                        <th>No</th>
-
-									<th >Fecha Movimiento</th>
-									<th >Descripcion</th>
-									<th >Tipo Movimiento</th>
-
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($movimientos as $movimiento)
-                                        <tr>
-                                            <td>{{ ++$i }}</td>
-
-										<td >{{ $movimiento->fecha_movimiento }}</td>
-										<td >{{ $movimiento->descripcion }}</td>
-										<td >{{ $movimiento->tipo_movimiento }}</td>
-
-                                            <td>
-                                                <form action="{{ route('movimientos.destroy', $movimiento->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('movimientos.show', $movimiento->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('movimientos.edit', $movimiento->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="event.preventDefault(); confirm('Are you sure to delete?') ? this.closest('form').submit() : false;"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                {!! $movimientos->withQueryString()->links() !!}
-            </div>
-        </div>
-    </div>
-@endsection --}}
-
 @extends('layouts.index_layout')
 
 @section('title', 'Movimientos')
@@ -91,8 +15,13 @@
                 </div>
                 <div class="text-center">
                     <p>Fecha</p>
-                    <input type="date" name="numero_cas" class="form-control bg-white rounded-4"
+                    <input type="date" name="fecha_movimiento" class="form-control bg-white rounded-4"
                         style="text-align: center;" placeholder="---" value="{{ request()->get('fecha') }}">
+                </div>
+                <div class="text-center">
+                    <p>Usuario</p>
+                    <input type="date" name="username" class="form-control bg-white rounded-4"
+                        style="text-align: center;" placeholder="---" value="{{ request()->get('name') }}">
                 </div>
                 <div class="text-center">
                     <p>Filtrar</p>
@@ -114,6 +43,7 @@
     <th >Fecha</th>
 	<th >Descripcion</th>
 	<th >Tipo</th>
+    <th >Usuario</th>
 @endsection
 
 @section('table_content')
@@ -126,9 +56,9 @@
             <tr>
                 <td class="col-sm-1">{{ ++$i }}</td>
                 <td>{{ $movimiento->fecha_movimiento }}</td>
-                <td>{{ $movimiento->descripcion }}</td>
-                <td>{{ $movimiento->tipo_movimiento ? $movimiento->tipo_movimiento->nombre: 'Sin tipo de movimiento'}}</td>
-
+                <td>{{ Str::limit($movimiento->descripcion, 50) }}</td>
+                <td>{{ $movimiento->tipoMovimiento ? $movimiento->tipoMovimiento->nombre : 'Sin tipo de movimiento' }}</td>
+                <td>{{ $movimiento->user ? $movimiento->user->name: 'Sin usuario'}}</td>
                 <td class="text-end">
                     <form action="{{ route('movimientos.destroy', $movimiento->id) }}" method="POST" class="d-inline">
                         <a class="btn btn-sm" href="javascript:void(0)"
@@ -167,16 +97,19 @@
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body overflow-x-auto">
                 <div class="form-group mb-2 mb20">
                     <strong>Fecha:</strong>
                     <span id="modalFecha"></span>
                     <br>
                     <strong>Descripción:</strong>
-                    <span id="modalDescripcion"></span>
+                    <span id="modalDescripcion" style="white-space: pre-wrap;"></span>
                     <br>
                     <strong>Tipo de movimiento:</strong>
                     <span id="modalTipoMovimiento"></span>
+                    <br>
+                    <strong>Usuario:</strong>
+                    <span id="modalUsuario"></span>
                     <br>
                 </div>
             </div>
@@ -188,8 +121,9 @@
 <script>
     function mostrarModalMovimiento(movimiento) {
         document.getElementById('modalFecha').textContent = movimiento.fecha_movimiento;
-        document.getElementById('modalDescripcion').textContent = movimiento.descripcion_movimiento;
-        document.getElementById('modalTipoMovimiento').textContent = movimiento.tipo_movimiento ? movimiento.tipo_movimiento.nombre : 'Sin tipo de movimiento';
+        document.getElementById('modalDescripcion').textContent = movimiento.descripcion;
+        document.getElementById('modalTipoMovimiento').textContent = movimiento.tipoMovimiento ? movimiento.tipoMovimiento.nombre : 'Sin tipo de movimiento';
+        document.getElementById('modalUsuario').textContent = movimiento.user ? movimiento.user.name : 'Sin usuario';
         var movimientoModal = new bootstrap.Modal(document.getElementById('movimientoModal'));
         document.getElementById('movimientoModal').addEventListener('hidden.bs.modal', function(event) {
             document.body.classList.remove('modal-open');
@@ -198,5 +132,3 @@
         movimientoModal.show();
     }
 </script>
-
-

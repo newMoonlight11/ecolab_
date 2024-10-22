@@ -32,6 +32,10 @@
                                     <strong>Tipo Movimiento:</strong>
                                     {{ $movimiento->tipo_movimiento }}
                                 </div>
+                                <div class="form-group mb-2 mb20">
+                                    <strong>Usuario Id:</strong>
+                                    {{ $movimiento->usuario_id }}
+                                </div>
 
                     </div>
                 </div>

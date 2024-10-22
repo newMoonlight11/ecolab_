@@ -7,8 +7,12 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\MovimientoRequest;
 use App\Models\TipoMovimiento;
+use App\Models\User;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
 
 class MovimientoController extends Controller
 {
@@ -17,15 +21,7 @@ class MovimientoController extends Controller
      */
     public function index(Request $request): View
     {
-        $query = Movimiento::with(['tipoMovimiento']);
-
-        if($request->filled('tipo_movimiento')) {
-            $query->Where('tipo_movimiento', 'like', '%', $request->input('tipo_movimiento') . '%');
-        }
-
-        if($request->filled('fecha_movimiento')) {
-            $query->Where('fecha_movimiento', 'like', '%', $request->input('fecha_movimiento') . '%');
-        }
+        $query = Movimiento::with(['tipoMovimiento', 'user']);
 
         $movimientos = $query->paginate(10);
         return view('movimiento.index', compact('movimientos'))
@@ -38,9 +34,10 @@ class MovimientoController extends Controller
     public function create(): View
     {
         $movimiento = new Movimiento();
-        $tipoMovimientos = TipoMovimiento::all();
+        $tipoMovimiento = TipoMovimiento::all();
+        $user = User::all();
 
-        return view('movimiento.create', compact('movimiento', 'tipoMovimientos'));
+        return view('movimiento.create', compact('movimiento', 'tipoMovimiento', 'user'));
     }
 
     /**
@@ -48,10 +45,15 @@ class MovimientoController extends Controller
      */
     public function store(MovimientoRequest $request): RedirectResponse
     {
-        Movimiento::create($request->validated());
+        $validatedData = $request->validated();
+        Log::info('Validated Data:', $validatedData);
+        // Asignar el ID del usuario autenticado de manera segura
+        $validatedData['usuario_id'] = Auth::id();
 
+        // Crear el movimiento con los datos validados
+        Movimiento::create($validatedData);
         return Redirect::route('movimientos.index')
-            ->with('success', 'Movimiento creado satisfactoriamente.');
+            ->with('success', 'Movimiento created successfully.');
     }
 
     /**
@@ -74,9 +76,10 @@ class MovimientoController extends Controller
     public function edit($id): View
     {
         $movimiento = Movimiento::find($id);
-        $tipoMovimientos = TipoMovimiento::all();
+        $tipoMovimiento = TipoMovimiento::all();
+        $user = User::all();
 
-        return view('movimiento.edit', compact('movimiento', 'tipoMovimientos'));
+        return view('movimiento.edit', compact('movimiento', 'tipoMovimiento', 'user'));
     }
 
     /**
@@ -87,7 +90,7 @@ class MovimientoController extends Controller
         $movimiento->update($request->validated());
 
         return Redirect::route('movimientos.index')
-            ->with('success', 'Movimiento actualizado satisfactoriamente');
+            ->with('success', 'Movimiento updated successfully');
     }
 
     public function destroy($id): RedirectResponse
@@ -95,6 +98,6 @@ class MovimientoController extends Controller
         Movimiento::find($id)->delete();
 
         return Redirect::route('movimientos.index')
-            ->with('success', 'Movimiento eliminado satisfactoriamente');
+            ->with('success', 'Movimiento deleted successfully');
     }
 }
