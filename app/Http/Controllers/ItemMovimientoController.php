@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ItemMovimientoRequest;
 use App\Models\Movimiento;
 use App\Models\Reactivo;
+use App\Models\Movimiento;
+use App\Models\Reactivo;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -32,6 +34,7 @@ class ItemMovimientoController extends Controller
         $itemMovimientos = $query->paginate(10);
         return view('item-movimiento.index', compact('itemMovimientos'))
             ->with('i', ($request->input('page', 1) - 1) * 10);
+            ->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
     /**
@@ -54,20 +57,23 @@ class ItemMovimientoController extends Controller
         ItemMovimiento::create($request->validated());
 
         return Redirect::route('item_movimiento.index')
-            ->with('success', 'ItemMovimiento created successfully.');
+            ->with('success', 'Item de movimiento creado satisfactoriamente');
     }
 
     /**
      * Display the specified resource.
      */
     public function show($id)
+    public function show($id)
     {
-        $itemMovimiento = Movimiento::with(['movimiento', 'reactivo'])->find($id);
+        $itemMovimiento = ItemMovimiento::with(['reactivo', 'movimiento'])->find($id);
+        //$reactivo = Reactivo::find($id);
 
         if (!$itemMovimiento) {
-            return response()->json(['error' => 'Item Movimiento no encontrado'], 404);
+            return response()->json(['error' => 'Item de movimiento no encontrado'], 404);
         }
 
+        // Devolver el reactivo con las relaciones al front-end (JSON)
         return response()->json($itemMovimiento);
     }
 
@@ -91,7 +97,7 @@ class ItemMovimientoController extends Controller
         $itemMovimiento->update($request->validated());
 
         return Redirect::route('item_movimiento.index')
-            ->with('success', 'ItemMovimiento updated successfully');
+            ->with('success', 'Item de movimiento actualizado satisfactoriamente');
     }
 
     public function destroy($id): RedirectResponse
@@ -99,6 +105,6 @@ class ItemMovimientoController extends Controller
         ItemMovimiento::find($id)->delete();
 
         return Redirect::route('item_movimiento.index')
-            ->with('success', 'ItemMovimiento deleted successfully');
+            ->with('success', 'Item de movimiento eliminado satisfactoriamente');
     }
 }

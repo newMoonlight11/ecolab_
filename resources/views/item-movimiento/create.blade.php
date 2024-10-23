@@ -1,12 +1,12 @@
 @extends('layouts.create')
 
-@section('title', 'Crear Item Movimiento')
+@section('title', 'Crear ítem de movimiento')
 
 @section('back_route')
     {{ route('item_movimiento.index') }}
 @endsection
 
-@section('heading', 'Crear Item Movimiento')
+@section('heading', 'Crear ítem de movimiento')
 
 @section('form_action')
     {{ route('item_movimiento.store') }}
