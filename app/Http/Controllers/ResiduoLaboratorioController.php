@@ -72,7 +72,7 @@ class ResiduoLaboratorioController extends Controller
      */
     public function show($id)
     {
-        $residuoLaboratorio = Residuo::with(['residuo', 'laboratorio', 'unidad'])->find($id);
+        $residuoLaboratorio = ResiduoLaboratorio::with(['residuo', 'laboratorio', 'unidad'])->find($id);
         //$reactivo = Reactivo::find($id);
 
         if (!$residuoLaboratorio) {

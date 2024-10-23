@@ -6,6 +6,8 @@ use App\Models\ItemMovimiento;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\ItemMovimientoRequest;
+use App\Models\Movimiento;
+use App\Models\Reactivo;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -16,10 +18,24 @@ class ItemMovimientoController extends Controller
      */
     public function index(Request $request): View
     {
-        $itemMovimientos = ItemMovimiento::paginate();
+        $query = ItemMovimiento::with(['reactivo', 'movimiento']);
+        
+        if ($request->filled('cantidad')) {
+            $query->where('cantidad', 'like', '%' . $request->input('cantidad') . '%');
+        }
+
+        if ($request->filled('reactivo_id')) {
+            $query->where('reactivo_id', 'like', '%' . $request->input('reactivo_id') . '%');
+        }
+
+        if ($request->filled('movimiento_id')) {
+            $query->where('movimiento_id', 'like', '%' . $request->input('movimiento_id') . '%');
+        }
+
+        $itemMovimientos = $query->paginate(10);
 
         return view('item-movimiento.index', compact('itemMovimientos'))
-            ->with('i', ($request->input('page', 1) - 1) * $itemMovimientos->perPage());
+            ->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
     /**
@@ -28,8 +44,10 @@ class ItemMovimientoController extends Controller
     public function create(): View
     {
         $itemMovimiento = new ItemMovimiento();
+        $reactivos = Reactivo::all();
+        $movimientos = Movimiento::all();
 
-        return view('item-movimiento.create', compact('itemMovimiento'));
+        return view('item-movimiento.create', compact('itemMovimiento', 'reactivos', 'movimientos'));
     }
 
     /**
@@ -40,17 +58,23 @@ class ItemMovimientoController extends Controller
         ItemMovimiento::create($request->validated());
 
         return Redirect::route('item_movimiento.index')
-            ->with('success', 'ItemMovimiento created successfully.');
+            ->with('success', 'Item de movimiento creado satisfactoriamente');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id): View
+    public function show($id)
     {
-        $itemMovimiento = ItemMovimiento::find($id);
+        $itemMovimiento = ItemMovimiento::with(['reactivo', 'movimiento'])->find($id);
+        //$reactivo = Reactivo::find($id);
 
-        return view('item-movimiento.show', compact('itemMovimiento'));
+        if (!$itemMovimiento) {
+            return response()->json(['error' => 'Item de movimiento no encontrado'], 404);
+        }
+
+        // Devolver el reactivo con las relaciones al front-end (JSON)
+        return response()->json($itemMovimiento);
     }
 
     /**
@@ -59,8 +83,10 @@ class ItemMovimientoController extends Controller
     public function edit($id): View
     {
         $itemMovimiento = ItemMovimiento::find($id);
+        $reactivos = Reactivo::all();
+        $movimientos = Movimiento::all();
 
-        return view('item-movimiento.edit', compact('itemMovimiento'));
+        return view('item-movimiento.edit', compact('itemMovimiento', 'reactivos', 'movimientos'));
     }
 
     /**
@@ -71,7 +97,7 @@ class ItemMovimientoController extends Controller
         $itemMovimiento->update($request->validated());
 
         return Redirect::route('item_movimiento.index')
-            ->with('success', 'ItemMovimiento updated successfully');
+            ->with('success', 'Item de movimiento actualizado satisfactoriamente');
     }
 
     public function destroy($id): RedirectResponse
@@ -79,6 +105,6 @@ class ItemMovimientoController extends Controller
         ItemMovimiento::find($id)->delete();
 
         return Redirect::route('item_movimiento.index')
-            ->with('success', 'ItemMovimiento deleted successfully');
+            ->with('success', 'Item de movimiento eliminado satisfactoriamente');
     }
 }

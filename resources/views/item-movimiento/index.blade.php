@@ -1,8 +1,8 @@
 @extends('layouts.index_layout')
 
-@section('title', 'Item Movimientos')
+@section('title', 'Ítems de movimientos')
 
-@section('heading', 'Inventario de Item Movimientos')
+@section('heading', 'Inventario de ítems de movimientos')
 
 @section('filter_content')
     <form method="GET" action="{{ route('item_movimiento.index') }}">
@@ -12,6 +12,16 @@
                     <p>Cantidad</p>
                     <input type="text" name="cantidad" class="form-control bg-white rounded-4" style="text-align: center;"
                         placeholder="---" value="{{ request()->get('cantidad') }}">
+                </div>
+                <div class="col-md-3 text-center">
+                    <p>Reactivo</p>
+                    <input type="text" name="reactivo_id" class="form-control bg-white rounded-4" style="text-align: center;"
+                        placeholder="---" value="{{ request()->get('reactivo_id') }}">
+                </div>
+                <div class="col-md-3 text-center">
+                    <p>Movimiento</p>
+                    <input type="text" name="movimiento_id" class="form-control bg-white rounded-4" style="text-align: center;"
+                        placeholder="---" value="{{ request()->get('movimiento_id') }}">
                 </div>
                 <div class="col-md-1 text-center">
                     <p>Filtrar</p>
@@ -38,15 +48,15 @@
 @section('table_content')
     @if ($itemMovimientos->isEmpty())
         <tr>
-            <td colspan="3" class="text-center">No hay item movimientos disponibles.</td>
+            <td colspan="3" class="text-center">No hay ítems de movimientos disponibles.</td>
         </tr>
     @else
         @foreach ($itemMovimientos as $itemMovimiento)
             <tr>
-                <td>{{ ++$i }}</td>
+                <td class="col-sm-1">{{ ++$i }}</td>
                 <td >{{ $itemMovimiento->cantidad }}</td>
-				<td >{{ $itemMovimiento->reactivo_id }}</td>
-				<td >{{ $itemMovimiento->movimiento_id }}</td>
+				<td >{{ $itemMovimiento->reactivo_id ? $itemMovimiento->reactivo->nombre : 'Sin reactivo' }}</td>
+				<td >{{ $itemMovimiento->movimiento_id ? $itemMovimiento->movimiento->descripcion : 'Sin movimiento' }}</td>
                 <td class="text-end">
                     <form action="{{ route('item_movimiento.destroy', $itemMovimiento->id) }}" method="POST" class="d-inline">
                         <a class="btn btn-sm" href="javascript:void(0)"
@@ -80,7 +90,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0 rounded-4 px-3 bg-white">
             <div class="modal-header">
-                <h5 class="modal-title text-primary text-center w-100 fs-3" id="itemMovimientoModalLabel">Detalles de la item movimiento
+                <h5 class="modal-title text-primary text-center w-100 fs-3" id="itemMovimientoModalLabel">Detalles del ítem de movimiento
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -103,10 +113,10 @@
 
 
 <script>
-    function mostrarModalItemMovimiento(item_movimiento) {
-        document.getElementById('modalCantidad').textContent = item_movimiento.cantidad;
-        document.getElementById('modalReactivo').textContent = item_movimiento.reactivo ?item_movimiento.reactivo.nombre : 'Sin reactivo';
-        document.getElementById('modalMovimiento').textContent = item_movimiento.movimiento ? item_movimiento.movimiento.nombre : 'Sin movimiento';
+    function mostrarModalItemMovimiento(itemMovimiento) {
+        document.getElementById('modalCantidad').textContent = itemMovimiento.cantidad;
+        document.getElementById('modalReactivo').textContent = itemMovimiento.reactivo_id ? itemMovimiento.reactivo.nombre : 'Sin reactivo';
+        document.getElementById('modalMovimiento').textContent = itemMovimiento.movimiento_id ? itemMovimiento.movimiento.descripcion : 'Sin movimiento';
         var itemMovimientoModal = new bootstrap.Modal(document.getElementById('itemMovimientoModal'));
         document.getElementById('itemMovimientoModal').addEventListener('hidden.bs.modal', function(event) {
             document.body.classList.remove('modal-open');
