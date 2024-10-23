@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    {{ $residuoLaboratorio->name ?? __('Show') . " " . __('Residuo Laboratorio') }}
+    {{ $residuoLaboratorio->name ?? __('Show') . " " . __('Stock de residuos') }}
 @endsection
 
 @section('content')
@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
                         <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Residuo Laboratorio</span>
+                            <span class="card-title">{{ __('Show') }} Stock de residuos</span>
                         </div>
                         <div class="float-right">
                             <a class="btn btn-primary btn-sm" href="{{ route('residuo-laboratorios.index') }}"> {{ __('Back') }}</a>

@@ -1,29 +1,17 @@
-@extends('layouts.app')
+@extends('layouts.edit')
 
-@section('template_title')
-    {{ __('Update') }} Residuo Laboratorio
+@section('title', 'Editar stock de residuo')
+
+@section('back_route')
+    {{ route('residuo-laboratorios.index') }}
 @endsection
 
-@section('content')
-    <section class="content container-fluid">
-        <div class="">
-            <div class="col-md-12">
+@section('heading', 'Editar stock de residuo')
 
-                <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">{{ __('Update') }} Residuo Laboratorio</span>
-                    </div>
-                    <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('residuo-laboratorios.update', $residuoLaboratorio->id) }}"  role="form" enctype="multipart/form-data">
-                            {{ method_field('PATCH') }}
-                            @csrf
+@section('form_action')
+    {{ route('residuo-laboratorios.update', $residuoLaboratorio->id) }}
+@endsection
 
-                            @include('residuo-laboratorio.form')
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+@section('form_content')
+    @include('residuo-laboratorio.form')
 @endsection

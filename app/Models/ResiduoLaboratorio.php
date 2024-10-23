@@ -9,7 +9,7 @@ class ResiduoLaboratorio extends Model
 {
     use HasFactory;
 
-    protected $table = 'stock_reactivos';
+    protected $table = 'residuo_laboratorios';
 
     protected $fillable = ['fecha_stock', 'cantidad_existencia', 'residuo_id', 'laboratorio_id', 'unidad_id'];
 

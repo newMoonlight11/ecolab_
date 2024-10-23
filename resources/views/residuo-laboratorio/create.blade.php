@@ -1,28 +1,18 @@
-@extends('layouts.app')
+@extends('layouts.create')
 
-@section('template_title')
-    {{ __('Create') }} Residuo Laboratorio
+@section('title', 'Crear stock de residuo')
+
+@section('back_route')
+    {{ route('residuo-laboratorios.index') }}
 @endsection
 
-@section('content')
-    <section class="content container-fluid">
-        <div class="row">
-            <div class="col-md-12">
+@section('heading', 'Crear stock de residuo')
 
-                <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">{{ __('Create') }} Residuo Laboratorio</span>
-                    </div>
-                    <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('residuo-laboratorios.store') }}"  role="form" enctype="multipart/form-data">
-                            @csrf
+@section('form_action')
+    {{ route('residuo-laboratorios.store') }}
+@endsection
 
-                            @include('residuo-laboratorio.form')
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+@section('form_content')
+    @csrf
+    @include('residuo-laboratorio.form')
 @endsection
