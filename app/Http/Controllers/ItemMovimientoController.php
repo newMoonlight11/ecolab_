@@ -8,8 +8,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ItemMovimientoRequest;
 use App\Models\Movimiento;
 use App\Models\Reactivo;
-use App\Models\Movimiento;
-use App\Models\Reactivo;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -33,7 +31,6 @@ class ItemMovimientoController extends Controller
         
         $itemMovimientos = $query->paginate(10);
         return view('item-movimiento.index', compact('itemMovimientos'))
-            ->with('i', ($request->input('page', 1) - 1) * 10);
             ->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
@@ -63,7 +60,6 @@ class ItemMovimientoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
     public function show($id)
     {
         $itemMovimiento = ItemMovimiento::with(['reactivo', 'movimiento'])->find($id);
