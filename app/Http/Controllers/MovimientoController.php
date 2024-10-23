@@ -46,10 +46,10 @@ class MovimientoController extends Controller
     public function create(): View
     {
         $movimiento = new Movimiento();
-        $tipoMovimiento = TipoMovimiento::all();
-        $user = User::all();
+        $tipoMovimientos = TipoMovimiento::all();
+        $users = User::all();
 
-        return view('movimiento.create', compact('movimiento', 'tipoMovimiento', 'user'));
+        return view('movimiento.create', compact('movimiento', 'tipoMovimientos', 'users'));
     }
 
     /**
@@ -88,10 +88,10 @@ class MovimientoController extends Controller
     public function edit($id): View
     {
         $movimiento = Movimiento::find($id);
-        $tipoMovimiento = TipoMovimiento::all();
-        $user = User::all();
+        $tipoMovimientos = TipoMovimiento::all();
+        $users = User::all();
 
-        return view('movimiento.edit', compact('movimiento', 'tipoMovimiento', 'user'));
+        return view('movimiento.edit', compact('movimiento', 'tipoMovimientos', 'users'));
     }
 
     /**

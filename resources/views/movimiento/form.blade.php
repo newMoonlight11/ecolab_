@@ -20,7 +20,7 @@
         <select name="tipo_movimiento" id="tipo_movimiento"
             class="form-control @error('tipo_movimiento') is-invalid @enderror">
             <option value="">{{ 'Seleccione un tipo de movimiento' }}</option>
-            @foreach ($tipoMovimiento as $tipoMovimiento)
+            @foreach ($tipoMovimientos as $tipoMovimiento)
                 <option value="{{ $tipoMovimiento->id }}"
                     {{ old('tipo_movimiento', $movimiento?->tipo_movimiento) == $tipoMovimiento->id ? 'selected' : '' }}>
                     {{ $tipoMovimiento->nombre }}
