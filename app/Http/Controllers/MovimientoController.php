@@ -65,7 +65,7 @@ class MovimientoController extends Controller
         // Crear el movimiento con los datos validados
         Movimiento::create($validatedData);
         return Redirect::route('movimientos.index')
-            ->with('success', 'Movimiento created successfully.');
+            ->with('success', 'Se ha registrado el movimiento satisfactoriamente');
     }
 
     /**
@@ -102,7 +102,7 @@ class MovimientoController extends Controller
         $movimiento->update($request->validated());
 
         return Redirect::route('movimientos.index')
-            ->with('success', 'Movimiento updated successfully');
+            ->with('success', 'Se ha actualizado el movimiento satisfactoriamente');
     }
 
     public function destroy($id): RedirectResponse
@@ -110,6 +110,6 @@ class MovimientoController extends Controller
         Movimiento::find($id)->delete();
 
         return Redirect::route('movimientos.index')
-            ->with('success', 'Movimiento deleted successfully');
+            ->with('success', 'Se ha eliminado el movimiento satisfactoriamente');
     }
 }

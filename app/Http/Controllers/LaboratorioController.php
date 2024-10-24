@@ -16,7 +16,15 @@ class LaboratorioController extends Controller
      */
     public function index(Request $request): View
     {
-        $laboratorios = Laboratorio::paginate();
+        $query = Laboratorio::query();
+
+        // Aplica los filtros si están presentes en la solicitud
+        if ($request->filled('nombre')) {
+            $query->where('nombre', 'like', '%' . $request->input('nombre') . '%');
+        }
+
+        // Paginación de los resultados de la consulta filtrada
+        $laboratorios = $query->paginate(10);
 
         return view('laboratorio.index', compact('laboratorios'))
             ->with('i', ($request->input('page', 1) - 1) * $laboratorios->perPage());
@@ -40,7 +48,7 @@ class LaboratorioController extends Controller
         Laboratorio::create($request->validated());
 
         return Redirect::route('laboratorios.index')
-            ->with('success', 'Laboratorio created successfully.');
+            ->with('success', 'Se ha registrado el laboratorio satisfactoriamente');
     }
 
     /**
@@ -71,7 +79,7 @@ class LaboratorioController extends Controller
         $laboratorio->update($request->validated());
 
         return Redirect::route('laboratorios.index')
-            ->with('success', 'Laboratorio updated successfully');
+            ->with('success', 'Se ha actualizado el laboratorio satisfactoriamente');
     }
 
     public function destroy($id): RedirectResponse
@@ -79,6 +87,6 @@ class LaboratorioController extends Controller
         Laboratorio::find($id)->delete();
 
         return Redirect::route('laboratorios.index')
-            ->with('success', 'Laboratorio deleted successfully');
+            ->with('success', 'Se ha eliminado el laboratorio satisfactoriamente');
     }
 }

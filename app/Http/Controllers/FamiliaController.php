@@ -16,7 +16,15 @@ class FamiliaController extends Controller
      */
     public function index(Request $request): View
     {
-        $familias = Familia::paginate();
+        $query = Familia::query();
+
+        // Aplica los filtros si están presentes en la solicitud
+        if ($request->filled('nombre')) {
+            $query->where('nombre', 'like', '%' . $request->input('nombre') . '%');
+        }
+
+        // Paginación de los resultados de la consulta filtrada
+        $familias = $query->paginate(10);
 
         return view('familia.index', compact('familias'))
             ->with('i', ($request->input('page', 1) - 1) * $familias->perPage());
@@ -40,7 +48,7 @@ class FamiliaController extends Controller
         Familia::create($request->validated());
 
         return Redirect::route('familias.index')
-            ->with('success', 'Familia created successfully.');
+            ->with('success', 'Se ha registrado la familia satisfactoriamente');
     }
 
     /**
@@ -71,7 +79,7 @@ class FamiliaController extends Controller
         $familia->update($request->validated());
 
         return Redirect::route('familias.index')
-            ->with('success', 'Familia updated successfully');
+            ->with('success', 'Se ha actualizado la familia satisfactoriamente');
     }
 
     public function destroy($id): RedirectResponse
@@ -79,6 +87,6 @@ class FamiliaController extends Controller
         Familia::find($id)->delete();
 
         return Redirect::route('familias.index')
-            ->with('success', 'Familia deleted successfully');
+            ->with('success', 'Se ha eliminado la familia satisfactoriamente');
     }
 }

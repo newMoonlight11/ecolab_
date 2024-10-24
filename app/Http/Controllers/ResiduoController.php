@@ -48,7 +48,7 @@ class ResiduoController extends Controller
         Residuo::create($request->validated());
 
         return Redirect::route('residuos.index')
-            ->with('success', 'Residuo creado satisfactoriamente.');
+            ->with('success', 'Se ha registrado el residuo satisfactoriamente');
     }
 
     /**
@@ -85,7 +85,7 @@ class ResiduoController extends Controller
         $residuo->update($request->validated());
 
         return Redirect::route('residuos.index')
-            ->with('success', 'Residuo actualizado satisfactoriamente');
+            ->with('success', 'Se ha actualizado el residuo satisfactoriamente');
     }
 
     public function destroy($id): RedirectResponse
@@ -93,6 +93,6 @@ class ResiduoController extends Controller
         Residuo::find($id)->delete();
 
         return Redirect::route('residuos.index')
-            ->with('success', 'Residuo eliminado satisfactoriamente');
+            ->with('success', 'Se ha eliminado el residuo satisfactoriamente');
     }
 }

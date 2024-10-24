@@ -16,7 +16,15 @@ class TipoMovimientoController extends Controller
      */
     public function index(Request $request): View
     {
-        $tipoMovimientos = TipoMovimiento::paginate();
+        $query = TipoMovimiento::query();
+
+        // Aplica los filtros si están presentes en la solicitud
+        if ($request->filled('nombre')) {
+            $query->where('nombre', 'like', '%' . $request->input('nombre') . '%');
+        }
+
+        // Paginación de los resultados de la consulta filtrada
+        $tipoMovimientos = $query->paginate(10);
 
         return view('tipo-movimiento.index', compact('tipoMovimientos'))
             ->with('i', ($request->input('page', 1) - 1) * $tipoMovimientos->perPage());
@@ -40,7 +48,7 @@ class TipoMovimientoController extends Controller
         TipoMovimiento::create($request->validated());
 
         return Redirect::route('tipo_movimiento.index')
-            ->with('success', 'El Tipo de Movimiento se ha creado con éxito.');
+            ->with('success', 'Se ha registrado el tipo de movimiento satisfactoriamente');
     }
 
     /**
@@ -71,7 +79,7 @@ class TipoMovimientoController extends Controller
         $tipoMovimiento->update($request->validated());
 
         return Redirect::route('tipo_movimiento.index')
-            ->with('success', 'TipoMovimiento updated successfully');
+            ->with('success', 'Se ha actualizado el tipo de movimiento satisfactoriamente');
     }
 
     public function destroy($id): RedirectResponse
@@ -79,6 +87,6 @@ class TipoMovimientoController extends Controller
         TipoMovimiento::find($id)->delete();
 
         return Redirect::route('tipo_movimiento.index')
-            ->with('success', 'El Tipo de Movimiento se ha eliminado con éxito');
+            ->with('success', 'Se ha eliminado el tipo de movimiento satisfactoriamente');
     }
 }

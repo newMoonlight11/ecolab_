@@ -55,7 +55,7 @@ class UserController extends Controller
         User::create($request->validated());
 
         return Redirect::route('users.index')
-            ->with('success', 'User created successfully.');
+            ->with('success', 'Se ha registrado el usuario satisfactoriamente');
     }
 
     /**
@@ -86,7 +86,7 @@ class UserController extends Controller
         $user->update($request->validated());
 
         return Redirect::route('users.index')
-            ->with('success', 'User updated successfully');
+            ->with('success', 'Se ha actualizado el usuario satisfactoriamente');
     }
 
     public function destroy($id): RedirectResponse
@@ -94,6 +94,6 @@ class UserController extends Controller
         User::find($id)->delete();
 
         return Redirect::route('users.index')
-            ->with('success', 'User deleted successfully');
+            ->with('success', 'Se ha eliminado el usuario satisfactoriamente');
     }
 }

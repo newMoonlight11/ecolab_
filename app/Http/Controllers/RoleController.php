@@ -50,7 +50,7 @@ class RoleController extends Controller
         }
 
         return Redirect::route('roles.index')
-            ->with('success', 'Role created successfully.');
+            ->with('success', 'Se ha creado el rol satisfactoriamente');
     }
 
     /**
@@ -86,7 +86,7 @@ class RoleController extends Controller
         }
 
         return Redirect::route('roles.index')
-            ->with('success', 'Role updated successfully');
+            ->with('success', 'Se ha actualizado el rol satisfactoriamente');
     }
 
     public function destroy($id): RedirectResponse
@@ -94,6 +94,6 @@ class RoleController extends Controller
         Role::find($id)->delete();
 
         return Redirect::route('roles.index')
-            ->with('success', 'Role deleted successfully');
+            ->with('success', 'Se ha eliminado el rol satisfactoriamente');
     }
 }

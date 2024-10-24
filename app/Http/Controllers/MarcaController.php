@@ -16,7 +16,16 @@ class MarcaController extends Controller
      */
     public function index(Request $request): View
     {
-        $marcas = Marca::paginate();
+        $query = Marca::query();
+
+        // Aplica los filtros si están presentes en la solicitud
+        if ($request->filled('nombre')) {
+            $query->where('nombre', 'like', '%' . $request->input('nombre') . '%');
+        }
+
+        // Paginación de los resultados de la consulta filtrada
+        $marcas = $query->paginate(10);
+
         return view('marca.index', compact('marcas'))
             ->with('i', ($request->input('page', 1) - 1) * $marcas->perPage());
     }
@@ -39,7 +48,7 @@ class MarcaController extends Controller
         Marca::create($request->validated());
 
         return Redirect::route('marcas.index')
-            ->with('success', 'Marca created successfully.');
+            ->with('success', 'Se ha registrado la marca satisfactoriamente');
     }
 
     /**
@@ -70,7 +79,7 @@ class MarcaController extends Controller
         $marca->update($request->validated());
 
         return Redirect::route('marcas.index')
-            ->with('success', 'Marca updated successfully');
+            ->with('success', 'Se ha actualizado la marca satisfactoriamente');
     }
 
     public function destroy($id): RedirectResponse
@@ -78,6 +87,6 @@ class MarcaController extends Controller
         Marca::find($id)->delete();
 
         return Redirect::route('marcas.index')
-            ->with('success', 'Marca deleted successfully');
+            ->with('success', 'Se ha eliminado la marca satisfactoriamente');
     }
 }
