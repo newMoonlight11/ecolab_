@@ -64,7 +64,7 @@ class ResiduoLaboratorioController extends Controller
         ResiduoLaboratorio::create($request->validated());
 
         return Redirect::route('residuo-laboratorios.index')
-            ->with('success', 'Stock de residuo creado satisfactoriamente');
+            ->with('success', 'Se ha registrado el stock de residuo satisfactoriamente');
     }
 
     /**
@@ -104,7 +104,7 @@ class ResiduoLaboratorioController extends Controller
         $residuoLaboratorio->update($request->validated());
 
         return Redirect::route('residuo-laboratorios.index')
-            ->with('success', 'Stock de residuo actualizado satisfactoriamente');
+            ->with('success', 'Se ha actualizado el stock de residuo satisfactoriamente');
     }
 
     public function destroy($id): RedirectResponse
@@ -112,6 +112,6 @@ class ResiduoLaboratorioController extends Controller
         ResiduoLaboratorio::find($id)->delete();
 
         return Redirect::route('residuo-laboratorios.index')
-            ->with('success', 'Stock de residuo eliminado satisfactoriamente');
+            ->with('success', 'Se ha eliminado el stock de residuo satisfactoriamente');
     }
 }

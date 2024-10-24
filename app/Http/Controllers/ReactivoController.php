@@ -69,7 +69,7 @@ class ReactivoController extends Controller
         Reactivo::create($request->validated());
 
         return Redirect::route('reactivos.index')
-            ->with('success', 'Reactivo creado satisfactoriamente.');
+            ->with('success', 'Se ha registrado el reactivo satisfactoriamente');
     }
 
     /**
@@ -108,7 +108,7 @@ class ReactivoController extends Controller
         $reactivo->update($request->validated());
 
         return Redirect::route('reactivos.index')
-            ->with('success', 'Reactivo actualizado satisfactoriamente');
+            ->with('success', 'Se ha actualizado el reactivo satisfactoriamente');
     }
 
     public function destroy($id): RedirectResponse
@@ -116,6 +116,6 @@ class ReactivoController extends Controller
         Reactivo::find($id)->delete();
 
         return Redirect::route('reactivos.index')
-            ->with('success', 'Reactivo eliminado satisfactoriamente');
+            ->with('success', 'Se ha eliminado el reactivo satisfactoriamente');
     }
 }

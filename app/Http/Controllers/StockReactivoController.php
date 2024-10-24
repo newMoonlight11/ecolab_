@@ -40,7 +40,7 @@ class StockReactivoController extends Controller
         StockReactivo::create($request->validated());
 
         return Redirect::route('stock_reactivos.index')
-            ->with('success', 'StockReactivo created successfully.');
+            ->with('success', 'Se ha registrado el stock de reactivo satisfactoriamente');
     }
 
     /**
@@ -71,7 +71,7 @@ class StockReactivoController extends Controller
         $stockReactivo->update($request->validated());
 
         return Redirect::route('stock_reactivos.index')
-            ->with('success', 'StockReactivo updated successfully');
+            ->with('success', 'Se ha actualizado el stock de reactivo satisfactoriamente');
     }
 
     public function destroy($id): RedirectResponse
@@ -79,6 +79,6 @@ class StockReactivoController extends Controller
         StockReactivo::find($id)->delete();
 
         return Redirect::route('stock_reactivos.index')
-            ->with('success', 'StockReactivo deleted successfully');
+            ->with('success', 'Se ha eliminado el stock de reactivo satisfactoriamente');
     }
 }

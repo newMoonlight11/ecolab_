@@ -16,7 +16,15 @@ class UnidadController extends Controller
      */
     public function index(Request $request): View
     {
-        $unidads = Unidad::paginate();
+        $query = Unidad::query();
+
+        // Aplica los filtros si están presentes en la solicitud
+        if ($request->filled('nombre')) {
+            $query->where('nombre', 'like', '%' . $request->input('nombre') . '%');
+        }
+
+        // Paginación de los resultados de la consulta filtrada
+        $unidads = $query->paginate(10);
 
         return view('unidad.index', compact('unidads'))
             ->with('i', ($request->input('page', 1) - 1) * $unidads->perPage());
@@ -40,7 +48,7 @@ class UnidadController extends Controller
         Unidad::create($request->validated());
 
         return Redirect::route('unidads.index')
-            ->with('success', 'Unidad created successfully.');
+            ->with('success', 'Se ha registrado la unidad satisfactoriamente');
     }
 
     /**
@@ -71,7 +79,7 @@ class UnidadController extends Controller
         $unidad->update($request->validated());
 
         return Redirect::route('unidads.index')
-            ->with('success', 'Unidad updated successfully');
+            ->with('success', 'Se ha actualizado la unidad satisfactoriamente');
     }
 
     public function destroy($id): RedirectResponse
@@ -79,6 +87,6 @@ class UnidadController extends Controller
         Unidad::find($id)->delete();
 
         return Redirect::route('unidads.index')
-            ->with('success', 'Unidad deleted successfully');
+            ->with('success', 'Se ha eliminado la unidad satisfactoriamente');
     }
 }
