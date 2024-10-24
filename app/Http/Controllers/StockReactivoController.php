@@ -6,6 +6,9 @@ use App\Models\StockReactivo;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\StockReactivoRequest;
+use App\Models\Laboratorio;
+use App\Models\Reactivo;
+use App\Models\Unidad;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -16,10 +19,25 @@ class StockReactivoController extends Controller
      */
     public function index(Request $request): View
     {
-        $stockReactivos = StockReactivo::paginate();
+        $query = StockReactivo::with(['laboratorio', 'reactivo', 'unidad']);
+        
+        if ($request->filled('fecha_stock')) {
+            $query->Where('fecha_stock', 'like', '%', $request->input('fecha_stock') . '%');
+        }
+        if ($request->filled('cantidad_existencia')) {
+            $query->Where('cantidad_existencia', 'like', '%', $request->input('cantidad_existencia') . '%');
+        }
+        if ($request->filled('reactivo_id')) {
+            $query->Where('reactivo_id', 'like', '%', $request->input('reactivo_id') . '%');
+        }
+        if ($request->filled('laboratorio_id')) {
+            $query->Where('laboratorio_id', 'like', '%', $request->input('laboratorio_id') . '%');
+        }
+        
+        $stockReactivos = $query->paginate(10);
 
         return view('stock-reactivo.index', compact('stockReactivos'))
-            ->with('i', ($request->input('page', 1) - 1) * $stockReactivos->perPage());
+            ->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
     /**
@@ -28,8 +46,11 @@ class StockReactivoController extends Controller
     public function create(): View
     {
         $stockReactivo = new StockReactivo();
+        $laboratorios = Laboratorio::all();
+        $reactivos = Reactivo::all();
+        $unidads = Unidad::all();        
 
-        return view('stock-reactivo.create', compact('stockReactivo'));
+        return view('stock-reactivo.create', compact('stockReactivo', 'laboratorios', 'reactivos', 'unidads'));
     }
 
     /**
@@ -46,11 +67,14 @@ class StockReactivoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id): View
+    public function show($id)
     {
-        $stockReactivo = StockReactivo::find($id);
+        $stockReactivo = StockReactivo::with(['laboratorio', 'reactivo', 'unidad'])->find($id);
 
-        return view('stock-reactivo.show', compact('stockReactivo'));
+        if (!$stockReactivo){
+            return response()->json(['error' => 'Stock de reactivo no encontrado'], 404);
+        }
+        return response()->json($stockReactivo);
     }
 
     /**
@@ -59,8 +83,11 @@ class StockReactivoController extends Controller
     public function edit($id): View
     {
         $stockReactivo = StockReactivo::find($id);
+        $laboratorios = Laboratorio::all();
+        $reactivos = Reactivo::all();
+        $unidads = Unidad::all();  
 
-        return view('stock-reactivo.edit', compact('stockReactivo'));
+        return view('stock-reactivo.edit', compact('stockReactivo', 'laboratorios', 'reactivos', 'unidads'));
     }
 
     /**

@@ -1,28 +1,19 @@
-@extends('layouts.app')
+@extends('layouts.create')
 
-@section('template_title')
-    {{ __('Create') }} Stock Reactivo
+@section('title', 'Crear stock reactivo')
+
+@section('back_route')
+    {{ route('stock_reactivos.index') }}
 @endsection
 
-@section('content')
-    <section class="content container-fluid">
-        <div class="row">
-            <div class="col-md-12">
+@section('heading', 'Crear stock reactivo')
 
-                <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">{{ __('Create') }} Stock Reactivo</span>
-                    </div>
-                    <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('stock_reactivos.store') }}"  role="form" enctype="multipart/form-data">
-                            @csrf
-
-                            @include('stock-reactivo.form')
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+@section('form_action')
+    {{ route('stock_reactivos.store') }}
 @endsection
+
+@section('form_content')
+    @csrf
+    @include('stock-reactivo.form')
+@endsection
+

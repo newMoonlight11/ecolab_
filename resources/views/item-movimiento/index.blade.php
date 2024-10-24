@@ -15,13 +15,13 @@
                 </div>
                 <div class="col-md-3 text-center">
                     <p>Reactivo</p>
-                    <input type="text" name="reactivo_id" class="form-control bg-white rounded-4" style="text-align: center;"
-                        placeholder="---" value="{{ request()->get('reactivo_id') }}">
+                    <input type="text" name="reactivo_id" class="form-control bg-white rounded-4"
+                        style="text-align: center;" placeholder="---" value="{{ request()->get('reactivo_id') }}">
                 </div>
                 <div class="col-md-3 text-center">
                     <p>Movimiento</p>
-                    <input type="text" name="movimiento_id" class="form-control bg-white rounded-4" style="text-align: center;"
-                        placeholder="---" value="{{ request()->get('movimiento_id') }}">
+                    <input type="text" name="movimiento_id" class="form-control bg-white rounded-4"
+                        style="text-align: center;" placeholder="---" value="{{ request()->get('movimiento_id') }}">
                 </div>
                 <div class="col-md-1 text-center">
                     <p>Filtrar</p>
@@ -40,9 +40,9 @@
 
 @section('table_header')
     <th class="col-md-1">#</th>
-    <th >Cantidad</th>
-    <th >Reactivo</th>
-	<th >Movimiento</th>
+    <th>Cantidad</th>
+    <th>Reactivo</th>
+    <th>Movimiento</th>
 @endsection
 
 @section('table_content')
@@ -54,14 +54,21 @@
         @foreach ($itemMovimientos as $itemMovimiento)
             <tr>
                 <td class="col-sm-1">{{ ++$i }}</td>
-                <td >{{ $itemMovimiento->cantidad }}</td>
-				<td >{{ $itemMovimiento->reactivo_id ? $itemMovimiento->reactivo->nombre : 'Sin reactivo' }}</td>
-				<td >{{ $itemMovimiento->movimiento_id ? $itemMovimiento->movimiento->descripcion : 'Sin movimiento' }}</td>
+                <td>{{ $itemMovimiento->cantidad }}</td>
+                <td>{{ $itemMovimiento->reactivo_id ? $itemMovimiento->reactivo->nombre : 'Sin reactivo' }}</td>
+                <td>{{ $itemMovimiento->movimiento_id ? Str::limit($itemMovimiento->movimiento->descripcion, 50) : 'Sin movimiento' }}
+                </td>
                 <td class="text-end">
-                    <form action="{{ route('item_movimiento.destroy', $itemMovimiento->id) }}" method="POST" class="d-inline">
+                    <form action="{{ route('item_movimiento.destroy', $itemMovimiento->id) }}" method="POST"
+                        class="d-inline">
                         <a class="btn btn-sm" href="javascript:void(0)"
-                            onclick="mostrarModalItemMovimiento({{ json_encode($itemMovimiento->id) }})" data-bs-toggle="modal"
-                            data-bs-target="#itemMovimientoModal">
+                        onclick="mostrarModalItemMovimiento({ 
+                            id: {{ json_encode($itemMovimiento->id) }},
+                            cantidad: '{{ $itemMovimiento->cantidad }}',
+                            reactivo: {{ $itemMovimiento->reactivo ? json_encode($itemMovimiento->reactivo) : 'null' }},
+                            movimiento: {{ $itemMovimiento->movimiento ? json_encode($itemMovimiento->movimiento) : 'null' }}
+                        })"
+                            data-bs-toggle="modal" data-bs-target="#itemMovimientoModal">
                             <i class="bi bi-search text-primary fs-5"></i>
                         </a>
                         <a class="btn btn-sm" href="{{ route('item_movimiento.edit', $itemMovimiento->id) }}">
@@ -86,15 +93,17 @@
     </div>
 @endsection
 
-<div class="modal fade" id="itemMovimientoModal" tabindex="-1" aria-labelledby="itemMovimientoModalLabel" aria-hidden="true">
+<div class="modal fade" id="itemMovimientoModal" tabindex="-1" aria-labelledby="itemMovimientoModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0 rounded-4 px-3 bg-white">
             <div class="modal-header">
-                <h5 class="modal-title text-primary text-center w-100 fs-3" id="itemMovimientoModalLabel">Detalles del ítem de movimiento
+                <h5 class="modal-title text-primary text-center w-100 fs-3" id="itemMovimientoModalLabel">Detalles del
+                    ítem de movimiento
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body overflow-x-auto">
                 <div class="form-group mb-2 mb20">
                     <strong>Cantidad:</strong>
                     <span id="modalCantidad"></span>
@@ -114,14 +123,21 @@
 
 <script>
     function mostrarModalItemMovimiento(itemMovimiento) {
+        // Asegúrate de que el itemMovimiento contiene todas las propiedades necesarias.
         document.getElementById('modalCantidad').textContent = itemMovimiento.cantidad;
-        document.getElementById('modalReactivo').textContent = itemMovimiento.reactivo_id ? itemMovimiento.reactivo.nombre : 'Sin reactivo';
-        document.getElementById('modalMovimiento').textContent = itemMovimiento.movimiento_id ? itemMovimiento.movimiento.descripcion : 'Sin movimiento';
+        document.getElementById('modalReactivo').textContent = itemMovimiento.reactivo ? itemMovimiento.reactivo
+            .nombre : 'Sin reactivo';
+        document.getElementById('modalMovimiento').textContent = itemMovimiento.movimiento ? itemMovimiento.movimiento
+            .descripcion : 'Sin movimiento';
+
         var itemMovimientoModal = new bootstrap.Modal(document.getElementById('itemMovimientoModal'));
+
+        // Evitar problemas de backdrop al cerrar el modal
         document.getElementById('itemMovimientoModal').addEventListener('hidden.bs.modal', function(event) {
             document.body.classList.remove('modal-open');
             document.querySelector('.modal-backdrop')?.remove();
         });
+
         itemMovimientoModal.show();
     }
 </script>

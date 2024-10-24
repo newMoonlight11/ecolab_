@@ -6,12 +6,6 @@
             value="{{ old('nombre', $reactivo?->nombre) }}" id="nombre" placeholder="Nombre">
         {!! $errors->first('nombre', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
     </div>
-    {{-- <div class="form-group mb-2 mb20">
-        <label for="img_reactivo" class="form-label">{{ __('Img Reactivo') }}</label>
-        <input type="text" name="img_reactivo" class="form-control @error('img_reactivo') is-invalid @enderror"
-            value="{{ old('img_reactivo', $reactivo?->img_reactivo) }}" id="img_reactivo" placeholder="Img Reactivo">
-        {!! $errors->first('img_reactivo', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
-    </div> --}}
     <div class="form-group mb-2 mb20">
         <label for="numero_cas" class="form-label">{{ __('Numero Cas') }}</label>
         <input type="text" name="numero_cas" class="form-control @error('numero_cas') is-invalid @enderror"

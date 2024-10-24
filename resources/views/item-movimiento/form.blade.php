@@ -26,7 +26,7 @@
             @foreach ($movimientos as $movimiento)
                 <option value="{{ $movimiento->id }}"
                     {{ old('movimiento_id', $itemMovimiento?->movimiento_id) == $movimiento->id ? 'selected' : '' }}>
-                    {{ $movimiento->nombre }}
+                    {{ $movimiento->descripcion }}
                 </option>
             @endforeach
         </select>

@@ -1,29 +1,17 @@
-@extends('layouts.app')
+@extends('layouts.edit')
 
-@section('template_title')
-    {{ __('Update') }} Stock Reactivo
+@section('title', 'Editar stock reactivo')
+
+@section('back_route')
+    {{ route('stock_reactivos.index') }}
 @endsection
 
-@section('content')
-    <section class="content container-fluid">
-        <div class="">
-            <div class="col-md-12">
+@section('heading', 'Editar stock reactivo')
 
-                <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">{{ __('Update') }} Stock Reactivo</span>
-                    </div>
-                    <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('stock_reactivos.update', $stockReactivo->id) }}"  role="form" enctype="multipart/form-data">
-                            {{ method_field('PATCH') }}
-                            @csrf
+@section('form_action')
+    {{ route('stock_reactivos.update', $stockReactivo->id) }}
+@endsection
 
-                            @include('stock-reactivo.form')
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+@section('form_content')
+    @include('stock-reactivo.form')
 @endsection
