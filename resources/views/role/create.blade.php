@@ -1,28 +1,18 @@
-@extends('layouts.app')
+@extends('layouts.create')
 
-@section('template_title')
-    {{ __('Create') }} Role
+@section('title', 'Crear roles')
+
+@section('back_route')
+    {{ route('roles.index') }}
 @endsection
 
-@section('content')
-    <section class="content container-fluid">
-        <div class="row">
-            <div class="col-md-12">
+@section('heading', 'Crear roles')
 
-                <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">{{ __('Create') }} Role</span>
-                    </div>
-                    <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('roles.store') }}"  role="form" enctype="multipart/form-data">
-                            @csrf
+@section('form_action')
+    {{ route('roles.store') }}
+@endsection
 
-                            @include('role.form')
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+@section('form_content')
+    @csrf
+    @include('role.form')
 @endsection

@@ -1,8 +1,8 @@
 @extends('layouts.index_layout')
 
-@section('title', 'Stock de Reactivos')
+@section('title', 'Stock de reactivos')
 
-@section('heading', 'Stock de Reactivos')
+@section('heading', 'Stock de reactivos')
 
 @section('filter_content')
     <form method="GET" action="{{ route('stock_reactivos.index') }}">

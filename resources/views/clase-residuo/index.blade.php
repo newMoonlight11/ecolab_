@@ -45,7 +45,7 @@
 
                 <td>{{ $claseResiduo->nombre }}</td>
 
-                <td>
+                <td class="text-end">
                     <form action="{{ route('clase-residuos.destroy', $claseResiduo->id) }}" method="POST" class="d-inline">
                         <a class="btn btn-sm" href="javascript:void(0)"
                             onclick="mostrarModalClaseResiduo({{ json_encode($claseResiduo) }})" data-bs-toggle="modal"

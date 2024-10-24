@@ -1,29 +1,17 @@
-@extends('layouts.app')
+@extends('layouts.edit')
 
-@section('template_title')
-    {{ __('Update') }} Role
+@section('title', 'Editar roles')
+
+@section('back_route')
+    {{ route('roles.index') }}
 @endsection
 
-@section('content')
-    <section class="content container-fluid">
-        <div class="">
-            <div class="col-md-12">
+@section('heading', 'Editar roles')
 
-                <div class="card card-default">
-                    <div class="card-header">
-                        <span class="card-title">{{ __('Update') }} Role</span>
-                    </div>
-                    <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('roles.update', $role->id) }}"  role="form" enctype="multipart/form-data">
-                            {{ method_field('PATCH') }}
-                            @csrf
+@section('form_action')
+    {{ route('roles.update', $role->id) }}
+@endsection
 
-                            @include('role.form')
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+@section('form_content')
+    @include('role.form')
 @endsection

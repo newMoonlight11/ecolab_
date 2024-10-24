@@ -2,14 +2,14 @@
 @section('form_content')
     <div class="form-group mb-2 mb20">
         <label for="fecha_stock" class="form-label">{{ __('Fecha Stock') }}</label>
-        <input type="date" name="fecha_stock" class="form-control @error('fecha_stock') is-invalid @enderror"
+        <input type="date" name="fecha_stock" class="form-control bg-white rounded-4 @error('fecha_stock') is-invalid @enderror"
             value="{{ old('fecha_stock', $stockReactivo?->fecha_stock) }}" id="fecha_stock" placeholder="Fecha Stock">
         {!! $errors->first('fecha_stock', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
     </div>
     <div class="form-group mb-2 mb20">
         <label for="cantidad_existencia" class="form-label">{{ __('Cantidad Existencia') }}</label>
         <input type="text" name="cantidad_existencia"
-            class="form-control @error('cantidad_existencia') is-invalid @enderror"
+            class="form-control bg-white rounded-4 @error('cantidad_existencia') is-invalid @enderror"
             value="{{ old('cantidad_existencia', $stockReactivo?->cantidad_existencia) }}" id="cantidad_existencia"
             placeholder="Cantidad Existencia">
         {!! $errors->first(
@@ -19,7 +19,7 @@
     </div>
     <div class="form-group mb-2 mb20">
         <label for="reactivo_id" class="form-label">{{ __('Reactivo') }}</label>
-        <select name="reactivo_id" id="reactivo_id" class="form-control @error('reactivo_id') is-invalid @enderror">
+        <select name="reactivo_id" id="reactivo_id" class="form-control bg-white rounded-4 @error('reactivo_id') is-invalid @enderror">
             <option value="">{{ 'Seleccione un reactivo' }}</option>
             @foreach ($reactivos as $reactivo)
                 <option value="{{ $reactivo->id }}"
@@ -33,7 +33,7 @@
     <div class="form-group mb-2 mb20">
         <label for="laboratorio_id" class="form-label">{{ __('Laboratorio') }}</label>
         <select name="laboratorio_id" id="laboratorio_id"
-            class="form-control @error('laboratorio_id') is-invalid @enderror">
+            class="form-control bg-white rounded-4 @error('laboratorio_id') is-invalid @enderror">
             <option value="">{{ 'Seleccione un laboratorio' }}</option>
             @foreach ($laboratorios as $laboratorio)
                 <option value="{{ $laboratorio->id }}"
@@ -49,7 +49,7 @@
     </div>
     <div class="form-group mb-2 mb20">
         <label for="unidad_id" class="form-label">{{ __('Unidad') }}</label>
-        <select name="unidad_id" id="unidad_id" class="form-control @error('unidad_id') is-invalid @enderror">
+        <select name="unidad_id" id="unidad_id" class="form-control bg-white rounded-4 @error('unidad_id') is-invalid @enderror">
             <option value="">{{ 'Seleccione la unidad' }}</option>
             @foreach ($unidads as $unidad)
                 <option value="{{ $unidad->id }}"

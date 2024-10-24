@@ -2,14 +2,14 @@
 @section('form_content')
     <div class="form-group mb-2 mb20">
         <label for="nombre" class="form-label">{{ __('Nombre') }}</label>
-        <input type="text" name="nombre" class="form-control @error('nombre') is-invalid @enderror"
+        <input type="text" name="nombre" class="form-control bg-white rounded-4 @error('nombre') is-invalid @enderror"
             value="{{ old('nombre', $residuo?->nombre) }}" id="nombre" placeholder="Nombre">
         {!! $errors->first('nombre', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
     </div>
     <div class="form-group mb-2 mb20">
-        <label for="clase_residuo_id" class="form-label">{{ 'Clase Residuo Id' }}</label>
+        <label for="clase_residuo_id" class="form-label">{{ 'Clase del residuo' }}</label>
         <select name="clase_residuo_id" id="clase_residuo_id"
-            class="form-control @error('clase_residuo_id') is-invalid @enderror">
+            class="form-control bg-white rounded-4 @error('clase_residuo_id') is-invalid @enderror">
             <option value="">{{ 'Seleccione una clase' }}</option>
             @foreach ($claseResiduos as $claseResiduo)
                 <option value="{{ $claseResiduo->id }}"
