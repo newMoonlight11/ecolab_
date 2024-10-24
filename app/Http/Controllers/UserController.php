@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -74,8 +75,8 @@ class UserController extends Controller
     public function edit($id): View
     {
         $user = User::find($id);
-
-        return view('user.edit', compact('user'));
+        $roles = Role::all();
+        return view('user.edit', compact('user', 'roles'));
     }
 
     /**
@@ -84,6 +85,7 @@ class UserController extends Controller
     public function update(UserRequest $request, User $user): RedirectResponse
     {
         $user->update($request->validated());
+        $user->roles()->sync($request->input('roles', []));
 
         return Redirect::route('users.index')
             ->with('success', 'Se ha actualizado el usuario satisfactoriamente');

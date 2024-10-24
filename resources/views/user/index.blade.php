@@ -42,6 +42,7 @@
     <th class="col-md-1">#</th>
     <th>Nombre</th>
     <th>Correo electrónico</th>
+    <th>Roles</th>
 @endsection
 
 @section('table_content')
@@ -55,6 +56,13 @@
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
+                <td>
+                    @if($user->roles->isEmpty())
+                        <span>No tiene roles</span>
+                    @else
+                        {{ $user->roles->pluck('name')->join(', ') }} <!-- Muestra los roles separados por comas -->
+                    @endif
+                </td>
                 <td class="text-end">
                     <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline">
                         <a class="btn btn-sm" href="javascript:void(0)"
