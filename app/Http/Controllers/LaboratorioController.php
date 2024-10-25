@@ -18,17 +18,16 @@ class LaboratorioController extends Controller
     {
         $query = Laboratorio::query();
 
-        // Aplica los filtros si están presentes en la solicitud
         if ($request->filled('nombre')) {
             $query->where('nombre', 'like', '%' . $request->input('nombre') . '%');
         }
 
-        // Paginación de los resultados de la consulta filtrada
         $laboratorios = $query->paginate(10);
 
         return view('laboratorio.index', compact('laboratorios'))
             ->with('i', ($request->input('page', 1) - 1) * $laboratorios->perPage());
     }
+
 
     /**
      * Show the form for creating a new resource.

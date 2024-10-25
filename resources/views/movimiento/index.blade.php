@@ -10,18 +10,18 @@
             <div class="d-flex justify-content-between flex-wrap gap-3">
                 <div class="text-center">
                     <p>Tipo</p>
-                    <input type="text" name="nombre" class="form-control bg-white rounded-4" style="text-align: center;"
+                    <input type="text" name="tipo_movimiento" class="form-control bg-white rounded-4" style="text-align: center;"
                         placeholder="---" value="{{ request()->get('tipo_movimiento') }}">
                 </div>
                 <div class="text-center">
                     <p>Fecha</p>
                     <input type="date" name="fecha_movimiento" class="form-control bg-white rounded-4"
-                        style="text-align: center;" placeholder="---" value="{{ request()->get('fecha') }}">
+                        style="text-align: center;" placeholder="---" value="{{ request()->get('fecha_movimiento') }}">
                 </div>
                 <div class="text-center">
                     <p>Usuario</p>
                     <input type="text" name="username" class="form-control bg-white rounded-4"
-                        style="text-align: center;" placeholder="---" value="{{ request()->get('name') }}">
+                        style="text-align: center;" placeholder="---" value="{{ request()->get('usuario_id') }}">
                 </div>
                 <div class="text-center">
                     <p>Filtrar</p>

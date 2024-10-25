@@ -18,17 +18,16 @@ class TipoMovimientoController extends Controller
     {
         $query = TipoMovimiento::query();
 
-        // Aplica los filtros si están presentes en la solicitud
         if ($request->filled('nombre')) {
             $query->where('nombre', 'like', '%' . $request->input('nombre') . '%');
         }
 
-        // Paginación de los resultados de la consulta filtrada
         $tipoMovimientos = $query->paginate(10);
 
         return view('tipo-movimiento.index', compact('tipoMovimientos'))
             ->with('i', ($request->input('page', 1) - 1) * $tipoMovimientos->perPage());
     }
+
 
     /**
      * Show the form for creating a new resource.

@@ -18,17 +18,16 @@ class ClaseResiduoController extends Controller
     {
         $query = ClaseResiduo::query();
 
-        // Aplica los filtros si están presentes en la solicitud
         if ($request->filled('nombre')) {
             $query->where('nombre', 'like', '%' . $request->input('nombre') . '%');
         }
 
-        // Paginación de los resultados de la consulta filtrada
         $claseResiduos = $query->paginate(10);
 
         return view('clase-residuo.index', compact('claseResiduos'))
             ->with('i', ($request->input('page', 1) - 1) * $claseResiduos->perPage());
     }
+
 
     /**
      * Show the form for creating a new resource.

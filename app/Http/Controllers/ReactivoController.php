@@ -20,7 +20,6 @@ class ReactivoController extends Controller
     {
         $query = Reactivo::with(['familia', 'marca']);
 
-        // Aplica los filtros si están presentes en la solicitud
         if ($request->filled('nombre')) {
             $query->where('nombre', 'like', '%' . $request->input('nombre') . '%');
         }
@@ -42,11 +41,9 @@ class ReactivoController extends Controller
         }
 
         $reactivos = $query->paginate(10);
+
         return view('reactivo.index', compact('reactivos'))
             ->with('i', ($request->input('page', 1) - 1) * 10);
-        // $reactivos = Reactivo::paginate();
-        // return view('reactivo.index', compact('reactivos'))
-        //     ->with('i', ($request->input('page', 1) - 1) * $reactivos->perPage());
     }
 
     /**

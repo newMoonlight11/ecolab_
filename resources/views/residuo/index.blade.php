@@ -14,6 +14,11 @@
                         placeholder="---" value="{{ request()->get('nombre') }}">
                 </div>
                 <div class="text-center">
+                    <p>Clase</p>
+                    <input type="text" name="clase_residuo_id" class="form-control bg-white rounded-4" style="text-align: center;"
+                        placeholder="---" value="{{ request()->get('clase_residuo_id') }}">
+                </div>
+                <div class="text-center">
                     <p>Filtrar</p>
                     <button type="submit" class="btn btn-primary rounded-3 btn-xxl"><i
                             class="bi bi-sort-down-alt fs-5"></i></button>

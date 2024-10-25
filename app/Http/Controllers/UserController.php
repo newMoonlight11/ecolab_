@@ -17,10 +17,8 @@ class UserController extends Controller
      */
     public function index(Request $request): View
     {
-        // Inicia una consulta base
         $query = User::query();
 
-        // Aplica los filtros si están presentes en la solicitud
         if ($request->filled('name')) {
             $query->where('name', 'like', '%' . $request->input('name') . '%');
         }
@@ -29,13 +27,12 @@ class UserController extends Controller
             $query->where('email', 'like', '%' . $request->input('email') . '%');
         }
 
-        // Paginación de los resultados de la consulta filtrada
         $users = $query->paginate(10);
 
-        // Retorna la vista con los usuarios filtrados y paginados
         return view('user.index', compact('users'))
             ->with('i', ($request->input('page', 1) - 1) * $users->perPage());
     }
+
 
 
     /**

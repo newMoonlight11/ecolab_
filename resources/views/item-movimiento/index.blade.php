@@ -10,7 +10,7 @@
             <div class="d-flex justify-content-between flex-wrap gap-2">
                 <div class="col-md-3 text-center">
                     <p>Cantidad</p>
-                    <input type="text" name="cantidad" class="form-control bg-white rounded-4" style="text-align: center;"
+                    <input type="number" name="cantidad" class="form-control bg-white rounded-4" style="text-align: center;"
                         placeholder="---" value="{{ request()->get('cantidad') }}">
                 </div>
                 <div class="col-md-3 text-center">

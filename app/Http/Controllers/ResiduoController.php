@@ -19,15 +19,22 @@ class ResiduoController extends Controller
     {
         $query = Residuo::with(['claseResiduo']);
 
-        // Aplica los filtros si están presentes en la solicitud
         if ($request->filled('nombre')) {
             $query->where('nombre', 'like', '%' . $request->input('nombre') . '%');
         }
 
+        if ($request->filled('clase_residuo_id')) {
+            $query->whereHas('claseResiduo', function ($q) use ($request) {
+                $q->where('nombre', 'like', '%' . $request->input('clase_residuo_id') . '%');
+            });
+        }
+
         $residuos = $query->paginate(10);
+
         return view('residuo.index', compact('residuos'))
             ->with('i', ($request->input('page', 1) - 1) * 10);
     }
+
 
     /**
      * Show the form for creating a new resource.
