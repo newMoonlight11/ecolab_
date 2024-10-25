@@ -10,12 +10,12 @@
             <div class="d-flex justify-content-between flex-wrap gap-3">
                 <div class="text-center">
                     <p>Fecha de stock</p>
-                    <input type="text" name="fecha_stock" class="form-control bg-white rounded-4" style="text-align: center;"
+                    <input type="date" name="fecha_stock" class="form-control bg-white rounded-4" style="text-align: center;"
                         placeholder="---" value="{{ request()->get('fecha_stock') }}">
                 </div>
                 <div class="text-center">
                     <p>Cantidad en stock</p>
-                    <input type="text" name="cantidad_existencia" class="form-control bg-white rounded-4"
+                    <input type="number" name="cantidad_existencia" class="form-control bg-white rounded-4"
                         style="text-align: center;" placeholder="---" value="{{ request()->get('cantidad_existencia') }}">
                 </div>
                 <div class="text-center">

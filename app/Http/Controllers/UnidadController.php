@@ -18,17 +18,16 @@ class UnidadController extends Controller
     {
         $query = Unidad::query();
 
-        // Aplica los filtros si están presentes en la solicitud
         if ($request->filled('nombre')) {
             $query->where('nombre', 'like', '%' . $request->input('nombre') . '%');
         }
 
-        // Paginación de los resultados de la consulta filtrada
         $unidads = $query->paginate(10);
 
         return view('unidad.index', compact('unidads'))
             ->with('i', ($request->input('page', 1) - 1) * $unidads->perPage());
     }
+
 
     /**
      * Show the form for creating a new resource.

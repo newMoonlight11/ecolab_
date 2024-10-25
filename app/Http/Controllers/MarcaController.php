@@ -18,17 +18,16 @@ class MarcaController extends Controller
     {
         $query = Marca::query();
 
-        // Aplica los filtros si están presentes en la solicitud
         if ($request->filled('nombre')) {
             $query->where('nombre', 'like', '%' . $request->input('nombre') . '%');
         }
 
-        // Paginación de los resultados de la consulta filtrada
         $marcas = $query->paginate(10);
 
         return view('marca.index', compact('marcas'))
             ->with('i', ($request->input('page', 1) - 1) * $marcas->perPage());
     }
+
 
     /**
      * Show the form for creating a new resource.

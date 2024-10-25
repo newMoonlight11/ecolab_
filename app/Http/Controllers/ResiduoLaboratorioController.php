@@ -20,7 +20,19 @@ class ResiduoLaboratorioController extends Controller
     public function index(Request $request): View
     {
         $query = ResiduoLaboratorio::with(['laboratorio', 'unidad']);
-        
+
+        if ($request->filled('residuo_id')) {
+            $query->whereHas('residuo', function ($q) use ($request) {
+                $q->where('nombre', 'like', '%' . $request->input('residuo_id') . '%');
+            });
+        }
+
+        if ($request->filled('laboratorio_id')) {
+            $query->whereHas('laboratorio', function ($q) use ($request) {
+                $q->where('nombre', 'like', '%' . $request->input('laboratorio_id') . '%');
+            });
+        }
+
         if ($request->filled('fecha_stock')) {
             $query->where('fecha_stock', 'like', '%' . $request->input('fecha_stock') . '%');
         }
@@ -29,19 +41,12 @@ class ResiduoLaboratorioController extends Controller
             $query->where('cantidad_existencia', 'like', '%' . $request->input('cantidad_existencia') . '%');
         }
 
-        if ($request->filled('residuo_id')) {
-            $query->where('residuo_id', 'like', '%' . $request->input('residuo_id') . '%');
-        }
-
-        if ($request->filled('laboratorio_id')) {
-            $query->where('laboratorio_id', 'like', '%' . $request->input('laboratorio_id') . '%');
-        }
-
         $residuoLaboratorios = $query->paginate(10);
 
         return view('residuo-laboratorio.index', compact('residuoLaboratorios'))
             ->with('i', ($request->input('page', 1) - 1) * 10);
     }
+
 
     /**
      * Show the form for creating a new resource.

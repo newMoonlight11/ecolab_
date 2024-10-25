@@ -19,21 +19,32 @@ class ItemMovimientoController extends Controller
     public function index(Request $request): View
     {
         $query = ItemMovimiento::with(['movimiento', 'reactivo']);
+
+        // Filtro para cantidad
         if ($request->filled('cantidad')) {
-            $query->Where('cantidad', 'like', '%', $request->input('cantidad') . '%');
+            $query->where('cantidad', $request->input('cantidad'));
         }
+
+        // Filtro por nombre del movimiento con búsqueda parcial (LIKE)
         if ($request->filled('movimiento_id')) {
-            $query->Where('movimiento_id', 'like', '%', $request->input('movimiento_id') . '%');
+            $query->whereHas('movimiento', function ($q) use ($request) {
+                $q->where('descripcion', 'like', '%' . $request->input('movimiento_id') . '%');
+            });
         }
+
+        // Filtro por nombre del reactivo con búsqueda parcial (LIKE)
         if ($request->filled('reactivo_id')) {
-            $query->Where('reactivo_id', 'like', '%', $request->input('reactivo_id') . '%');
+            $query->whereHas('reactivo', function ($q) use ($request) {
+                $q->where('nombre', 'like', '%' . $request->input('reactivo_id') . '%');
+            });
         }
-        
+
+        // Paginación de resultados
         $itemMovimientos = $query->paginate(10);
+
         return view('item-movimiento.index', compact('itemMovimientos'))
             ->with('i', ($request->input('page', 1) - 1) * 10);
     }
-
     /**
      * Show the form for creating a new resource.
      */

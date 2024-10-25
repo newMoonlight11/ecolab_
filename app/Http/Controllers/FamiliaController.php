@@ -18,17 +18,16 @@ class FamiliaController extends Controller
     {
         $query = Familia::query();
 
-        // Aplica los filtros si están presentes en la solicitud
         if ($request->filled('nombre')) {
             $query->where('nombre', 'like', '%' . $request->input('nombre') . '%');
         }
 
-        // Paginación de los resultados de la consulta filtrada
         $familias = $query->paginate(10);
 
         return view('familia.index', compact('familias'))
             ->with('i', ($request->input('page', 1) - 1) * $familias->perPage());
     }
+
 
     /**
      * Show the form for creating a new resource.

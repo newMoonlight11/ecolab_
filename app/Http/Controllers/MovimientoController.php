@@ -24,21 +24,27 @@ class MovimientoController extends Controller
         $query = Movimiento::with(['tipoMovimiento', 'user']);
 
         if ($request->filled('tipo_movimiento')) {
-            $query->Where('tipo_movimiento', 'like', '%', $request->input('tipo_movimiento') . '%');
-        }
-
-        if ($request->filled('fecha_movimiento')) {
-            $query->Where('fecha_movimiento', 'like', '%', $request->input('fecha_movimiento') . '%');
+            $query->whereHas('tipoMovimiento', function ($q) use ($request) {
+                $q->where('nombre', 'like', '%' . $request->input('tipo_movimiento') . '%');
+            });
         }
 
         if ($request->filled('usuario_id')) {
-            $query->Where('usuario_id', 'like', '%', $request->input('usuario_id') . '%');
+            $query->whereHas('user', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->input('usuario_id') . '%');
+            });
+        }
+
+        if ($request->filled('fecha_movimiento')) {
+            $query->where('fecha_movimiento', 'like', '%' . $request->input('fecha_movimiento') . '%');
         }
 
         $movimientos = $query->paginate(10);
+
         return view('movimiento.index', compact('movimientos'))
             ->with('i', ($request->input('page', 1) - 1) * 10);
     }
+
 
     /**
      * Show the form for creating a new resource.
