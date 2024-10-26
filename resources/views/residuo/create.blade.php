@@ -1,12 +1,12 @@
 @extends('layouts.create')
 
-@section('title', 'Crear residuo')
+@section('title', 'Registrar residuo')
 
 @section('back_route')
     {{ route('residuos.index') }}
 @endsection
 
-@section('heading', 'Crear residuo')
+@section('heading', 'Registrar residuo')
 
 @section('form_action')
     {{ route('residuos.store') }}

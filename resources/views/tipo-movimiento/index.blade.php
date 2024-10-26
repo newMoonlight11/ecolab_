@@ -1,8 +1,8 @@
 @extends('layouts.index_layout')
 
-@section('title', 'Tipo de Movimientos')
+@section('title', 'Tipos de movimientos')
 
-@section('heading', 'Inventario de Tipo de Movimientos')
+@section('heading', 'Tipos de movimientos')
 
 @section('filter_content')
     <form method="GET" action="{{ route('tipo_movimiento.index') }}">
@@ -36,7 +36,7 @@
 @section('table_content')
     @if ($tipoMovimientos->isEmpty())
         <tr>
-            <td colspan="3" class="text-center">No hay Tipos de Movimiento disponibles.</td>
+            <td colspan="3" class="text-center">No hay tipos de movimiento disponibles.</td>
         </tr>
     @else
     @foreach ($tipoMovimientos as $tipoMovimiento)

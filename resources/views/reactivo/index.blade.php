@@ -29,7 +29,7 @@
                         placeholder="---" value="{{ request()->get('lote') }}">
                 </div>
                 <div class="text-center">
-                    <p># Registro Invima</p>
+                    <p># Registro invima</p>
                     <input type="text" name="num_registro_invima" class="form-control bg-white rounded-4"
                         style="text-align: center;" placeholder="---" value="{{ request()->get('num_registro_invima') }}">
                 </div>
@@ -51,10 +51,10 @@
 @section('table_header')
     <th class="col-md-1">#</th>
     <th>Nombre</th>
-    <th>Numero Cas</th>
-    <th>Referencia Fabricante</th>
+    <th>Número CAS</th>
+    <th>Referencia fabricante</th>
     <th>Lote</th>
-    <th>Num Registro Invima</th>
+    <th>Num registro invima</th>
     <th>Familia</th>
     <th>Marca</th>
 @endsection
@@ -128,7 +128,7 @@
                     <strong>Lote:</strong>
                     <span id="modalLote"></span>
                     <br>
-                    <strong>Registro Invima:</strong>
+                    <strong>Registro invima:</strong>
                     <span id="modalRegistroInvima"></span>
                     <br>
                     <strong>Familia:</strong>

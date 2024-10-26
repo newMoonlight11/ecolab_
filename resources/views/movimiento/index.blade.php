@@ -2,7 +2,7 @@
 
 @section('title', 'Movimientos')
 
-@section('heading', 'Inventario de Movimientos')
+@section('heading', 'Inventario de movimientos')
 
 @section('filter_content')
     <form method="GET" action="{{ route('movimientos.index') }}">

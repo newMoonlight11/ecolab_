@@ -2,7 +2,7 @@
 
 @section('title', 'Familias')
 
-@section('heading', 'Inventario de Familias')
+@section('heading', 'Familias de reactivos')
 
 @section('filter_content')
     <form method="GET" action="{{ route('familias.index') }}">

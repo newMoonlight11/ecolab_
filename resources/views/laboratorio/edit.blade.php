@@ -1,12 +1,12 @@
 @extends('layouts.edit')
 
-@section('title', 'Editar Laboratorio')
+@section('title', 'Editar laboratorio')
 
 @section('back_route')
     {{ route('laboratorios.index') }}
 @endsection
 
-@section('heading', 'Editar Laboratorio')
+@section('heading', 'Editar laboratorio')
 
 @section('form_action')
     {{ route('laboratorios.update', $laboratorio->id) }}

@@ -1,12 +1,12 @@
 @extends('layouts.create')
 
-@section('title', 'Crear stock de residuo')
+@section('title', 'Registrar stock de residuo')
 
 @section('back_route')
     {{ route('residuo-laboratorios.index') }}
 @endsection
 
-@section('heading', 'Crear stock de residuo')
+@section('heading', 'Registrar stock de residuo')
 
 @section('form_action')
     {{ route('residuo-laboratorios.store') }}

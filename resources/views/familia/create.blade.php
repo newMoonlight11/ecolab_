@@ -1,12 +1,12 @@
 @extends('layouts.create')
 
-@section('title', 'Crear Familia')
+@section('title', 'Registrar familia')
 
 @section('back_route')
     {{ route('familias.index') }}
 @endsection
 
-@section('heading', 'Crear Familia')
+@section('heading', 'Registrar familia')
 
 @section('form_action')
     {{ route('familias.store') }}

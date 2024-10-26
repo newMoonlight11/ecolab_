@@ -36,7 +36,7 @@
 @section('table_header')
     <th class="col-md-1">#</th>
     <th>Nombre</th>
-    <th>Clase de residuos</th>
+    <th>Clase del residuo</th>
 @endsection
 
 @section('table_content')
@@ -94,7 +94,7 @@
                     <strong>Nombre:</strong>
                     <span id="modalNombre"></span>
                     <br>
-                    <strong>Clase de residuos:</strong>
+                    <strong>Clase del residuo:</strong>
                     <span id="modalClase"></span>
                     <br>
                 </div>

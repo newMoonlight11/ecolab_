@@ -1,9 +1,9 @@
 @extends('layouts.form')
 @section('form_content')
     <div class="form-group mb-2 mb20">
-        <label for="fecha_stock" class="form-label">{{ __('Fecha Stock') }}</label>
+        <label for="fecha_stock" class="form-label">{{ __('Fecha de stock') }}</label>
         <input type="date" name="fecha_stock" class="form-control bg-white rounded-4 @error('fecha_stock') is-invalid @enderror"
-            value="{{ old('fecha_stock', $residuoLaboratorio?->fecha_stock) }}" id="fecha_stock" placeholder="Fecha Stock">
+            value="{{ old('fecha_stock', $residuoLaboratorio?->fecha_stock) }}" id="fecha_stock" placeholder="Fecha de stock">
         {!! $errors->first('fecha_stock', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
     </div>
     <div class="form-group mb-2 mb20">
@@ -11,7 +11,7 @@
         <input type="text" name="cantidad_existencia"
             class="form-control bg-white rounded-4 @error('cantidad_existencia') is-invalid @enderror"
             value="{{ old('cantidad_existencia', $residuoLaboratorio?->cantidad_existencia) }}" id="cantidad_existencia"
-            placeholder="Cantidad Existencia">
+            placeholder="Cantidad en existencia">
         {!! $errors->first(
             'cantidad_existencia',
             '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>',

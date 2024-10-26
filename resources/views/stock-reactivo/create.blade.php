@@ -1,12 +1,12 @@
 @extends('layouts.create')
 
-@section('title', 'Crear stock reactivo')
+@section('title', 'Registrar stock reactivo')
 
 @section('back_route')
     {{ route('stock_reactivos.index') }}
 @endsection
 
-@section('heading', 'Crear stock reactivo')
+@section('heading', 'Registrar stock reactivo')
 
 @section('form_action')
     {{ route('stock_reactivos.store') }}

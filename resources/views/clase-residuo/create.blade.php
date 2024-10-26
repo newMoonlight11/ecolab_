@@ -1,12 +1,12 @@
 @extends('layouts.create')
 
-@section('title', 'Crear clase de residuo')
+@section('title', 'Registrar clase de residuo')
 
 @section('back_route')
     {{ route('clase-residuos.index') }}
 @endsection
 
-@section('heading', 'Crear clase de residuos')
+@section('heading', 'Registrar clase de residuos')
 
 @section('form_action')
     {{ route('clase-residuos.store') }}

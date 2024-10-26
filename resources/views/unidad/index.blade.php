@@ -2,7 +2,7 @@
 
 @section('title', 'Unidades')
 
-@section('heading', 'Tipos de Unidades')
+@section('heading', 'Tipos de unidades de medición')
 
 @section('filter_content')
     <form method="GET" action="{{ route('unidads.index') }}">

@@ -1,12 +1,12 @@
 @extends('layouts.create')
 
-@section('title', 'Crear Laboratorio')
+@section('title', 'Registrar laboratorio')
 
 @section('back_route')
     {{ route('laboratorios.index') }}
 @endsection
 
-@section('heading', 'Crear Laboratorio')
+@section('heading', 'Registrar laboratorio')
 
 @section('form_action')
     {{ route('laboratorios.store') }}

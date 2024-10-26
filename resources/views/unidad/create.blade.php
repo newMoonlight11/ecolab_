@@ -1,12 +1,12 @@
 @extends('layouts.create')
 
-@section('title', 'Crear Unidad')
+@section('title', 'Registrar unidad')
 
 @section('back_route')
     {{ route('unidads.index') }}
 @endsection
 
-@section('heading', 'Crear Unidad')
+@section('heading', 'Registrar unidad')
 
 @section('form_action')
     {{ route('unidads.store') }}

@@ -2,7 +2,7 @@
 
 @section('title', 'Marcas')
 
-@section('heading', 'Inventario de Marcas')
+@section('heading', 'Marcas de reactivos')
 
 @section('filter_content')
     <form method="GET" action="{{ route('marcas.index') }}">

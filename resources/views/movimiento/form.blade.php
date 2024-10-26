@@ -16,7 +16,7 @@
         {!! $errors->first('descripcion', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
     </div>
     <div class="form-group mb-2 mb20">
-        <label for="tipo_movimiento" class="form-label">{{ __('Tipo de Movimiento') }}</label>
+        <label for="tipo_movimiento" class="form-label">{{ __('Tipo de movimiento') }}</label>
         <select name="tipo_movimiento" id="tipo_movimiento"
             class="form-control bg-white rounded-4 @error('tipo_movimiento') is-invalid @enderror">
             <option value="">{{ 'Seleccione un tipo de movimiento' }}</option>

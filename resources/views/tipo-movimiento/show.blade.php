@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    {{ $tipoMovimiento->name ?? __('Show') . " " . __('Tipo Movimiento') }}
+    {{ $tipoMovimiento->name ?? __('Show') . " " . __('Tipos de movimiento') }}
 @endsection
 
 @section('content')
@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
                         <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Tipo Movimiento</span>
+                            <span class="card-title">{{ __('Show') }} Tipos de movimiento</span>
                         </div>
                         <div class="float-right">
                             <a class="btn btn-primary btn-sm" href="{{ route('tipo_movimiento.index') }}"> {{ __('Back') }}</a>

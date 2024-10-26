@@ -2,7 +2,7 @@
 
 @section('title', 'Laboratorios')
 
-@section('heading', 'Inventario de Laboratorios')
+@section('heading', 'Laboratorios de química de la UNAB')
 
 @section('filter_content')
     <form method="GET" action="{{ route('laboratorios.index') }}">

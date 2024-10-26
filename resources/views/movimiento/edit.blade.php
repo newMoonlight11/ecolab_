@@ -1,12 +1,12 @@
 @extends('layouts.edit')
 
-@section('title', 'Editar Marca')
+@section('title', 'Editar movimiento')
 
 @section('back_route')
     {{ route('movimientos.index') }}
 @endsection
 
-@section('heading', 'Editar Marca')
+@section('heading', 'Editar movimiento')
 
 @section('form_action')
     {{ route('movimientos.update', $movimiento->id) }}

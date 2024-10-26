@@ -74,6 +74,24 @@
     </div>
 @endsection
 
+<div class="modal fade" id="claseResiduoModal" tabindex="-1" aria-labelledby="claseResiduoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 rounded-4 px-3 bg-white">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary text-center w-100 fs-3" id="familiaModalLabel">Detalles de la clase de residuos
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mb-2 mb20">
+                    <strong>Nombre:</strong>
+                    <span id="modalNombre"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     function mostrarModalClaseResiduo(claseResiduo) {
         document.getElementById('modalNombre').textContent = claseResiduo.nombre;

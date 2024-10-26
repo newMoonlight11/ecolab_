@@ -1,12 +1,12 @@
 @extends('layouts.create')
 
-@section('title', 'Crear reactivo')
+@section('title', 'Registrar reactivo')
 
 @section('back_route')
     {{ route('reactivos.index') }}
 @endsection
 
-@section('heading', 'Crear reactivo')
+@section('heading', 'Registrar reactivo')
 
 @section('form_action')
     {{ route('reactivos.store') }}
