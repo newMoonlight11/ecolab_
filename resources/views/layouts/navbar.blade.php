@@ -14,17 +14,48 @@
             <ul class="navbar-nav me-auto">
                 @if (Route::has('login'))
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('reactivos.index') }}">{{ __('Reactivos') }}</a>
+                        <a class="nav-link" href="{{ route('clase-residuos.index') }}">{{ __('Clases residuos') }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('familias.index') }}">{{ __('Familias') }}</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ route('item_movimiento.index') }}">{{ __('Items movimientos') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('laboratorios.index') }}">{{ __('Laboratorios') }}</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('marcas.index') }}">{{ __('Marcas') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('movimientos.index') }}">{{ __('Movimientos') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('reactivos.index') }}">{{ __('Reactivos') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('residuos.index') }}">{{ __('Residuos') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('residuo-laboratorios.index') }}">{{ __('Stock de residuos') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('roles.index') }}">{{ __('Roles') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('stock_reactivos.index') }}">{{ __('Stock de reactivos') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('tipo_movimiento.index') }}">{{ __('Tipos de movimientos') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('unidads.index') }}">{{ __('Unidades') }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('users.index') }}">{{ __('Usuarios') }}</a>
                     </li>
+                    
                 @endif
             </ul>
 

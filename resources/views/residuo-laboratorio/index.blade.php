@@ -8,7 +8,7 @@
     <form method="GET" action="{{ route('residuo-laboratorios.index') }}">
         <div class="row mb-4">
             <div class="d-flex justify-content-between flex-wrap gap-3">
-                <div class="text-center">
+                <div class="text-center col-1">
                     <p>Fecha de stock</p>
                     <input type="date" name="fecha_stock" class="form-control bg-white rounded-4" style="text-align: center;"
                         placeholder="---" value="{{ request()->get('fecha_stock') }}">
@@ -23,7 +23,7 @@
                     <input type="text" name="residuo_id" class="form-control bg-white rounded-4"
                         style="text-align: center;" placeholder="---" value="{{ request()->get('residuo_id') }}">
                 </div>
-                <div class="col-md-1 text-center">
+                <div class="text-center">
                     <p>Laboratorio</p>
                     <input type="text" name="laboratorio_id" class="form-control bg-white rounded-4"
                         style="text-align: center;" placeholder="---" value="{{ request()->get('laboratorio_id') }}">

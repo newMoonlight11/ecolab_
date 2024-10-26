@@ -54,5 +54,13 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'ver_residuos', 'description' => 'Ver residuos']);
         Permission::create(['name' => 'editar_residuo', 'description' => 'Editar residuos']);
         Permission::create(['name' => 'eliminar_residuo', 'description' => 'Eliminar residuos']);
+        Permission::create(['name' => 'registrar_unidad', 'description' => 'Registrar unidades']);
+        Permission::create(['name' => 'ver_unidad', 'description' => 'Ver unidades']);
+        Permission::create(['name' => 'editar_unidad', 'description' => 'Editar unidades']);
+        Permission::create(['name' => 'eliminar_unidad', 'description' => 'Eliminar unidades']);
+        Permission::create(['name' => 'registrar_prestamo', 'description' => 'Registrar préstamos']);
+        Permission::create(['name' => 'ver_prestamo', 'description' => 'Ver préstamos']);
+        Permission::create(['name' => 'editar_prestamo', 'description' => 'Editar préstamos']);
+        Permission::create(['name' => 'eliminar_prestamo', 'description' => 'Eliminar préstamos']);
     }
 }

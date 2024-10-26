@@ -9,8 +9,9 @@
 
     <title>ECOLAB</title>
     <link rel="stylesheet" href="/css/styles.css">
-    <link rel="icon" href={{ asset('images/favicon.svg') }} type="image/svg+xml">
-
+    <link rel="icon" href="{{ asset('images/main_icon.png') }}?v=1.0" type="image/png">
+    <link rel="icon" href="{{ asset('images/main_icon.svg') }}?v=1.0" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="{{ asset('images/main_icon.png') }}?v=1.0">
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
   </head>
@@ -68,8 +69,6 @@
 
 <body>
     <div >
-
-
         @include('layouts.navbar')
         <main class="py-4 bg-bground">
             @yield('content')

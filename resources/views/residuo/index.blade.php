@@ -8,12 +8,12 @@
     <form method="GET" action="{{ route('residuos.index') }}">
         <div class="row mb-4">
             <div class="d-flex justify-content-between flex-wrap gap-3">
-                <div class="text-center">
+                <div class="text-center col-3">
                     <p>Nombre</p>
                     <input type="text" name="nombre" class="form-control bg-white rounded-4" style="text-align: center;"
                         placeholder="---" value="{{ request()->get('nombre') }}">
                 </div>
-                <div class="text-center">
+                <div class="text-center col-3">
                     <p>Clase</p>
                     <input type="text" name="clase_residuo_id" class="form-control bg-white rounded-4" style="text-align: center;"
                         placeholder="---" value="{{ request()->get('clase_residuo_id') }}">

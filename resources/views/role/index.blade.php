@@ -7,8 +7,8 @@
 @section('filter_content')
     <form method="GET" action="{{ route('roles.index') }}">
         <div class="row mb-4">
-            <div class="d-flex justify-content-between flex-wrap gap-2">
-                <div class="col-md-1 text-center">
+            <div class="d-flex flex-wrap gap-2 justify-content-end">
+                <div>
                     <p>Agregar</p>
                     <a href="{{ route('roles.create') }}" class="btn btn-primary rounded-3 btn-xxl"
                         data-placement="center"><i class="bi bi-plus-circle fs-5"></i></a>
