@@ -54,6 +54,18 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'ver_residuos', 'description' => 'Ver residuos']);
         Permission::create(['name' => 'editar_residuo', 'description' => 'Editar residuos']);
         Permission::create(['name' => 'eliminar_residuo', 'description' => 'Eliminar residuos']);
+        Permission::create(['name' => 'registrar_stock_residuo', 'description' => 'Registrar stock de residuos']);
+        Permission::create(['name' => 'ver_stock_residuo', 'description' => 'Ver stock de residuos']);
+        Permission::create(['name' => 'editar_stock_residuo', 'description' => 'Editar stock de residuos']);
+        Permission::create(['name' => 'eliminar_stock_residuo', 'description' => 'Eliminar stock de residuos']);
+        Permission::create(['name' => 'registrar_stock_reactivo', 'description' => 'Registrar stock de reactivos']);
+        Permission::create(['name' => 'ver_stock_reactivo', 'description' => 'Ver stock de reactivos']);
+        Permission::create(['name' => 'editar_stock_reactivo', 'description' => 'Editar stock de reactivos']);
+        Permission::create(['name' => 'eliminar_stock_reactivo', 'description' => 'Eliminar stock de reactivos']);
+        Permission::create(['name' => 'registrar_tipo_movimiento', 'description' => 'Registrar tipos de movimiento']);
+        Permission::create(['name' => 'ver_tipo_movimiento', 'description' => 'Ver tipos de movimiento']);
+        Permission::create(['name' => 'editar_tipo_movimiento', 'description' => 'Editar tipos de movimiento']);
+        Permission::create(['name' => 'eliminar_tipo_movimiento', 'description' => 'Eliminar tipos de movimiento']);
         Permission::create(['name' => 'registrar_unidad', 'description' => 'Registrar unidades']);
         Permission::create(['name' => 'ver_unidad', 'description' => 'Ver unidades']);
         Permission::create(['name' => 'editar_unidad', 'description' => 'Editar unidades']);

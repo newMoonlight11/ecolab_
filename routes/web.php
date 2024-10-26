@@ -26,7 +26,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('/users', UserController::class);Route::resource('movimientos', MovimientoController::class);
+Route::resource('/users', UserController::class)->middleware('can:ver_usuarios');
+Route::resource('movimientos', MovimientoController::class);
 Route::resource('tipo_movimiento', TipoMovimientoController::class);
 Route::resource('item_movimiento', ItemMovimientoController::class);
 Route::resource('stock_reactivos', StockReactivoController::class);
@@ -38,9 +39,10 @@ Route::resource('marcas', MarcaController::class);
 Route::resource('unidads', UnidadController::class);
 
 //crud de roles
-Route::resource('roles', RoleController::class);
+Route::resource('roles', RoleController::class)->middleware('can:ver_roles');
 
 Route::resource('movimientos', MovimientoController::class);
+Route::put('movimientos/{movimiento}', [MovimientoController::class, 'destroy'])->middleware('can:eliminar_movimiento');
 Route::resource('tipo_movimiento', TipoMovimientoController::class);
 Route::resource('item_movimiento', ItemMovimientoController::class);
 Route::resource('stock_reactivos', StockReactivoController::class);
