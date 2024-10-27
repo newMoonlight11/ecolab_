@@ -1,100 +1,198 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-    <div class="container">
-        <a class="navbar-brand" href="{{ url('/home') }}">
-            {{-- {{ config('app.name', 'Ecolab') }} --}}
+{{-- <nav class="navbar navbar-light bg-white shadow-sm">
+    <div class="container-fluid">
+        <!-- Toggle Button, que siempre estará visible en la esquina superior izquierda -->
+        @auth
+            <button class="navbar-toggler" style="top: 10px; left: 10px;" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        @endauth
+
+        <!-- Logo Ecolab centrado -->
+        <a class="navbar-brand mx-auto" href="{{ url('/home') }}">
             <img src="{{ asset('images/ecolab_blue1.png') }}" alt="Ecolab" style="height: 25px;">
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-            <span class="navbar-toggler-icon"></span>
-        </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Left Side Of Navbar -->
-            <ul class="navbar-nav me-auto">
+        <!-- Dropdown de Usuario, fijo a la derecha -->
+        <div class="dropdown ms-auto me-3">
+            @auth
+                <button class="btn btn-light bg-white dropdown-toggle" type="button" id="userMenu"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ Auth::user()->name }}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end bg-white" aria-labelledby="userMenu">
+                    <li>
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </a>
+                    </li>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </ul>
+            @else
+                <!-- Mostrar el link de inicio de sesión si el usuario no está autenticado -->
                 @if (Route::has('login'))
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('clase-residuos.index') }}">{{ __('Clases residuos') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('familias.index') }}">{{ __('Familias') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('item_movimiento.index') }}">{{ __('Items movimientos') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('laboratorios.index') }}">{{ __('Laboratorios') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('marcas.index') }}">{{ __('Marcas') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('movimientos.index') }}">{{ __('Movimientos') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('reactivos.index') }}">{{ __('Reactivos') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('residuos.index') }}">{{ __('Residuos') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('residuo-laboratorios.index') }}">{{ __('Stock de residuos') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('roles.index') }}">{{ __('Roles') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('stock_reactivos.index') }}">{{ __('Stock de reactivos') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('tipo_movimiento.index') }}">{{ __('Tipos de movimientos') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('unidads.index') }}">{{ __('Unidades') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('users.index') }}">{{ __('Usuarios') }}</a>
-                    </li>
-                    
+                    <a class="nav-link" href="{{ route('login') }}">{{ __('Inicia sesión') }}</a>
                 @endif
-            </ul>
+                @if (Route::has('register'))
+                    <a class="nav-link" href="{{ route('register') }}">{{ __('Regístrate') }}</a>
+                @endif
+            @endauth
+        </div>
 
-            <!-- Right Side Of Navbar -->
-            <ul class="navbar-nav ms-auto">
-                <!-- Authentication Links -->
-                @guest
+        <!-- Links de navegación según roles y permisos -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto">
+                @auth
+                    @if (Auth::user()->hasRole('admin'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('clase-residuos.index') }}">{{ __('Clases residuos') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('familias.index') }}">{{ __('Familias') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"
+                                href="{{ route('item_movimiento.index') }}">{{ __('Items movimientos') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('laboratorios.index') }}">{{ __('Laboratorios') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('marcas.index') }}">{{ __('Marcas') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('movimientos.index') }}">{{ __('Movimientos') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('reactivos.index') }}">{{ __('Reactivos') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('residuos.index') }}">{{ __('Residuos') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"
+                                href="{{ route('residuo-laboratorios.index') }}">{{ __('Stock de residuos') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('roles.index') }}">{{ __('Roles') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"
+                                href="{{ route('stock_reactivos.index') }}">{{ __('Stock de reactivos') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"
+                                href="{{ route('tipo_movimiento.index') }}">{{ __('Tipos de movimientos') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('unidads.index') }}">{{ __('Unidades') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('users.index') }}">{{ __('Usuarios') }}</a>
+                        </li>
+                    @elseif(Auth::user()->hasRole('general'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('reactivos.index') }}">{{ __('Reactivos') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('movimientos.create') }}">{{ __('Crear préstamo') }}</a>
+                        </li>
+                    @endif
+                @endauth
+            </ul>
+        </div>
+    </div>
+</nav> --}}
+
+<nav class="navbar navbar-light bg-white shadow-sm">
+    <div class="container-fluid">
+        @auth
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-label="{{ __('Toggle navigation') }}">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        @endauth
+        <div class="offcanvas offcanvas-start bg-white" tabindex="-1" id="offcanvasNavbar"
+            aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 id="offcanvasNavbarLabel"><img src="{{ asset('images/ecolab_blue1.png') }}" style="height: 25px;">
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav flex-column">
+                    @auth
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('clase-residuos.index') }}">{{ __('Clases residuos') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('familias.index') }}">{{ __('Familias') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"
+                                href="{{ route('item_movimiento.index') }}">{{ __('Items movimientos') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('laboratorios.index') }}">{{ __('Laboratorios') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('marcas.index') }}">{{ __('Marcas') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('movimientos.index') }}">{{ __('Movimientos') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('reactivos.index') }}">{{ __('Reactivos') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('residuos.index') }}">{{ __('Residuos') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('roles.index') }}">{{ __('Roles') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('users.index') }}">{{ __('Usuarios') }}</a>
+                        </li>
+                    @endauth
+                </ul>
+            </div>
+        </div>
+        <a class="position-absolute top-2 start-50 translate-middle-x"  href="{{ url('/home') }}">
+            <img src="{{ asset('images/ecolab_blue1.png') }}" alt="Ecolab" style="height: 25px;">
+        </a>
+        <div class="dropdown ms-auto me-3">
+            @auth
+                <button class="btn btn-light bg-white dropdown-toggle" type="button" id="userMenu"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ Auth::user()->name }}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end bg-white" aria-labelledby="userMenu">
+                    <li>
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </a>
+                    </li>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </ul>
+            @else
+                <!-- Mostrar el link de inicio de sesión si el usuario no está autenticado -->
+                <div class="d-flex me-0">
                     @if (Route::has('login'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Inicia sesión') }}</a>
-                        </li>
+                        <a class="nav-link me-3 pb-2 pt-2" href="{{ route('login') }}">{{ __('Inicia sesión') }}</a> <!-- Add margin end -->
                     @endif
-
+                    <br>
                     @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Regístrate') }}</a>
-                        </li>
+                        <a class="nav-link pb-2 pt-2" href="{{ route('register') }}">{{ __('Regístrate') }}</a>
                     @endif
-                @else
-                    <div class="dropdown">
-                        <button class="dropbtn"> {{ Auth::user()->name }}</button>
-                        <div class="dropdown-content">
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                   document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-
-
-                        </div>
-                    </div>
-
-
-                @endguest
-            </ul>
+                </div>
+            @endauth
         </div>
     </div>
 </nav>

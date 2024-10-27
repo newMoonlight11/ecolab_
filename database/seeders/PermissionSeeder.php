@@ -13,7 +13,7 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        Permission::truncate();
+        // Permission::truncate();
         Permission::create(['name' => 'registrar_usuario', 'description' => 'Registrar usuario']);
         Permission::create(['name' => 'ver_usuarios', 'description' => 'Ver usuarios']);
         Permission::create(['name' => 'editar_usuario', 'description' => 'Editar usuarios']);
