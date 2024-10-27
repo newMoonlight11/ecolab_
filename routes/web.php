@@ -26,7 +26,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('/users', UserController::class);Route::resource('movimientos', MovimientoController::class);
+Route::resource('/users', UserController::class);
+Route::resource('movimientos', MovimientoController::class);
 Route::resource('tipo_movimiento', TipoMovimientoController::class);
 Route::resource('item_movimiento', ItemMovimientoController::class);
 Route::resource('stock_reactivos', StockReactivoController::class);
