@@ -15,8 +15,8 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         // Limpiar permisos y roles previos
-        //Permission::truncate();
-        //Role::truncate();
+        // Permission::truncate();
+        // Role::truncate();
         // Crear permisos específicos
         Permission::create(['name' => 'registrar_usuario', 'description' => 'Registrar usuario']);
         Permission::create(['name' => 'ver_usuarios', 'description' => 'Ver usuarios']);

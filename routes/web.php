@@ -32,7 +32,6 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::resource('tipo_movimiento', TipoMovimientoController::class);
     Route::resource('item_movimiento', ItemMovimientoController::class);
     Route::resource('stock_reactivos', StockReactivoController::class);
-
     Route::resource('reactivos', ReactivoController::class);
     Route::resource('familias', FamiliaController::class);
     Route::resource('laboratorios', LaboratorioController::class);
@@ -53,6 +52,5 @@ Route::group(['middleware' => ['role:admin']], function () {
 });
 
 Route::group(['middleware' => ['role:general']], function () {
-    Route::get('/reactivos', [ReactivoController::class, 'index'])->name('reactivos.index');
     Route::get('/prestamos', [PaginasController::class, 'prestamos']);
 });

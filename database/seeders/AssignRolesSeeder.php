@@ -13,13 +13,13 @@ class AssignRolesSeeder extends Seeder
      */
     public function run(): void
     {
-        $adminUser = User::find(6);
+        $adminUser = User::find(1);
         if ($adminUser) {
             $adminUser->assignRole('admin');
         }
 
         // Asignar rol de "general" al usuario con ID 2
-        $generalUser = User::find(7);
+        $generalUser = User::find(2);
         if ($generalUser) {
             $generalUser->assignRole('general');
         }
