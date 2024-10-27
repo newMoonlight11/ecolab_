@@ -1,8 +1,3 @@
-/* Ejemplo de CSS personalizado */
-.bg-bground {
-    background-color: #f8fafc; /* Ajustamos el fondo similar al de la imagen */
-}
-
 .form-control {
     border-radius: 20px;
     padding: 10px;

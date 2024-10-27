@@ -52,5 +52,5 @@ Route::group(['middleware' => ['role:admin']], function () {
 });
 
 Route::group(['middleware' => ['role:general']], function () {
-    Route::get('/prestamos', [PaginasController::class, 'prestamos']);
+    Route::get('/prestamos', [PaginasController::class, 'prestamos'])->name('prestamos');
 });
