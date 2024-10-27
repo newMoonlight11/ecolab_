@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class PermissionSeeder extends Seeder
 {
@@ -13,6 +14,9 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
+        // Limpiar permisos y roles previos
+        //Permission::truncate();
+        //Role::truncate();
         // Crear permisos específicos
         Permission::create(['name' => 'registrar_usuario', 'description' => 'Registrar usuario']);
         Permission::create(['name' => 'ver_usuarios', 'description' => 'Ver usuarios']);
@@ -74,5 +78,14 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'ver_prestamo', 'description' => 'Ver préstamos']);
         Permission::create(['name' => 'editar_prestamo', 'description' => 'Editar préstamos']);
         Permission::create(['name' => 'eliminar_prestamo', 'description' => 'Eliminar préstamos']);
+
+        $adminRole = Role::create(['name' => 'admin']);
+        $generalRole = Role::create(['name' => 'general']);
+
+        // Asignar permisos al rol "admin"
+        $adminRole->givePermissionTo(Permission::all());
+
+        // Asignar permisos específicos al rol "general"
+        $generalRole->givePermissionTo(['ver_reactivos', 'registrar_prestamo']);
     }
 }
