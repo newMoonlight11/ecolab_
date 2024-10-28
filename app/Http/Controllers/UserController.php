@@ -17,19 +17,33 @@ class UserController extends Controller
      */
     public function index(Request $request): View
     {
-        $query = User::query();
+        $query = User::query()->with('roles'); // Asegúrate de cargar los roles para cada usuario
 
+        // Filtro de nombre
         if ($request->filled('name')) {
             $query->where('name', 'like', '%' . $request->input('name') . '%');
         }
 
+        // Filtro de email
         if ($request->filled('email')) {
             $query->where('email', 'like', '%' . $request->input('email') . '%');
         }
 
+        // Filtro de rol
+        if ($request->filled('role')) {
+            $role = $request->input('role');
+            $query->whereHas('roles', function ($q) use ($role) {
+                $q->where('name', $role);
+            });
+        }
+
+        // Paginación
         $users = $query->paginate(10);
 
-        return view('user.index', compact('users'))
+        // Obtener todos los roles para el filtro
+        $roles = Role::all()->pluck('name', 'name');
+
+        return view('user.index', compact('users', 'roles'))
             ->with('i', ($request->input('page', 1) - 1) * $users->perPage());
     }
 

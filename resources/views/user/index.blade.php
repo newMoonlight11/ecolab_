@@ -8,21 +8,42 @@
     <form method="GET" action="{{ route('users.index') }}">
         <div class="row mb-4">
             <div class="d-flex justify-content-between flex-wrap gap-2">
+                <!-- Campo de nombre -->
                 <div class="col-md-3 text-center">
                     <p>Nombre</p>
-                    <input type="text" name="nombre" class="form-control bg-white rounded-4" style="text-align: center;"
-                        placeholder="---" value="{{ request()->get('nombre') }}">
+                    <input type="text" name="name" class="form-control bg-white rounded-4" style="text-align: center;"
+                        placeholder="---" value="{{ request()->get('name') }}">
                 </div>
+
+                <!-- Campo de correo -->
                 <div class="col-md-3 text-center">
                     <p>Correo electrónico</p>
-                    <input type="text" name="nombre" class="form-control bg-white rounded-4" style="text-align: center;"
-                        placeholder="---" value="{{ request()->get('nombre') }}">
+                    <input type="text" name="email" class="form-control bg-white rounded-4" style="text-align: center;"
+                        placeholder="---" value="{{ request()->get('email') }}">
                 </div>
+
+                <!-- Filtro de rol -->
+                <div class="col-md-3 text-center">
+                    <p>Rol</p>
+                    <select name="role" class="form-control bg-white rounded-4" style="text-align: center;">
+                        <option value="">--- Todos los Roles ---</option>
+                        @foreach ($roles as $role)
+                            <option value="{{ $role }}" {{ request()->get('role') == $role ? 'selected' : '' }}>
+                                {{ $role }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Botón de Filtrar -->
                 <div class="col-md-1 text-center">
                     <p>Filtrar</p>
-                    <button type="submit" class="btn btn-primary rounded-3 btn-xxl"><i
-                            class="bi bi-sort-down-alt fs-5"></i></button>
+                    <button type="submit" class="btn btn-primary rounded-3 btn-xxl">
+                        <i class="bi bi-sort-down-alt fs-5"></i>
+                    </button>
                 </div>
+
+                <!-- Botón para Roles -->
                 <div class="col-md-1 text-center">
                     <p>Roles</p>
                     <a href="{{ route('roles.index') }}" class="btn btn-primary rounded-3 btn-xxl"
@@ -43,7 +64,7 @@
 @section('table_content')
     @if ($users->isEmpty())
         <tr>
-            <td colspan="3" class="text-center">No hay usuarios creados.</td>
+            <td colspan="4" class="text-center">No hay usuarios creados.</td>
         </tr>
     @else
         @foreach ($users as $user)
@@ -52,7 +73,7 @@
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>
-                    @if($user->roles->isEmpty())
+                    @if ($user->roles->isEmpty())
                         <span>No tiene roles</span>
                     @else
                         {{ $user->roles->pluck('name')->join(', ') }} <!-- Muestra los roles separados por comas -->

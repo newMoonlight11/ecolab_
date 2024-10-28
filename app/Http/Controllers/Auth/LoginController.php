@@ -36,7 +36,7 @@ class LoginController extends Controller
             return '/home';
         } elseif ($user->hasRole('general')) {
             // Redirige a /prestamos si el usuario es Usuario General
-            return '/prestamos';
+            return '/prestamos/create';
         }
 
         // Redirige a una página predeterminada si no tiene un rol específico

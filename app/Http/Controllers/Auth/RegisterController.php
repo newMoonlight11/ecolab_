@@ -33,10 +33,10 @@ class RegisterController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->hasRole('Administrador')) {
+        if ($user->hasRole('admin')) {
             return '/home';
-        } elseif ($user->hasRole('Usuario General')) {
-            return '/prestamos';
+        } elseif ($user->hasRole('general')) {
+            return '/prestamos/create';
         }
 
         return '/home';
