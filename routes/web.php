@@ -8,8 +8,8 @@ use App\Http\Controllers\ItemMovimientoController;
 use App\Http\Controllers\LaboratorioController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\MovimientoController;
+use App\Http\Controllers\PrestamoController;
 use App\Http\Controllers\UnidadController;
-use App\Http\Controllers\PaginasController;
 use App\Http\Controllers\ResiduoController;
 use App\Http\Controllers\ResiduoLaboratorioController;
 use App\Http\Controllers\RoleController;
@@ -48,9 +48,9 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::resource('clase-residuos', ClaseResiduoController::class);
     Route::resource('residuos', ResiduoController::class);
     Route::resource('residuo-laboratorios', ResiduoLaboratorioController::class);
-    Route::get('/prestamos', [PaginasController::class, 'prestamos']);
+    Route::resource('prestamos', PrestamoController::class);
 });
 
 Route::group(['middleware' => ['role:general']], function () {
-    Route::get('/prestamos', [PaginasController::class, 'prestamos'])->name('prestamos');
+    Route::get('prestamos/create', [PrestamoController::class,  'create'])->name('prestamos.create');
 });

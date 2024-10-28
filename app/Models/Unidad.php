@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\PrestamoController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,5 +22,10 @@ class Unidad extends Model
     public function stockResiduos()
     {
         return $this->hasMany(ResiduoLaboratorio::class, 'unidad_id');
+    }
+
+    public function prestamos()
+    {
+        return $this->hasMany(PrestamoController::class, 'unidad_id');
     }
 }

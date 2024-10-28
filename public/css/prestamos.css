@@ -21,8 +21,8 @@ label {
 }
 button.btn-toggle {
     background-color: white;
-    color: #007bff; /* Azul de Bootstrap */
-    border: 2px solid #007bff;
+    color: #0056b3; /* Azul de Bootstrap */
+    border: 2px solid #0056b3;
     border-radius: 20px;
     padding: 10px 30px;
     transition: all 0.3s ease;
@@ -30,14 +30,14 @@ button.btn-toggle {
 
 /* Cuando el cursor pasa por encima */
 button.btn-toggle:hover {
-    background-color: #007bff;
+    background-color: #0056b3;
     color: white;
-    border-color: #007bff;
+    border-color: #0056b3;
 }
 
 /* Cuando el botón está activo o seleccionado */
 button.btn-toggle.active {
-    background-color: #007bff;
+    background-color: #0056b3;
     color: white;
-    border-color: #007bff;
+    border-color: #0056b3;
 }
