@@ -15,6 +15,7 @@ use App\Http\Controllers\ResiduoLaboratorioController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StockReactivoController;
 use App\Http\Controllers\TipoMovimientoController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
@@ -24,9 +25,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Route::group(['middleware' => ['role:admin']], function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('/users', UserController::class);
     Route::resource('movimientos', MovimientoController::class);
     Route::resource('tipo_movimiento', TipoMovimientoController::class);
