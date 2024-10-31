@@ -39,7 +39,7 @@ class PrestamoController extends Controller
         if ($request->filled('cantidad')) {
             $query->where('cantidad', 'like', '%' . $request->input('cantidad') . '%');
         }
-        
+
         $prestamos = $query->paginate(10);
         return view('prestamo.index', compact('prestamos'))
             ->with('i', ($request->input('page', 1) - 1) * 10);
@@ -89,6 +89,7 @@ class PrestamoController extends Controller
         $laboratorios = Laboratorio::all();
         $reactivos = Reactivo::all();
         $unidads = Unidad::all();
+        //dd($prestamo);
 
         return view('prestamo.edit', compact('prestamo', 'laboratorios', 'reactivos', 'unidads'));
     }

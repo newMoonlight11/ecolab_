@@ -58,21 +58,21 @@
         <div class="form-group mb-2">
             <label for="cantidad" class="form-label">{{ __('Cantidad') }}</label>
             <input type="number" name="cantidad" class="form-control bg-white rounded-4 @error('cantidad') is-invalid @enderror"
-                   id="cantidad" placeholder="Cantidad" value="{{ old('cantidad') }}">
+                   id="cantidad" placeholder="Cantidad" value="{{ old('cantidad', $prestamo?->cantidad) }}">
             {!! $errors->first('cantidad', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
 
         <div class="form-group mb-2">
             <label for="fecha" class="form-label">{{ __('Fecha') }}</label>
             <input type="date" name="fecha" class="form-control bg-white rounded-4 @error('fecha') is-invalid @enderror"
-                   id="fecha" placeholder="Fecha" value="{{ old('fecha') }}">
+                   id="fecha" placeholder="Fecha" value="{{ old('fecha',$prestamo?->fecha) }}">
             {!! $errors->first('fecha', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
 
         <div class="form-group mb-2">
             <label for="email" class="form-label">{{ __('Email') }}</label>
             <input type="email" name="email" class="form-control bg-white rounded-4 @error('email') is-invalid @enderror"
-                   id="email" placeholder="Email" value="{{ old('email') }}">
+                   id="email" placeholder="Email" value="{{ old('email',$prestamo?->email) }}">
             {!! $errors->first('email', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
         <!-- Botón de enviar -->
