@@ -48,9 +48,10 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::resource('clase-residuos', ClaseResiduoController::class);
     Route::resource('residuos', ResiduoController::class);
     Route::resource('residuo-laboratorios', ResiduoLaboratorioController::class);
-    Route::resource('prestamos', PrestamoController::class);
+    // Route::resource('prestamos', PrestamoController::class);
 });
 
 Route::group(['middleware' => ['role:general']], function () {
     Route::get('prestamos/create', [PrestamoController::class,  'create'])->name('prestamos.create');
+    Route::post('prestamos/store', [PrestamoController::class, 'store'])->name('prestamos.store');
 });
