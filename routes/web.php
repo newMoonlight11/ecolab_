@@ -27,31 +27,62 @@ Auth::routes();
 
 Route::group(['middleware' => ['role:admin']], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});
+Route::middleware(['auth', 'can:gestionar_usuarios'])->group(function () {
     Route::resource('/users', UserController::class);
+});
+Route::middleware(['auth', 'can:gestionar_movimientos'])->group(function () {
     Route::resource('movimientos', MovimientoController::class);
+});
+Route::middleware(['auth', 'can:gestionar_tipos_movimiento'])->group(function () {
     Route::resource('tipo_movimiento', TipoMovimientoController::class);
+});
+Route::middleware(['auth', 'can:gestionar_items_movimiento'])->group(function () {
     Route::resource('item_movimiento', ItemMovimientoController::class);
+});
+Route::middleware(['auth', 'can:gestionar_stock_reactivos'])->group(function () {
     Route::resource('stock_reactivos', StockReactivoController::class);
+});
+Route::middleware(['auth', 'can:gestionar_reactivos'])->group(function () {
     Route::resource('reactivos', ReactivoController::class);
+});
+Route::middleware(['auth', 'can:gestionar_familias'])->group(function () {
     Route::resource('familias', FamiliaController::class);
+});
+Route::middleware(['auth', 'can:gestionar_laboratorios'])->group(function () {
     Route::resource('laboratorios', LaboratorioController::class);
+});
+Route::middleware(['auth', 'can:gestionar_marcas'])->group(function () {
     Route::resource('marcas', MarcaController::class);
+});
+Route::middleware(['auth', 'can:gestionar_unidades'])->group(function () {
     Route::resource('unidads', UnidadController::class);
-
-    //crud de roles
-    Route::resource('roles', RoleController::class);
-
-    Route::resource('movimientos', MovimientoController::class);
-    Route::resource('tipo_movimiento', TipoMovimientoController::class);
-    Route::resource('item_movimiento', ItemMovimientoController::class);
-    Route::resource('stock_reactivos', StockReactivoController::class);
-    Route::resource('clase-residuos', ClaseResiduoController::class);
-    Route::resource('residuos', ResiduoController::class);
-    Route::resource('residuo-laboratorios', ResiduoLaboratorioController::class);
-    // Route::resource('prestamos', PrestamoController::class);
 });
 
-Route::group(['middleware' => ['role:general']], function () {
-    Route::get('prestamos/create', [PrestamoController::class,  'create'])->name('prestamos.create');
+//crud de roles
+Route::middleware(['auth', 'can:gestionar_roles'])->group(function () {
+    Route::resource('roles', RoleController::class);
+});
+Route::middleware(['auth', 'can:gestionar_clases_residuo'])->group(function () {
+    Route::resource('clase-residuos', ClaseResiduoController::class);
+});
+Route::middleware(['auth', 'can:gestionar_residuos'])->group(function () {
+    Route::resource('residuos', ResiduoController::class);
+});
+Route::middleware(['auth', 'can:gestionar_stock_residuos'])->group(function () {
+    Route::resource('residuo-laboratorios', ResiduoLaboratorioController::class);
+});
+Route::middleware(['auth', 'can:registrar_prestamo'])->group(function () {
+    Route::get('prestamos/create', [PrestamoController::class, 'create'])->name('prestamos.create');
     Route::post('prestamos/store', [PrestamoController::class, 'store'])->name('prestamos.store');
+});
+Route::middleware(['auth', 'can:ver_prestamo'])->group(function () {
+    Route::get('prestamos', [PrestamoController::class, 'index'])->name('prestamos.index');
+});
+Route::middleware(['auth', 'can:editar_prestamo'])->group(function () {
+    Route::get('prestamos/{id}/edit', [PrestamoController::class, 'edit'])->name('prestamos.edit');
+    Route::put('prestamos/{id}', [PrestamoController::class, 'update'])->name('prestamos.update');
+});
+Route::middleware(['auth', 'can:eliminar_prestamo'])->group(function () {
+    Route::delete('prestamos/{id}', [PrestamoController::class, 'destroy'])->name('prestamos.destroy');
 });
