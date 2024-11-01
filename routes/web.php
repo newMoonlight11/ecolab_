@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClaseResiduoController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReactivoController;
 use App\Http\Controllers\FamiliaController;
@@ -86,3 +87,5 @@ Route::middleware(['auth', 'can:editar_prestamo'])->group(function () {
 Route::middleware(['auth', 'can:eliminar_prestamo'])->group(function () {
     Route::delete('prestamos/{id}', [PrestamoController::class, 'destroy'])->name('prestamos.destroy');
 });
+
+Route::get('send-email', [EmailController::class, 'sendTestEmail'])->name('sendEmail');
