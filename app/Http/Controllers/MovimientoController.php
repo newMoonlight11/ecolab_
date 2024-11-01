@@ -6,6 +6,7 @@ use App\Models\Movimiento;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\MovimientoRequest;
+use App\Models\Reactivo;
 use App\Models\TipoMovimiento;
 use App\Models\User;
 use Illuminate\Support\Facades\Redirect;
@@ -65,12 +66,11 @@ class MovimientoController extends Controller
     {
         $validatedData = $request->validated();
         Log::info('Validated Data:', $validatedData);
-        // Asignar el ID del usuario autenticado de manera segura
         $validatedData['usuario_id'] = Auth::id();
+        $validatedData['estado'] = 'sin asignar';
 
-        // Crear el movimiento con los datos validados
-        Movimiento::create($validatedData);
-        return Redirect::route('movimientos.index')
+        $movimiento =  Movimiento::create($validatedData);
+        return Redirect::route('movimientos.show', $movimiento->id)
             ->with('success', 'Se ha registrado el movimiento satisfactoriamente');
     }
 
@@ -79,13 +79,20 @@ class MovimientoController extends Controller
      */
     public function show($id)
     {
-        $movimiento = Movimiento::with(['tipoMovimiento'])->find($id);
+        $movimiento = Movimiento::with(['tipoMovimiento', 'items.reactivo', 'user'])->find($id);
+        $tipoMovimientos = TipoMovimiento::all();
+        $users = User::all();
+        $reactivos = Reactivo::all();
 
         if (!$movimiento) {
             return response()->json(['error' => 'Movimiento no encontrado'], 404);
         }
 
-        return response()->json($movimiento);
+        if (request()->wantsJson()) {
+            return response()->json($movimiento);
+        }
+
+        return view('movimiento.show', compact('movimiento', 'tipoMovimientos', 'users', 'reactivos'));
     }
 
     /**

@@ -62,8 +62,25 @@ class ItemMovimientoController extends Controller
      */
     public function store(ItemMovimientoRequest $request): RedirectResponse
     {
-        ItemMovimiento::create($request->validated());
+        $item = ItemMovimiento::create($request->validated());
 
+        // Cargar relaciones necesarias para devolver datos completos
+        $item->load('reactivo');
+
+        $movimiento = Movimiento::find($request->movimiento_id);
+        if ($movimiento && $movimiento->estado === 'sin asignar') {
+            $movimiento->update(['estado' => 'asignado']);
+        }
+
+        // Si la solicitud es AJAX, devolver JSON para el modal
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'item' => $item
+            ]);
+        }
+
+        // Si no es AJAX, redirigir como en una solicitud normal
         return Redirect::route('item_movimiento.index')
             ->with('success', 'Item de movimiento creado satisfactoriamente');
     }

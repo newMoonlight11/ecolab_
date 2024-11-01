@@ -19,6 +19,7 @@
                         <form method="POST" action="@yield('form_action')" role="form" enctype="multipart/form-data">
                             @csrf
                             @yield('form_content')
+                            @stack('scripts')
                         </form>
                     </div>
                 </div>

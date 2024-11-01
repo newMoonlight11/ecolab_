@@ -26,6 +26,7 @@ class MovimientoRequest extends FormRequest
             'descripcion' => 'required|string',     // El campo 'text' no tiene límite de longitud
             'tipo_movimiento' => 'required|integer|exists:tipo_movimiento,id',  // Verificar si el campo es singular
             'usuario_id' => 'required|integer|exists:users,id',                 // Validación de existencia
+            'estado' => 'nullable|string',
         ];
         
     }

@@ -29,6 +29,11 @@
                             class="bi bi-sort-down-alt fs-5"></i></button>
                 </div>
                 <div class="text-center">
+                    <p>Añadir al stock</p>
+                    <button type="submit" class="btn btn-primary rounded-3 btn-xxl"><i
+                            class="bi bi-house-add fs-5"></i></button>
+                </div>
+                <div class="text-center">
                     <p>Agregar</p>
                     <a href="{{ route('movimientos.create') }}" class="btn btn-primary rounded-3 btn-xxl"
                         data-placement="center"><i class="bi bi-plus-circle fs-5"></i></a>
@@ -44,6 +49,7 @@
 	<th >Descripcion</th>
 	<th >Tipo</th>
     <th >Usuario</th>
+    <th >Estado</th>
 @endsection
 
 @section('table_content')
@@ -59,12 +65,16 @@
                 <td>{{ Str::limit($movimiento->descripcion, 50) }}</td>
                 <td>{{ $movimiento->tipoMovimiento ? $movimiento->tipoMovimiento->nombre : 'Sin tipo de movimiento' }}</td>
                 <td>{{ $movimiento->user ? $movimiento->user->name: 'Sin usuario'}}</td>
+                <td>{{ $movimiento->estado }}</td>
                 <td class="text-end">
                     <form action="{{ route('movimientos.destroy', $movimiento->id) }}" method="POST" class="d-inline">
+                        <a class="btn btn-sm" href="{{ route('movimientos.show', $movimiento->id) }}">
+                            <i class="bi bi-bag-plus-fill text-primary fs-5"></i>
+                        </a>
                         <a class="btn btn-sm" href="javascript:void(0)"
                             onclick="mostrarModalMovimiento({{ json_encode($movimiento) }})" data-bs-toggle="modal"
                             data-bs-target="#movimientoModal">
-                            <i class="bi bi-search text-primary fs-5"></i>
+                            <i class="bi bi-search text-blues fs-5"></i>
                         </a>
                         <a class="btn btn-sm" href="{{ route('movimientos.edit', $movimiento->id) }}">
                             <i class="bi bi-pencil text-pop fs-5"></i>
