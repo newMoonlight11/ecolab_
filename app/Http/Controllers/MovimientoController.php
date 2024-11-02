@@ -158,21 +158,23 @@ class MovimientoController extends Controller
             $stockReactivo = StockReactivo::firstOrCreate(
                 [
                     'reactivo_id' => $item->reactivo_id,
-                    'cantidad_existencia' => 0,
-                    'fecha_stock' => date("Y-m-d"),
                     'laboratorio_id' => $item->laboratorio_id,
-                    'unidad_id'=>$item->unidad_id
-                ] // Valor inicial si no existe
+                    'unidad_id' => $item->unidad_id
+                ],
+                ['cantidad_existencia' => 0, 'fecha_stock' => now()]
             );
 
-            // Actualizar el stock en función del tipo de movimiento
-            if ($movimiento->tipo_movimiento ==  EnumsTipoMovimiento::COMPRA->getId()) {
+            if ($movimiento->tipo_movimiento == EnumsTipoMovimiento::COMPRA->getId()) {
                 $stockReactivo->increment('cantidad_existencia', $item->cantidad);
             } elseif ($movimiento->tipo_movimiento == EnumsTipoMovimiento::PRESTAMO->getId()) {
-                $stockReactivo->decrement('cantidad_existencia', $item->cantidad);
+                if ($stockReactivo->cantidad_existencia >= $item->cantidad) {
+                    $stockReactivo->decrement('cantidad_existencia', $item->cantidad);
+                } else {
+                    return response()->json(['error' => 'Cantidad insuficiente en stock para realizar el préstamo'], 422);
+                }
             }
-        }
 
+        }
         // Actualizar el estado a "asignado"
         $movimiento->update(['estado' => 'asignado']);
 

@@ -77,10 +77,10 @@ class ItemMovimientoController extends Controller
         // Cargar relaciones necesarias para devolver datos completos
         $item->load('reactivo');
 
-        $movimiento = Movimiento::find($request->movimiento_id);
-        if ($movimiento && $movimiento->estado === 'sin asignar') {
-            $movimiento->update(['estado' => 'asignado']);
-        }
+        // $movimiento = Movimiento::find($request->movimiento_id);
+        // if ($movimiento && $movimiento->estado === 'sin asignar') {
+        //     $movimiento->update(['estado' => 'asignado']);
+        // }
 
         // Si la solicitud es AJAX, devolver JSON para el modal
         if ($request->ajax()) {

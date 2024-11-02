@@ -60,15 +60,14 @@
             <td colspan="6" class="text-center">No hay stock de reactivos disponible.</td>
         </tr>
     @else
-        @foreach ($reactivosPaginated as $reactivo)
+        @foreach ($reactivosPaginated as $stock)
             <tr>
-                <td>{{ ++$i }}</td>
-                <td>{{ $reactivo->nombre }}</td>
-                <td>{{ $reactivo->stockReactivos->first()->laboratorio->nombre ?? 'Sin laboratorio' }}</td>
-                <td>{{ $reactivo->stockReactivos->first()->unidad->nombre ?? 'Sin unidad' }}</td>
-                <td>{{ $reactivo->cantidad_existente }}</td>
-                <td>{{ $reactivo->ultima_fecha ? \Carbon\Carbon::parse($reactivo->ultima_fecha)->format('d-m-Y') : 'Sin movimientos' }}
-                </td>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $stock->reactivo->nombre ?? 'Sin reactivo' }}</td>
+                <td>{{ $stock->laboratorio->nombre ?? 'Sin laboratorio' }}</td>
+                <td>{{ $stock->unidad->nombre ?? 'Sin unidad' }}</td>
+                <td>{{ $stock->cantidad_existencia }}</td>
+                <td>{{ \Carbon\Carbon::parse($stock->fecha_stock)->format('d-m-Y') }}</td>
             </tr>
         @endforeach
     @endif
