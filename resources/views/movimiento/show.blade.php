@@ -31,8 +31,8 @@
             </div>
             <div class="form-group mb-2 mb20">
                 <label for="estado" class="form-label">{{ __('Estado') }}</label>
-                <input type="text" name="estado" class="form-control bg-white"
-                    value="{{ $movimiento->estado }}" disabled>
+                <input type="text" name="estado" class="form-control bg-white" value="{{ $movimiento->estado }}"
+                    disabled>
             </div>
             <br>
             <div class="text-center">
@@ -40,12 +40,45 @@
                 <br>
                 <br>
                 <br>
-                <h4>Ítems Agregados</h4>
-                <ul id="items-list">
-                    @foreach ($movimiento->items as $item)
-                        <li>{{ $item->reactivo->nombre }} - Cantidad: {{ $item->cantidad }}</li>
-                    @endforeach
-                </ul>
+                <h4>Ítems agregados</h4>
+                <br>
+                <br>
+                <div class="table-responsive">
+                    <table class="table table-hover table-border-0 table-bg-white table-rounded-4">
+                        <thead>
+                            <tr class="text-center">
+                                <th class="col-md-1">#</th>
+                                <th>Nombre del reactivo</th>
+                                <th>Cantidad</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($movimiento->items as $index => $item)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $item->reactivo->nombre }}</td>
+                                    <td>{{ $item->cantidad }}</td>
+                                    <td class="text-center">
+                                        <form action="{{ route('item_movimiento.destroy', $item->id) }}" method="POST"
+                                            onsubmit="return confirm('¿Estás seguro de eliminar este ítem?');"
+                                            class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm rounded-3">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4" class="text-center">No hay ítems agregados.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -91,43 +124,43 @@
     </div>
 @endsection
 @push('scripts')
-<script>
-    // Función para mostrar el modal
-    function showItemModal() {
-        const itemModal = new bootstrap.Modal(document.getElementById('itemModal'));
-        itemModal.show();
-    }
+    <script>
+        // Función para mostrar el modal
+        function showItemModal() {
+            const itemModal = new bootstrap.Modal(document.getElementById('itemModal'));
+            itemModal.show();
+        }
 
-    // Función para enviar el formulario de ítem por AJAX
-    function submitItemForm() {
-        // Datos del formulario
-        const formData = new FormData(document.getElementById('itemForm'));
+        // Función para enviar el formulario de ítem por AJAX
+        function submitItemForm() {
+            // Datos del formulario
+            const formData = new FormData(document.getElementById('itemForm'));
 
-        fetch("{{ route('item_movimiento.store') }}", {
-                method: "POST",
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Cerrar el modal
-                    const itemModal = bootstrap.Modal.getInstance(document.getElementById('itemModal'));
-                    itemModal.hide();
+            fetch("{{ route('item_movimiento.store') }}", {
+                    method: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Cerrar el modal
+                        const itemModal = bootstrap.Modal.getInstance(document.getElementById('itemModal'));
+                        itemModal.hide();
 
-                    // Limpiar el formulario
-                    document.getElementById('itemForm').reset();
+                        // Limpiar el formulario
+                        document.getElementById('itemForm').reset();
 
-                    // Actualizar la lista de ítems
-                    const itemList = document.getElementById('items-list');
-                    itemList.innerHTML += `<li>${data.item.reactivo.nombre} - Cantidad: ${data.item.cantidad}</li>`;
-                } else {
-                    alert("Hubo un error al añadir el ítem.");
-                }
-            })
-            .catch(error => console.error('Error:', error));
-    }
-</script>
+                        // Actualizar la lista de ítems
+                        const itemList = document.getElementById('items-list');
+                        itemList.innerHTML += `<li>${data.item.reactivo.nombre} - Cantidad: ${data.item.cantidad}</li>`;
+                    } else {
+                        alert("Hubo un error al añadir el ítem.");
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
 @endpush

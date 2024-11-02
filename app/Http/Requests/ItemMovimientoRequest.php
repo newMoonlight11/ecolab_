@@ -25,6 +25,8 @@ class ItemMovimientoRequest extends FormRequest
             'cantidad' => 'required|integer|min:1',  // Asegurar que sea un número entero y positivo
             'reactivo_id' => 'required|exists:reactivos,id',  // Validar que exista en la tabla 'reactivos'
             'movimiento_id' => 'required|exists:movimientos,id',  // Validar que exista en la tabla 'movimientos'
+            'laboratorio_id' => 'required|exists:laboratorio,id',  // Verificar que el laboratorio exista
+            'unidad_id' => 'required|exists:unidad,id',  // Verificar que la unidad exista
         ];
     }
 }

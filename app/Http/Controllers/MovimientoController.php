@@ -7,8 +7,10 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\MovimientoRequest;
 use App\Models\Reactivo;
+use App\Models\StockReactivo;
 use App\Models\TipoMovimiento;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
@@ -125,4 +127,45 @@ class MovimientoController extends Controller
         return Redirect::route('movimientos.index')
             ->with('success', 'Se ha eliminado el movimiento satisfactoriamente');
     }
+
+    public function asignar($id): JsonResponse
+{
+    // Obtener el movimiento con sus relaciones de ítems
+    $movimiento = Movimiento::with('items')->find($id);
+
+    // Verificar que el movimiento existe
+    if (!$movimiento) {
+        return response()->json(['error' => 'Movimiento no encontrado'], 404);
+    }
+
+    // Verificar que todos los campos del movimiento estén completos
+    if (!$movimiento->fecha_movimiento || !$movimiento->descripcion || !$movimiento->tipo_movimiento || !$movimiento->usuario_id) {
+        return response()->json(['error' => 'Todos los campos del movimiento deben estar completos'], 422);
+    }
+
+    // Verificar que el movimiento tenga al menos un ítem
+    if ($movimiento->items->isEmpty()) {
+        return response()->json(['error' => 'El movimiento debe tener al menos un ítem relacionado'], 422);
+    }
+
+    // Actualizar el estado a "asignado"
+    $movimiento->update(['estado' => 'asignado']);
+
+    // Actualizar el stock de cada reactivo relacionado con los ítems del movimiento
+    foreach ($movimiento->items as $item) {
+        $stockReactivo = StockReactivo::firstOrCreate(
+            ['reactivo_id' => $item->reactivo_id],
+            ['cantidad_existencia' => 0] // Valor inicial si no existe
+        );
+
+        // Actualizar el stock en función del tipo de movimiento
+        if ($movimiento->tipo_movimiento == 'compra') {
+            $stockReactivo->increment('cantidad_existencia', $item->cantidad);
+        } elseif ($movimiento->tipo_movimiento == 'préstamo') {
+            $stockReactivo->decrement('cantidad_existencia', $item->cantidad);
+        }
+    }
+
+    return response()->json(['success' => 'Movimiento asignado y stock actualizado'], 200);
+}
 }
