@@ -141,9 +141,8 @@ class ItemMovimientoController extends Controller
     {
         $item=ItemMovimiento::find($id);
         $idmovimiento=$item->movimiento->id;
-        dd($item);
         $item->delete();
-        return Redirect::route('movimiento.show', $idmovimiento)
+        return Redirect::route('movimientos.show', $idmovimiento)
             ->with('success', 'Item de movimiento eliminado satisfactoriamente');
     }
 }

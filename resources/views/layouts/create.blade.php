@@ -11,7 +11,7 @@
                 <div class="card bg-white border-0 rounded-4">
                     <div class="card-body">
                         <div class="d-flex justify-content-end">
-                            <a class="btn @yield('options')" href="@yield('back_route')"> 
+                            <a class="btn @yield('options')" href="@yield('back_route')">
                                 <i class="bi bi-arrow-left-circle-fill fs-4 text-primary"></i>
                             </a>
                         </div>
@@ -21,6 +21,7 @@
                             @yield('form_content')
                             @stack('scripts')
                         </form>
+                        @yield('other_content')
                     </div>
                 </div>
             </div>

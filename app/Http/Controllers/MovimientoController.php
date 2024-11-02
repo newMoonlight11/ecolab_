@@ -122,6 +122,7 @@ class MovimientoController extends Controller
 
     public function destroy($id): RedirectResponse
     {
+        //dd("delete de moviento");
         Movimiento::find($id)->delete();
 
         return Redirect::route('movimientos.index')
