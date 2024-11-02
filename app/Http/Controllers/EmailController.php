@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Mail;
 class EmailController extends Controller
 {
     public function sendTestEmail (){
-        echo 'se enviará un email';
+        //echo 'se enviará un email';
         Mail::to('prueba@prueba.com')->send(new TestMail());
         return 'se ha enviado exitosamente';
     }
