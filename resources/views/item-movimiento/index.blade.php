@@ -8,20 +8,30 @@
     <form method="GET" action="{{ route('item_movimiento.index') }}">
         <div class="row mb-4">
             <div class="d-flex justify-content-between flex-wrap gap-2">
-                <div class="col-md-3 text-center">
+                <div class="col-md-1 text-center">
                     <p>Cantidad</p>
                     <input type="number" name="cantidad" class="form-control bg-white rounded-4" style="text-align: center;"
                         placeholder="---" value="{{ request()->get('cantidad') }}">
                 </div>
-                <div class="col-md-3 text-center">
+                <div class="col-md-2 text-center">
                     <p>Reactivo</p>
                     <input type="text" name="reactivo_id" class="form-control bg-white rounded-4"
                         style="text-align: center;" placeholder="---" value="{{ request()->get('reactivo_id') }}">
                 </div>
-                <div class="col-md-3 text-center">
+                <div class="col-md-2 text-center">
                     <p>Movimiento</p>
                     <input type="text" name="movimiento_id" class="form-control bg-white rounded-4"
                         style="text-align: center;" placeholder="---" value="{{ request()->get('movimiento_id') }}">
+                </div>
+                <div class="col-md-2 text-center">
+                    <p>Laboratorio</p>
+                    <input type="text" name="Laboratorio_id" class="form-control bg-white rounded-4"
+                        style="text-align: center;" placeholder="---" value="{{ request()->get('Laboratorio_id') }}">
+                </div>
+                <div class="col-md-1 text-center">
+                    <p>unidad</p>
+                    <input type="text" name="unidad_id" class="form-control bg-white rounded-4"
+                        style="text-align: center;" placeholder="---" value="{{ request()->get('unidad_id') }}">
                 </div>
                 <div class="col-md-1 text-center">
                     <p>Filtrar</p>
@@ -43,6 +53,8 @@
     <th>Cantidad</th>
     <th>Reactivo</th>
     <th>Movimiento</th>
+    <th>Laboratorio</th>
+    <th>Unidad</th>
 @endsection
 
 @section('table_content')
@@ -57,12 +69,14 @@
                 <td>{{ $itemMovimiento->cantidad }}</td>
                 <td>{{ $itemMovimiento->reactivo_id ? $itemMovimiento->reactivo->nombre : 'Sin reactivo' }}</td>
                 <td>{{ $itemMovimiento->movimiento_id ? Str::limit($itemMovimiento->movimiento->descripcion, 50) : 'Sin movimiento' }}
+                <td>{{ $itemMovimiento->laboratorio_id ? $itemMovimiento->laboratorio->nombre : 'Sin laboratorio' }}
+                    <td>{{ $itemMovimiento->unidad_id ? $itemMovimiento->unidad->nombre : 'Sin laboratorio' }}
                 </td>
                 <td class="text-end">
                     <form action="{{ route('item_movimiento.destroy', $itemMovimiento->id) }}" method="POST"
                         class="d-inline">
                         <a class="btn btn-sm" href="javascript:void(0)"
-                        onclick="mostrarModalItemMovimiento({ 
+                            onclick="mostrarModalItemMovimiento({ 
                             id: {{ json_encode($itemMovimiento->id) }},
                             cantidad: '{{ $itemMovimiento->cantidad }}',
                             reactivo: {{ $itemMovimiento->reactivo ? json_encode($itemMovimiento->reactivo) : 'null' }},

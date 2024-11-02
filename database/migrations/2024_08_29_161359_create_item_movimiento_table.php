@@ -23,6 +23,13 @@ return new class extends Migration
 
             $table->unsignedBigInteger('movimiento_id');
             $table->foreign('movimiento_id')->references('id')->on('movimientos');
+
+            $table->unsignedBigInteger('laboratorio_id');
+            $table->foreign('laboratorio_id')->references('id')->on('laboratorio');
+
+            $table->unsignedBigInteger('unidad_id');
+            $table->foreign('unidad_id')->references('id')->on('unidad');
+
         });
     }
 

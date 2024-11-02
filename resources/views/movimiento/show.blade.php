@@ -41,39 +41,44 @@
                 <br>
                 <br>
                 <h4>Ítems agregados</h4>
-                <table class="table table-hover table-bordered bg-white rounded-4">
-                    <thead>
-                        <tr>
-                            <th class="col-md-1">#</th>
-                            <th>Nombre del reactivo</th>
-                            <th>Cantidad</th>
-                            <th class="text-end">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($movimiento->items as $index => $item)
-                            <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $item->reactivo->nombre }}</td>
-                                <td>{{ $item->cantidad }}</td>
-                                <td class="text-end">
-                                    <form action="{{ route('item_movimiento.destroy', $item->id) }}" method="POST"
-                                        onsubmit="return confirm('¿Estás seguro de eliminar este ítem?');" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm rounded-3">
-                                            <i class="bi bi-trash-fill"></i> Eliminar
-                                        </button>
-                                    </form>
-                                </td>
+                <br>
+                <br>
+                <div class="table-responsive">
+                    <table class="table table-hover table-border-0 table-bg-white table-rounded-4">
+                        <thead>
+                            <tr class="text-center">
+                                <th class="col-md-1">#</th>
+                                <th>Nombre del reactivo</th>
+                                <th>Cantidad</th>
+                                <th>Acciones</th>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="4" class="text-center">No hay ítems agregados.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @forelse ($movimiento->items as $index => $item)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $item->reactivo->nombre }}</td>
+                                    <td>{{ $item->cantidad }}</td>
+                                    <td class="text-center">
+                                        <form action="{{ route('item_movimiento.destroy', $item->id) }}" method="POST"
+                                            onsubmit="return confirm('¿Estás seguro de eliminar este ítem?');"
+                                            class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm rounded-3">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4" class="text-center">No hay ítems agregados.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

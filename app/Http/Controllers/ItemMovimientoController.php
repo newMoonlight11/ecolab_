@@ -6,8 +6,10 @@ use App\Models\ItemMovimiento;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\ItemMovimientoRequest;
+use App\Models\Laboratorio;
 use App\Models\Movimiento;
 use App\Models\Reactivo;
+use App\Models\Unidad;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -18,7 +20,7 @@ class ItemMovimientoController extends Controller
      */
     public function index(Request $request): View
     {
-        $query = ItemMovimiento::with(['movimiento', 'reactivo']);
+        $query = ItemMovimiento::with(['movimiento', 'reactivo', 'laboratorio', 'unidad']);
 
         // Filtro para cantidad
         if ($request->filled('cantidad')) {
@@ -33,9 +35,15 @@ class ItemMovimientoController extends Controller
         }
 
         // Filtro por nombre del reactivo con búsqueda parcial (LIKE)
-        if ($request->filled('reactivo_id')) {
-            $query->whereHas('reactivo', function ($q) use ($request) {
-                $q->where('nombre', 'like', '%' . $request->input('reactivo_id') . '%');
+        if ($request->filled('laboratorio_id')) {
+            $query->whereHas('laboratorio', function ($q) use ($request) {
+                $q->where('nombre', 'like', '%' . $request->input('laboratorio_id') . '%');
+            });
+        }
+
+        if ($request->filled('unidad_id')) {
+            $query->whereHas('unidad', function ($q) use ($request) {
+                $q->where('nombre', 'like', '%' . $request->input('unidad_id') . '%');
             });
         }
 
@@ -53,8 +61,10 @@ class ItemMovimientoController extends Controller
         $itemMovimiento = new ItemMovimiento();
         $movimientos = Movimiento::all();
         $reactivos = Reactivo::all();
+        $unidads = Unidad::all();
+        $laboratorios = Laboratorio::all();
 
-        return view('item-movimiento.create', compact('itemMovimiento', 'movimientos', 'reactivos'));
+        return view('item-movimiento.create', compact('itemMovimiento', 'movimientos', 'reactivos', 'laboratorios', 'unidads'));
     }
 
     /**
@@ -90,7 +100,7 @@ class ItemMovimientoController extends Controller
      */
     public function show($id)
     {
-        $itemMovimiento = ItemMovimiento::with(['reactivo', 'movimiento'])->find($id);
+        $itemMovimiento = ItemMovimiento::with(['reactivo', 'movimiento', 'laboratorio', 'unidad'])->find($id);
         //$reactivo = Reactivo::find($id);
 
         if (!$itemMovimiento) {
@@ -109,8 +119,11 @@ class ItemMovimientoController extends Controller
         $itemMovimiento = ItemMovimiento::find($id);
         $movimientos = Movimiento::all();
         $reactivos = Reactivo::all();
+        $unidads = Unidad::all();
+        $laboratorios = Laboratorio::all();
 
-        return view('item-movimiento.edit', compact('itemMovimiento', 'movimientos', 'reactivos'));
+
+        return view('item-movimiento.edit', compact('itemMovimiento', 'movimientos', 'reactivos', 'laboratorios', 'unidads'));
     }
 
     /**
@@ -126,9 +139,11 @@ class ItemMovimientoController extends Controller
 
     public function destroy($id): RedirectResponse
     {
-        ItemMovimiento::find($id)->delete();
-
-        return Redirect::route('item_movimiento.index')
+        $item=ItemMovimiento::find($id);
+        $idmovimiento=$item->movimiento->id;
+        dd($item);
+        $item->delete();
+        return Redirect::route('movimiento.show', $idmovimiento)
             ->with('success', 'Item de movimiento eliminado satisfactoriamente');
     }
 }

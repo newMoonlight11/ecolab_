@@ -65,23 +65,21 @@
                 <td>{{ Str::limit($movimiento->descripcion, 50) }}</td>
                 <td>{{ $movimiento->tipoMovimiento ? $movimiento->tipoMovimiento->nombre : 'Sin tipo de movimiento' }}</td>
                 <td>{{ $movimiento->user ? $movimiento->user->name: 'Sin usuario'}}</td>
-                <td>{{ $movimiento->estado }}</td>
+                <td id="estado-{{ $movimiento->id }}">{{ $movimiento->estado }}</td>
                 <td class="text-end">
                     <form action="{{ route('movimientos.destroy', $movimiento->id) }}" method="POST" class="d-inline">
-                        <a class="btn btn-sm" href="{{ route('movimientos.show', $movimiento->id) }}">
+                        <a class="btn btn-sm" href="javascript:void(0)" onclick="asignarMovimiento({{ $movimiento->id }})">
                             <i class="bi bi-bag-plus-fill text-primary fs-5"></i>
                         </a>
-                        <a class="btn btn-sm" href="javascript:void(0)"
-                            onclick="mostrarModalMovimiento({{ json_encode($movimiento) }})" data-bs-toggle="modal"
-                            data-bs-target="#movimientoModal">
+                        <a class="btn btn-sm" href="{{ route('movimientos.show', $movimiento->id) }}">
                             <i class="bi bi-search text-blues fs-5"></i>
                         </a>
-                        <a class="btn btn-sm" href="{{ route('movimientos.edit', $movimiento->id) }}">
+                        <a class="btn btn-sm" id="editar-{{ $movimiento->id }}" href="{{ route('movimientos.edit', $movimiento->id) }}">
                             <i class="bi bi-pencil text-pop fs-5"></i>
                         </a>
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-sm"
+                        <button type="submit" class="btn btn-sm" id="eliminar-{{ $movimiento->id }}"
                             onclick="event.preventDefault(); confirm('¿Estás seguro de eliminarlo?') ? this.closest('form').submit() : false;">
                             <i class="bi bi-trash text-danger fs-5"></i>
                         </button>
@@ -140,5 +138,32 @@
             document.querySelector('.modal-backdrop')?.remove();
         });
         movimientoModal.show();
+    }
+</script>
+
+<script>
+    function asignarMovimiento(movimientoId) {
+        if (!confirm("¿Deseas asignar este movimiento?")) return;
+
+        fetch(`/movimientos/${movimientoId}/asignar`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.success);
+
+                // Cambiar el estado a "asignado" en la tabla y desactivar botones
+                document.querySelector(`#estado-${movimientoId}`).textContent = 'asignado';
+                document.querySelector(`#editar-${movimientoId}`).style.display = 'none';
+                document.querySelector(`#eliminar-${movimientoId}`).style.display = 'none';
+            } else if (data.error) {
+                alert(data.error);
+            }
+        })
+        .catch(error => console.error('Error:', error));
     }
 </script>
