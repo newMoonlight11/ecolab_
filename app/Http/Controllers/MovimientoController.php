@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\TipoMovimiento as EnumsTipoMovimiento;
 use App\Models\Movimiento;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -55,7 +56,9 @@ class MovimientoController extends Controller
     public function create(): View
     {
         $movimiento = new Movimiento();
-        $tipoMovimientos = TipoMovimiento::all();
+        $tipoMovimientos = EnumsTipoMovimiento::cases();
+
+        // dd($tipoMovimientos);
         $users = User::all();
 
         return view('movimiento.create', compact('movimiento', 'tipoMovimientos', 'users'));
@@ -82,7 +85,7 @@ class MovimientoController extends Controller
     public function show($id)
     {
         $movimiento = Movimiento::with(['tipoMovimiento', 'items.reactivo', 'user'])->find($id);
-        $tipoMovimientos = TipoMovimiento::all();
+        $tipoMovimientos = EnumsTipoMovimiento::fromId($movimiento->tipo_movimiento);
         $users = User::all();
         $reactivos = Reactivo::all();
 
@@ -130,43 +133,49 @@ class MovimientoController extends Controller
     }
 
     public function asignar($id): JsonResponse
-{
-    // Obtener el movimiento con sus relaciones de ítems
-    $movimiento = Movimiento::with('items')->find($id);
+    {
+        // Obtener el movimiento con sus relaciones de ítems
+        $movimiento = Movimiento::with('items')->find($id);
 
-    // Verificar que el movimiento existe
-    if (!$movimiento) {
-        return response()->json(['error' => 'Movimiento no encontrado'], 404);
-    }
-
-    // Verificar que todos los campos del movimiento estén completos
-    if (!$movimiento->fecha_movimiento || !$movimiento->descripcion || !$movimiento->tipo_movimiento || !$movimiento->usuario_id) {
-        return response()->json(['error' => 'Todos los campos del movimiento deben estar completos'], 422);
-    }
-
-    // Verificar que el movimiento tenga al menos un ítem
-    if ($movimiento->items->isEmpty()) {
-        return response()->json(['error' => 'El movimiento debe tener al menos un ítem relacionado'], 422);
-    }
-
-    // Actualizar el estado a "asignado"
-    $movimiento->update(['estado' => 'asignado']);
-
-    // Actualizar el stock de cada reactivo relacionado con los ítems del movimiento
-    foreach ($movimiento->items as $item) {
-        $stockReactivo = StockReactivo::firstOrCreate(
-            ['reactivo_id' => $item->reactivo_id],
-            ['cantidad_existencia' => 0] // Valor inicial si no existe
-        );
-
-        // Actualizar el stock en función del tipo de movimiento
-        if ($movimiento->tipo_movimiento == 'compra') {
-            $stockReactivo->increment('cantidad_existencia', $item->cantidad);
-        } elseif ($movimiento->tipo_movimiento == 'préstamo') {
-            $stockReactivo->decrement('cantidad_existencia', $item->cantidad);
+        // Verificar que el movimiento existe
+        if (!$movimiento) {
+            return response()->json(['error' => 'Movimiento no encontrado'], 404);
         }
-    }
 
-    return response()->json(['success' => 'Movimiento asignado y stock actualizado'], 200);
-}
+        // Verificar que todos los campos del movimiento estén completos
+        if (!$movimiento->fecha_movimiento || !$movimiento->descripcion || !$movimiento->tipo_movimiento || !$movimiento->usuario_id) {
+            return response()->json(['error' => 'Todos los campos del movimiento deben estar completos'], 422);
+        }
+
+        // Verificar que el movimiento tenga al menos un ítem
+        if ($movimiento->items->isEmpty()) {
+            return response()->json(['error' => 'El movimiento debe tener al menos un ítem relacionado'], 422);
+        }
+
+
+        // Actualizar el stock de cada reactivo relacionado con los ítems del movimiento
+        foreach ($movimiento->items as $item) {
+            $stockReactivo = StockReactivo::firstOrCreate(
+                [
+                    'reactivo_id' => $item->reactivo_id,
+                    'cantidad_existencia' => 0,
+                    'fecha_stock' => date("Y-m-d"),
+                    'laboratorio_id' => $item->laboratorio_id,
+                    'unidad_id'=>$item->unidad_id
+                ] // Valor inicial si no existe
+            );
+
+            // Actualizar el stock en función del tipo de movimiento
+            if ($movimiento->tipo_movimiento ==  EnumsTipoMovimiento::COMPRA->getId()) {
+                $stockReactivo->increment('cantidad_existencia', $item->cantidad);
+            } elseif ($movimiento->tipo_movimiento == EnumsTipoMovimiento::PRESTAMO->getId()) {
+                $stockReactivo->decrement('cantidad_existencia', $item->cantidad);
+            }
+        }
+
+        // Actualizar el estado a "asignado"
+        $movimiento->update(['estado' => 'asignado']);
+
+        return response()->json(['success' => 'Movimiento asignado y stock actualizado'], 200);
+    }
 }

@@ -22,7 +22,7 @@
             <div class="form-group mb-2 mb20">
                 <label for="tipo_movimiento" class="form-label">{{ __('Tipo de movimiento') }}</label>
                 <input type="text" name="tipo_movimiento" class="form-control bg-white"
-                    value="{{ $movimiento->tipoMovimiento->nombre }}" disabled>
+                    value="{{ $tipoMovimientos->getName() }}" disabled>
             </div>
             <div class="form-group mb-2 mb20">
                 <label for="usuario_id" class="form-label">{{ __('Usuario') }}</label>

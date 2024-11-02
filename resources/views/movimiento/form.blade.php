@@ -21,9 +21,9 @@
             class="form-control bg-white rounded-4 @error('tipo_movimiento') is-invalid @enderror">
             <option value="">{{ 'Seleccione un tipo de movimiento' }}</option>
             @foreach ($tipoMovimientos as $tipoMovimiento)
-                <option value="{{ $tipoMovimiento->id }}"
-                    {{ old('tipo_movimiento', $movimiento?->tipo_movimiento) == $tipoMovimiento->id ? 'selected' : '' }}>
-                    {{ $tipoMovimiento->nombre }}
+                <option value="{{ $tipoMovimiento->getId() }}"
+                    {{ old('tipo_movimiento', $movimiento?->tipo_movimiento) == $tipoMovimiento->getId() ? 'selected' : '' }}>
+                    {{ $tipoMovimiento->getName() }}
                 </option>
             @endforeach
         </select>
@@ -44,6 +44,6 @@
         <label for="estado" class="form-label">{{ __('Estado') }}</label>
         <input type="text" class="form-control bg-white rounded-4" value="{{ $movimiento->estado }}" disabled>
     </div>
-    
+
 @section('button_type', 'submit')
 
