@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             MarcaSeeder::class,
             TipoMovimientoSeeder::class,
             UnidadSeeder::class,
+            ReactivoSeeder::class,
         ]);
     }
 }

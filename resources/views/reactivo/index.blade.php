@@ -68,12 +68,12 @@
         @foreach ($reactivos as $reactivo)
             <tr>
                 <td class="col-sm-1">{{ ++$i }}</td>
-                <td>{{ $reactivo->nombre }}</td>
+                <td>{{ Str::limit($reactivo->nombre, 8) }}</td>
                 <td>{{ $reactivo->numero_cas }}</td>
                 <td>{{ $reactivo->referencia_fabricante }}</td>
                 <td>{{ $reactivo->lote }}</td>
                 <td>{{ $reactivo->num_registro_invima }}</td>
-                <td>{{ $reactivo->familia ? $reactivo->familia->nombre : 'Sin familia' }}</td>
+                <td>{{ Str::limit($reactivo->familia ? $reactivo->familia->nombre : 'Sin familia', 27) }}</td>
                 <td>{{ $reactivo->marca ? $reactivo->marca->nombre : 'Sin marca' }}</td>
 
                 <td class="text-end">
