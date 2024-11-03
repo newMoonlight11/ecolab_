@@ -1,7 +1,13 @@
 <?php
+
 namespace App\Http\Controllers;
 
+use App\Models\Familia;
+use App\Models\Laboratorio;
+use App\Models\Marca;
 use App\Models\Reactivo;
+use App\Models\Residuo;
+use App\Models\StockReactivo;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,76 +31,40 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // return view('home');
-        /* // Consultas para estadísticas
-
-        // Número total de reactivos
+        // Datos de las tarjetas
         $totalReactivos = Reactivo::count();
+        $totalLaboratorios = Laboratorio::count();
+        $totalMarcas = Marca::count();
+        $totalFamilias = Familia::count();
+        $totalResiduos = Residuo::count();
 
-        // Número de reactivos por laboratorio
-        $reactivosPorLaboratorio = Reactivo::select('laboratorio', DB::raw('count(*) as total'))
-            ->groupBy('laboratorio')
-            ->get();
-
-        // Cantidad de reactivos por familia
-        $reactivosPorFamilia = Reactivo::select('familia', DB::raw('count(*) as total'))
-            ->groupBy('familia')
-            ->get();
-
-        // Reactivos que vencen en los próximos 30 días
-        $fechaLimite = Carbon::now()->addDays(30);
-        $reactivosPorVencer = Reactivo::where('fecha_vencimiento', '<=', $fechaLimite)
-            ->get();
-
-        // Reactivos con menor cantidad en stock
-        $reactivosConBajaCantidad = Reactivo::where('cantidad', '<=', 10)
-            ->get();
-
-        // Preparar los datos para las gráficas
-        $laboratorios = $reactivosPorLaboratorio->pluck('laboratorio');
-        $totalesLaboratorio = $reactivosPorLaboratorio->pluck('total');
-
-        $familias = $reactivosPorFamilia->pluck('familia');
-        $totalesFamilia = $reactivosPorFamilia->pluck('total');
+        // Datos para la gráfica "Reactivos en stock"
+        // Obtén los datos de `stock_reactivos` y clasifícalos según el tiempo
+        $stockData = StockReactivo::selectRaw("
+                EXTRACT(MONTH FROM fecha_stock) as mes,
+                SUM(CASE WHEN cantidad_existencia > 0 AND fecha_stock < current_date - interval '1 month' THEN cantidad_existencia ELSE 0 END) as existentes,
+                SUM(CASE WHEN cantidad_existencia > 0 AND fecha_stock >= current_date - interval '1 month' THEN cantidad_existencia ELSE 0 END) as nuevos,
+                SUM(CASE WHEN cantidad_existencia = 0 THEN 1 ELSE 0 END) as salieron
+            ")
+            ->groupBy('mes')
+            ->get()
+            ->map(function ($row) {
+                return [
+                    // Convertimos el número de mes a nombre usando Carbon::create()->month($row->mes)->format('F')
+                    'mes' => Carbon::create(null, $row->mes)->format('M'),
+                    'existentes' => $row->existentes,
+                    'nuevos' => $row->nuevos,
+                    'salieron' => $row->salieron,
+                ];
+            });
 
         return view('home', compact(
             'totalReactivos',
-            'reactivosPorLaboratorio',
-            'reactivosPorFamilia',
-            'reactivosPorVencer',
-            'reactivosConBajaCantidad',
-            'laboratorios', 'totalesLaboratorio',
-            'familias', 'totalesFamilia'
-        )); */
-
-        $data = [
-            'total_reactivos' => 250,
-            'total_laboratorios' => 7,
-            'total_marcas' => 130,
-            'total_familias' => 100,
-            'total_residuos' => 122,
-            'reactivos_stock' => [ // Datos para el gráfico de barras
-                'jul' => [80, 50, 30],
-                'ago' => [70, 40, 20],
-                'sep' => [60, 30, 10],
-            ],
-            'residuos_generados' => [90, 80, 70, 85, 75, 60], // Datos para gráfico de líneas
-            'categorias_populares' => [
-                'Alcoholes' => 40,
-                'Ácidos orgánicos' => 25,
-                'Acetatos' => 20,
-                'Sulfatos' => 10,
-                'Nitratos' => 5,
-            ],
-            'compras_reactivos' => [100, 90, 80, 85, 75, 60], // Datos de compras
-            'reactivos_a_vencer' => [
-                'Potasio permanganato' => 9,
-                'Nitrato de plata' => 7,
-                'Amonio sulfato' => 5,
-                'Sacarosa' => 4,
-                'Cloroformo' => 3,
-            ],
-        ];
-        return view('home', compact('data'));
+            'totalLaboratorios',
+            'totalMarcas',
+            'totalFamilias',
+            'totalResiduos',
+            'stockData'
+        ));
     }
 }
