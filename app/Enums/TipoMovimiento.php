@@ -5,8 +5,8 @@ namespace App\Enums;
 enum TipoMovimiento: string
 {
     case COMPRA = 'Compra';
-    case PRESTAMO = 'PRESTAMOS';
-    case DEVOLUCION = 'Devolucion';
+    case PRESTAMO = 'Préstamo';
+    case DEVOLUCION = 'Devolución';
 
     public function getId(): int
     {

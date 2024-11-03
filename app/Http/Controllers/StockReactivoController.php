@@ -15,6 +15,7 @@ use App\Models\Movimiento;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Enums\TipoMovimiento as EnumsTipoMovimiento;
 
 class StockReactivoController extends Controller
 {
@@ -23,75 +24,33 @@ class StockReactivoController extends Controller
      */
     public function index(Request $request): View
     {
-        // Consulta base con los filtros de búsqueda
-        $query = Reactivo::with(['familia', 'marca', 'stockReactivos.laboratorio', 'stockReactivos.unidad']);
+        $query = StockReactivo::with(['reactivo', 'laboratorio', 'unidad']);
 
         if ($request->filled('reactivo_id')) {
-            $query->where('id', $request->input('reactivo_id'));
+            $query->where('reactivo_id', $request->input('reactivo_id'));
         }
 
         if ($request->filled('laboratorio_id')) {
-            $query->whereHas('stockReactivos.laboratorio', function ($q) use ($request) {
+            $query->whereHas('laboratorio', function ($q) use ($request) {
                 $q->where('nombre', 'like', '%' . $request->input('laboratorio_id') . '%');
             });
         }
 
         if ($request->filled('fecha_stock')) {
-            $query->whereHas('stockReactivos', function ($q) use ($request) {
-                $q->where('fecha_stock', 'like', '%' . $request->input('fecha_stock') . '%');
-            });
+            $query->where('fecha_stock', 'like', '%' . $request->input('fecha_stock') . '%');
         }
 
         if ($request->filled('cantidad_existencia')) {
-            $query->whereHas('stockReactivos', function ($q) use ($request) {
-                $q->where('cantidad_existencia', 'like', '%' . $request->input('cantidad_existencia') . '%');
-            });
+            $query->where('cantidad_existencia', 'like', '%' . $request->input('cantidad_existencia') . '%');
         }
 
-        // Obtén los reactivos con los filtros aplicados
-        $reactivos = $query->get()->map(function ($reactivo) {
-            $movimientos = DB::table('movimientos')
-                ->join('item_movimiento', 'movimientos.id', '=', 'item_movimiento.movimiento_id')
-                ->select('movimientos.tipo_movimiento', 'item_movimiento.cantidad', 'movimientos.created_at as fecha')
-                ->where('item_movimiento.reactivo_id', $reactivo->id)
-                ->get();
-
-            $cantidadExistente = 0;
-            $ultimaFecha = null;
-
-            foreach ($movimientos as $item) {
-                switch ($item->tipo_movimiento) {
-                    case 'préstamo':
-                        $cantidadExistente -= $item->cantidad;
-                        break;
-                    case 'compra':
-                    case 'devolución':
-                        $cantidadExistente += $item->cantidad;
-                        break;
-                }
-                $ultimaFecha = $item->fecha;
-            }
-
-            $reactivo->cantidad_existente = $cantidadExistente;
-            $reactivo->ultima_fecha = $ultimaFecha;
-
-            return $reactivo;
-        });
-
-        // Paginación manual
-        $page = $request->input('page', 1);
-        $perPage = 10;
-        $reactivosPaginated = new LengthAwarePaginator(
-            $reactivos->forPage($page, $perPage),
-            $reactivos->count(),
-            $perPage,
-            $page,
-            ['path' => $request->url(), 'query' => $request->query()]
-        );
+        $reactivosPaginated = $query->paginate(10);
 
         return view('stock-reactivo.index', compact('reactivosPaginated'))
-            ->with('i', ($page - 1) * $perPage);
+            ->with('i', (request()->input('page', 1) - 1) * 10);
     }
+
+
 
 
     /**

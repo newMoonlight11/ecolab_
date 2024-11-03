@@ -2,9 +2,7 @@
 @section('back_route')
     {{ route('movimientos.index') }}
 @endsection
-{{-- @section('form_action')
-    {{ route('movimientos.store') }}
-@endsection --}}
+
 @section('heading', 'Mostrar movimiento')
 @section('form_content')
     <div class="row justify-content-center">
@@ -39,8 +37,6 @@
                 <button type="button" class="btn btn-primary" onclick="showItemModal()">Añadir Ítems</button>
                 <br>
                 <br>
-                <br>
-
             </div>
         </div>
     </div>
@@ -88,43 +84,49 @@
 
 
 @section('other_content')
-    <h4>Ítems agregados</h4>
-    <br>
-    <br>
-    <div class="table-responsive">
-        <table class="table table-hover table-border-0 table-bg-white table-rounded-4">
-            <thead>
-                <tr class="text-center">
-                    <th class="col-md-1">#</th>
-                    <th>Nombre del reactivo</th>
-                    <th>Cantidad</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($movimiento->items as $index => $item)
-                    <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $item->reactivo->nombre }}</td>
-                        <td>{{ $item->cantidad }}</td>
-                        <td class="text-center">
-                            <form action="{{ route('item_movimiento.destroy', $item->id) }}" method="POST"
-                                onsubmit="return confirm('¿Estás seguro de eliminar este ítem?');" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm rounded-3">
-                                    <i class="bi bi-trash-fill"></i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="4" class="text-center">No hay ítems agregados.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+    <div class="row justify-content-center">
+        <div class="col-md-9">
+            <h4 class="text-center">Ítems agregados</h4>
+            <br>
+            <br>
+            <div class="table-responsive">
+                <table class="table table-hover table-border-0 table-bg-white table-rounded-4">
+                    <thead>
+                        <tr class="text-center">
+                            <th class="col-md-1">#</th>
+                            <th>Nombre del reactivo</th>
+                            <th>Cantidad</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="items-list">
+                        @forelse ($movimiento->items as $index => $item)
+                            <tr>
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ $item->reactivo->nombre }}</td>
+                                <td>{{ $item->cantidad }}</td>
+                                <td class="text-center">
+                                    @if($movimiento->estado === 'sin asignar')
+                                    <form action="{{ route('item_movimiento.destroy', $item->id) }}" method="POST"
+                                        onsubmit="return confirm('¿Estás seguro de eliminar este ítem?');" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm rounded-3">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
+                                    </form>
+                                    @endif
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="text-center">No hay ítems agregados.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -138,7 +140,6 @@
 
         // Función para enviar el formulario de ítem por AJAX
         function submitItemForm() {
-            // Datos del formulario
             const formData = new FormData(document.getElementById('itemForm'));
 
             fetch("{{ route('item_movimiento.store') }}", {
@@ -151,16 +152,29 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // Cerrar el modal
                         const itemModal = bootstrap.Modal.getInstance(document.getElementById('itemModal'));
                         itemModal.hide();
 
-                        // Limpiar el formulario
                         document.getElementById('itemForm').reset();
 
-                        // Actualizar la lista de ítems
                         const itemList = document.getElementById('items-list');
-                        itemList.innerHTML += `<li>${data.item.reactivo.nombre} - Cantidad: ${data.item.cantidad}</li>`;
+                        const newRow = `
+                            <tr>
+                                <td>${data.item.id}</td>
+                                <td>${data.item.reactivo.nombre}</td>
+                                <td>${data.item.cantidad}</td>
+                                <td class="text-center">
+                                    <form action="{{ route('item_movimiento.destroy', '') }}/${data.item.id}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm rounded-3">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        `;
+                        itemList.insertAdjacentHTML('beforeend', newRow);
                     } else {
                         alert("Hubo un error al añadir el ítem.");
                     }
