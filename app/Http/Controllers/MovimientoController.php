@@ -7,9 +7,11 @@ use App\Models\Movimiento;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\MovimientoRequest;
+use App\Models\Laboratorio;
 use App\Models\Reactivo;
 use App\Models\StockReactivo;
 use App\Models\TipoMovimiento;
+use App\Models\Unidad;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Redirect;
@@ -88,6 +90,8 @@ class MovimientoController extends Controller
         $tipoMovimientos = EnumsTipoMovimiento::fromId($movimiento->tipo_movimiento);
         $users = User::all();
         $reactivos = Reactivo::all();
+        $laboratorios = Laboratorio::all();
+        $unidads = Unidad::all();
 
         if (!$movimiento) {
             return response()->json(['error' => 'Movimiento no encontrado'], 404);
@@ -97,7 +101,7 @@ class MovimientoController extends Controller
             return response()->json($movimiento);
         }
 
-        return view('movimiento.show', compact('movimiento', 'tipoMovimientos', 'users', 'reactivos'));
+        return view('movimiento.show', compact('movimiento', 'tipoMovimientos', 'users', 'reactivos', 'laboratorios', 'unidads'));
     }
 
     /**
@@ -173,7 +177,6 @@ class MovimientoController extends Controller
                     return response()->json(['error' => 'Cantidad insuficiente en stock para realizar el préstamo'], 422);
                 }
             }
-
         }
         // Actualizar el estado a "asignado"
         $movimiento->update(['estado' => 'asignado']);

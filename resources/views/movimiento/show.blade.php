@@ -34,54 +34,14 @@
             </div>
             <br>
             <div class="text-center">
-                <button type="button" class="btn btn-primary" onclick="showItemModal()">Añadir Ítems</button>
+                <button type="button" class="btn btn-primary" onclick="showItemModal()" href="javascript:void(0)"
+                    data-bs-toggle="modal" data-bs-target="#itemModal">Añadir Ítems</button>
                 <br>
                 <br>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="itemModal" tabindex="-1" aria-labelledby="itemModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form id="itemForm">
-                    @csrf
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="itemModalLabel">Añadir Ítem al Movimiento</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        {{-- Campo oculto para el ID del movimiento --}}
-                        <input type="hidden" name="movimiento_id" value="{{ $movimiento->id }}">
-
-                        {{-- Reactivo --}}
-                        <div class="form-group mb-2">
-                            <label for="reactivo_id" class="form-label">Reactivo</label>
-                            <select name="reactivo_id" id="reactivo_id" class="form-control">
-                                <option value="">Seleccione un reactivo</option>
-                                @foreach ($reactivos as $reactivo)
-                                    <option value="{{ $reactivo->id }}">{{ $reactivo->nombre }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        {{-- Cantidad --}}
-                        <div class="form-group mb-2">
-                            <label for="cantidad" class="form-label">Cantidad</label>
-                            <input type="number" name="cantidad" id="cantidad" class="form-control"
-                                placeholder="Cantidad">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" onclick="submitItemForm()">Guardar Ítem</button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
 @endsection
-
 
 @section('other_content')
     <div class="row justify-content-center">
@@ -106,15 +66,16 @@
                                 <td>{{ $item->reactivo->nombre }}</td>
                                 <td>{{ $item->cantidad }}</td>
                                 <td class="text-center">
-                                    @if($movimiento->estado === 'sin asignar')
-                                    <form action="{{ route('item_movimiento.destroy', $item->id) }}" method="POST"
-                                        onsubmit="return confirm('¿Estás seguro de eliminar este ítem?');" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm rounded-3">
-                                            <i class="bi bi-trash-fill"></i>
-                                        </button>
-                                    </form>
+                                    @if ($movimiento->estado === 'sin asignar')
+                                        <form action="{{ route('item_movimiento.destroy', $item->id) }}" method="POST"
+                                            onsubmit="return confirm('¿Estás seguro de eliminar este ítem?');"
+                                            class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm rounded-3">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
+                                        </form>
                                     @endif
                                 </td>
                             </tr>
@@ -129,6 +90,66 @@
         </div>
     </div>
 @endsection
+
+<div class="modal fade" id="itemModal" tabindex="-1" aria-labelledby="itemModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 rounded-4 px-3 bg-white">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary text-center w-100 fs-3 " id="itemModalLabel">Añadir ítems al
+                    movimiento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="itemForm">
+                @csrf
+                <div class="modal-body">
+                    <input type="hidden" name="movimiento_id" value="{{ $movimiento->id }}">
+
+                    <div class="form-group mb-2 mb20">
+                        <label for="cantidad" class="form-label">Cantidad</label>
+                        <input type="number" name="cantidad" id="cantidad" class="form-control"
+                            placeholder="Cantidad">
+                    </div>
+
+                    <div class="form-group mb-2 mb20">
+                        <label for="reactivo_id" class="form-label">Reactivo</label>
+                        <select name="reactivo_id" id="reactivo_id" class="form-control">
+                            <option value="">Seleccione un reactivo</option>
+                            @foreach ($reactivos as $reactivo)
+                                <option value="{{ $reactivo->id }}">{{ $reactivo->nombre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-2 mb20">
+                        <label for="laboratorio_id" class="form-label">Laboratorio</label>
+                        <select name="laboratorio_id" id="laboratorio_id" class="form-control">
+                            <option value="">Seleccione un laboratorio</option>
+                            @foreach ($laboratorios as $laboratorio)
+                                <option value="{{ $laboratorio->id }}">{{ $laboratorio->nombre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-2 mb20">
+                        <label for="unidad_id" class="form-label">Unidad</label>
+                        <select name="unidad_id" id="unidad_id" class="form-control">
+                            <option value="">Seleccione la unidad</option>
+                            @foreach ($unidads as $unidad)
+                                <option value="{{ $unidad->id }}">{{ $unidad->nombre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary" onclick="submitItemForm()">Guardar Ítem</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
 
 @push('scripts')
     <script>
@@ -154,7 +175,6 @@
                     if (data.success) {
                         const itemModal = bootstrap.Modal.getInstance(document.getElementById('itemModal'));
                         itemModal.hide();
-
                         document.getElementById('itemForm').reset();
 
                         const itemList = document.getElementById('items-list');
@@ -163,6 +183,8 @@
                                 <td>${data.item.id}</td>
                                 <td>${data.item.reactivo.nombre}</td>
                                 <td>${data.item.cantidad}</td>
+                                <td>${data.item.laboratorio.nombre}</td>
+                                <td>${data.item.unidad.nombre}</td>
                                 <td class="text-center">
                                     <form action="{{ route('item_movimiento.destroy', '') }}/${data.item.id}" method="POST" class="d-inline">
                                         @csrf
@@ -175,6 +197,7 @@
                             </tr>
                         `;
                         itemList.insertAdjacentHTML('beforeend', newRow);
+                        location.reload();
                     } else {
                         alert("Hubo un error al añadir el ítem.");
                     }
