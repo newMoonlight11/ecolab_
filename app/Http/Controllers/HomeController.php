@@ -40,15 +40,23 @@ class HomeController extends Controller
 
         // Datos para la gráfica "Reactivos en stock"
         // Obtén los datos de `stock_reactivos` y clasifícalos según el tiempo
-        $reactivosEnStock = StockReactivo::selectRaw('COUNT(id) as total, 
-        CASE 
-            WHEN fecha_stock < NOW() - INTERVAL \'90 days\' THEN \'Antiguos\'
-            WHEN fecha_stock BETWEEN NOW() - INTERVAL \'90 days\' AND NOW() - INTERVAL \'30 days\' THEN \'Nuevos\'
-            ELSE \'Salieron del stock\'
-        END as tipo, 
-        EXTRACT(MONTH FROM fecha_stock) as mes')
-            ->groupBy('tipo', 'mes')
-            ->get();
+        $stockData = StockReactivo::selectRaw("
+                EXTRACT(MONTH FROM fecha_stock) as mes,
+                SUM(CASE WHEN cantidad_existencia > 0 AND fecha_stock < current_date - interval '1 month' THEN cantidad_existencia ELSE 0 END) as existentes,
+                SUM(CASE WHEN cantidad_existencia > 0 AND fecha_stock >= current_date - interval '1 month' THEN cantidad_existencia ELSE 0 END) as nuevos,
+                SUM(CASE WHEN cantidad_existencia = 0 THEN 1 ELSE 0 END) as salieron
+            ")
+            ->groupBy('mes')
+            ->get()
+            ->map(function ($row) {
+                return [
+                    // Convertimos el número de mes a nombre usando Carbon::create()->month($row->mes)->format('F')
+                    'mes' => Carbon::create(null, $row->mes)->format('M'),
+                    'existentes' => $row->existentes,
+                    'nuevos' => $row->nuevos,
+                    'salieron' => $row->salieron,
+                ];
+            });
 
         return view('home', compact(
             'totalReactivos',
@@ -56,7 +64,7 @@ class HomeController extends Controller
             'totalMarcas',
             'totalFamilias',
             'totalResiduos',
-            'reactivosEnStock'
+            'stockData'
         ));
     }
 }

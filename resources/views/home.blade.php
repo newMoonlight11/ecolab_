@@ -127,48 +127,34 @@
 @section('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const ctx = document.getElementById('reactivosEnStockChart').getContext('2d');
+            const ctx = document.getElementById('stockChart').getContext('2d');
+            const stockData = @json($stockData);
 
-            // Convertir los datos de PHP a JavaScript
-            const reactivosEnStock = @json($reactivosEnStock);
+            // Organizar datos para la gráfica
+            const labels = stockData.map(data => data.mes);
+            const existentesData = stockData.map(data => data.existentes);
+            const nuevosData = stockData.map(data => data.nuevos);
+            const salieronData = stockData.map(data => data.salieron);
 
-            // Obtener los meses únicos y asignarlos a las etiquetas de la gráfica
-            const meses = [...new Set(reactivosEnStock.map(item => item.mes))];
-
-            // Filtrar los datos por tipo de reactivo
-            const antiguos = meses.map(mes => {
-                const item = reactivosEnStock.find(d => d.mes === mes && d.tipo === 'Antiguos');
-                return item ? item.total : 0;
-            });
-            const nuevos = meses.map(mes => {
-                const item = reactivosEnStock.find(d => d.mes === mes && d.tipo === 'Nuevos');
-                return item ? item.total : 0;
-            });
-            const salieronDelStock = meses.map(mes => {
-                const item = reactivosEnStock.find(d => d.mes === mes && d.tipo === 'Salieron del stock');
-                return item ? item.total : 0;
-            });
-
-            // Crear la gráfica
             new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: meses,
+                    labels: labels,
                     datasets: [{
-                            label: 'Antiguos',
-                            data: antiguos,
-                            backgroundColor: '#3b82f6'
+                            label: 'Existentes',
+                            data: existentesData,
+                            backgroundColor: 'rgba(54, 162, 235, 0.8)',
                         },
                         {
                             label: 'Nuevos',
-                            data: nuevos,
-                            backgroundColor: '#60a5fa'
+                            data: nuevosData,
+                            backgroundColor: 'rgba(75, 192, 192, 0.8)',
                         },
                         {
                             label: 'Salieron del stock',
-                            data: salieronDelStock,
-                            backgroundColor: '#93c5fd'
-                        }
+                            data: salieronData,
+                            backgroundColor: 'rgba(153, 102, 255, 0.8)',
+                        },
                     ]
                 },
                 options: {
@@ -181,11 +167,11 @@
                             }
                         },
                         y: {
+                            beginAtZero: true,
                             title: {
                                 display: true,
                                 text: 'Cantidad'
-                            },
-                            beginAtZero: true
+                            }
                         }
                     }
                 }
