@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClaseResiduo;
 use App\Models\Familia;
 use App\Models\Laboratorio;
 use App\Models\Marca;
@@ -63,18 +64,52 @@ class HomeController extends Controller
             }
         }
 
+        // Consulta de residuos por mes y clase
         $residuosData = ResiduoLaboratorio::selectRaw("
-            EXTRACT(MONTH FROM fecha_stock) as mes,
-            SUM(cantidad_existencia) as total
-        ")
-            ->whereYear('fecha_stock', Carbon::now()->year) // Solo el año actual
-            ->groupBy('mes')
+        EXTRACT(MONTH FROM fecha_stock) as mes,
+        clase_residuo_id,
+        COUNT(residuo_laboratorios.id) as total
+    ")
+            ->join('residuos', 'residuos.id', '=', 'residuo_laboratorios.residuo_id')
+            ->groupBy('mes', 'clase_residuo_id')
             ->get();
 
-        $residuosFormattedData = array_fill(0, 12, 0); // Inicializar 12 meses en 0
-        foreach ($residuosData as $residuo) {
-            $residuosFormattedData[$residuo->mes - 1] = $residuo->total;
+
+        // Obtener todas las clases de residuos
+        $clasesResiduos = ClaseResiduo::all()->pluck('nombre', 'id');
+
+        // Organizar los datos en un formato que Chart.js pueda entender
+        $residuosFormattedData = [];
+        foreach ($clasesResiduos as $claseId => $claseNombre) {
+            $residuosFormattedData[$claseNombre] = array_fill(0, 12, 0);
+            foreach ($residuosData as $residuo) {
+                if ($residuo->clase_residuo_id == $claseId) {
+                    $residuosFormattedData[$claseNombre][$residuo->mes - 1] = $residuo->total;
+                }
+            }
         }
+
+        $laboratoriosData = Laboratorio::withCount('stockReactivos')->get()->map(function ($laboratorio) {
+            return [
+                'nombre' => $laboratorio->nombre,
+                'total' => $laboratorio->stock_reactivos_count, // Número de reactivos en el laboratorio
+            ];
+        });
+
+        $familiasData = Familia::withCount('reactivos')->get()->map(function ($familia) {
+            return [
+                'nombre' => $familia->nombre,
+                'total' => $familia->reactivos_count, // Número de reactivos en la familia
+            ];
+        });
+
+        $reactivosAVencer = [
+            ['nombre' => 'Reactivo A', 'dias' => 5],
+            ['nombre' => 'Reactivo B', 'dias' => 7],
+            ['nombre' => 'Reactivo C', 'dias' => 10],
+            ['nombre' => 'Reactivo D', 'dias' => 15],
+            ['nombre' => 'Reactivo E', 'dias' => 20]
+        ];
 
         return view('home', compact(
             'totalReactivos',
@@ -83,7 +118,10 @@ class HomeController extends Controller
             'totalFamilias',
             'totalResiduos',
             'movimientosFormattedData', // Datos de movimientos para la gráfica 1
-            'residuosFormattedData'     // Datos de residuos para la gráfica 2
+            'residuosFormattedData',     // Datos de residuos para la gráfica 2
+            'familiasData',
+            'laboratoriosData',
+            'reactivosAVencer'
         ));
     }
 }
