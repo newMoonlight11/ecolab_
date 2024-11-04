@@ -170,6 +170,8 @@ class MovimientoController extends Controller
 
             if ($movimiento->tipo_movimiento == EnumsTipoMovimiento::COMPRA->getId()) {
                 $stockReactivo->increment('cantidad_existencia', $item->cantidad);
+            } elseif ($movimiento->tipo_movimiento == EnumsTipoMovimiento::DEVOLUCION->getId()) {
+                $stockReactivo->increment('cantidad_existencia', $item->cantidad);
             } elseif ($movimiento->tipo_movimiento == EnumsTipoMovimiento::PRESTAMO->getId()) {
                 if ($stockReactivo->cantidad_existencia >= $item->cantidad) {
                     $stockReactivo->decrement('cantidad_existencia', $item->cantidad);
@@ -207,10 +209,12 @@ class MovimientoController extends Controller
                         'laboratorio_id' => $item->laboratorio_id,
                         'unidad_id' => $item->unidad_id
                     ],
-                    ['cantidad_existencia' => 0, 'fecha_stock' => now()]
+                    ['cantidad_existencia' => 0, 'fecha_stock' => today()]
                 );
 
                 if ($movimiento->tipo_movimiento == EnumsTipoMovimiento::COMPRA->getId()) {
+                    $stockReactivo->increment('cantidad_existencia', $item->cantidad);
+                } elseif ($movimiento->tipo_movimiento == EnumsTipoMovimiento::DEVOLUCION->getId()) {
                     $stockReactivo->increment('cantidad_existencia', $item->cantidad);
                 } elseif ($movimiento->tipo_movimiento == EnumsTipoMovimiento::PRESTAMO->getId()) {
                     if ($stockReactivo->cantidad_existencia >= $item->cantidad) {

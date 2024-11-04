@@ -59,7 +59,7 @@ class ItemMovimientoController extends Controller
     public function create(): View
     {
         $itemMovimiento = new ItemMovimiento();
-        $movimientos = Movimiento::all();
+        $movimientos = Movimiento::where('estado', 'sin asignar')->get();
         $reactivos = Reactivo::all();
         $unidads = Unidad::all();
         $laboratorios = Laboratorio::all();
@@ -124,7 +124,7 @@ class ItemMovimientoController extends Controller
     public function edit($id): View
     {
         $itemMovimiento = ItemMovimiento::find($id);
-        $movimientos = Movimiento::all();
+        $movimientos = Movimiento::where('estado', 'sin asignar')->get();
         $reactivos = Reactivo::all();
         $unidads = Unidad::all();
         $laboratorios = Laboratorio::all();
