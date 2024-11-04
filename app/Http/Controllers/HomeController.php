@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Familia;
 use App\Models\Laboratorio;
 use App\Models\Marca;
+use App\Models\Movimiento;
 use App\Models\Reactivo;
 use App\Models\Residuo;
+use App\Models\ResiduoLaboratorio;
 use App\Models\StockReactivo;
+use App\Models\TipoMovimiento;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -40,23 +43,38 @@ class HomeController extends Controller
 
         // Datos para la gráfica "Reactivos en stock"
         // Obtén los datos de `stock_reactivos` y clasifícalos según el tiempo
-        $stockData = StockReactivo::selectRaw("
-                EXTRACT(MONTH FROM fecha_stock) as mes,
-                SUM(CASE WHEN cantidad_existencia > 0 AND fecha_stock < current_date - interval '1 month' THEN cantidad_existencia ELSE 0 END) as existentes,
-                SUM(CASE WHEN cantidad_existencia > 0 AND fecha_stock >= current_date - interval '1 month' THEN cantidad_existencia ELSE 0 END) as nuevos,
-                SUM(CASE WHEN cantidad_existencia = 0 THEN 1 ELSE 0 END) as salieron
-            ")
+        $movimientosData = Movimiento::selectRaw("
+            EXTRACT(MONTH FROM fecha_movimiento) as mes,
+            tipo_movimiento,
+            COUNT(id) as total
+        ")
+            ->whereYear('fecha_movimiento', Carbon::now()->year) // Solo el año actual
+            ->groupBy('mes', 'tipo_movimiento')
+            ->get();
+
+        $tiposMovimiento = TipoMovimiento::all()->pluck('nombre', 'id');
+        $movimientosFormattedData = [];
+        foreach ($tiposMovimiento as $tipoId => $tipoNombre) {
+            $movimientosFormattedData[$tipoNombre] = array_fill(0, 12, 0);
+            foreach ($movimientosData as $movimiento) {
+                if ($movimiento->tipo_movimiento == $tipoId) {
+                    $movimientosFormattedData[$tipoNombre][$movimiento->mes - 1] = $movimiento->total;
+                }
+            }
+        }
+
+        $residuosData = ResiduoLaboratorio::selectRaw("
+            EXTRACT(MONTH FROM fecha_stock) as mes,
+            SUM(cantidad_existencia) as total
+        ")
+            ->whereYear('fecha_stock', Carbon::now()->year) // Solo el año actual
             ->groupBy('mes')
-            ->get()
-            ->map(function ($row) {
-                return [
-                    // Convertimos el número de mes a nombre usando Carbon::create()->month($row->mes)->format('F')
-                    'mes' => Carbon::create(null, $row->mes)->format('M'),
-                    'existentes' => $row->existentes,
-                    'nuevos' => $row->nuevos,
-                    'salieron' => $row->salieron,
-                ];
-            });
+            ->get();
+
+        $residuosFormattedData = array_fill(0, 12, 0); // Inicializar 12 meses en 0
+        foreach ($residuosData as $residuo) {
+            $residuosFormattedData[$residuo->mes - 1] = $residuo->total;
+        }
 
         return view('home', compact(
             'totalReactivos',
@@ -64,7 +82,8 @@ class HomeController extends Controller
             'totalMarcas',
             'totalFamilias',
             'totalResiduos',
-            'stockData'
+            'movimientosFormattedData', // Datos de movimientos para la gráfica 1
+            'residuosFormattedData'     // Datos de residuos para la gráfica 2
         ));
     }
 }

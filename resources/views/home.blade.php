@@ -116,66 +116,131 @@
                 <h2>{{ $totalResiduos }}</h2>
             </div>
         </div>
-        <!-- Espacio para la gráfica -->
-        <div style="margin-top: 40px;">
-            <h2>Reactivos en stock</h2>
-            <canvas id="reactivosEnStockChart" width="400" height="200"></canvas>
+    </div>
+    <div class="container">
+        <div class="row">
+            <!-- Card para la gráfica de Movimientos -->
+            <div class="col-md-6 mb-4">
+                <div class="card"
+                    style="background-color: white; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body">
+                        <h5 class="card-title">Movimientos mensuales por tipo</h5>
+                        <canvas id="movimientosChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card para la gráfica de Residuos en Stock -->
+            <div class="col-md-6 mb-4">
+                <div class="card"
+                    style="background-color: white; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body">
+                        <h5 class="card-title">Residuos ingresados al sistema</h5>
+                        <canvas id="residuosChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
 
-@section('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const ctx = document.getElementById('stockChart').getContext('2d');
-            const stockData = @json($stockData);
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const movimientosCtx = document.getElementById('movimientosChart').getContext('2d');
+        const movimientosData = @json($movimientosFormattedData);
 
-            // Organizar datos para la gráfica
-            const labels = stockData.map(data => data.mes);
-            const existentesData = stockData.map(data => data.existentes);
-            const nuevosData = stockData.map(data => data.nuevos);
-            const salieronData = stockData.map(data => data.salieron);
+        const labels = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP',
+            'OCT', 'NOV', 'DIC'
+        ];
 
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                            label: 'Existentes',
-                            data: existentesData,
-                            backgroundColor: 'rgba(54, 162, 235, 0.8)',
-                        },
-                        {
-                            label: 'Nuevos',
-                            data: nuevosData,
-                            backgroundColor: 'rgba(75, 192, 192, 0.8)',
-                        },
-                        {
-                            label: 'Salieron del stock',
-                            data: salieronData,
-                            backgroundColor: 'rgba(153, 102, 255, 0.8)',
-                        },
-                    ]
+        const datasets = Object.keys(movimientosData).map((tipoMovimiento, index) => {
+            const colors = [
+                'rgba(54, 162, 235, 0.8)', // Azul
+                'rgba(75, 192, 192, 0.8)', // Verde
+                'rgba(153, 102, 255, 0.8)', // Morado
+                'rgba(255, 159, 64, 0.8)' // Naranja
+            ];
+            return {
+                label: tipoMovimiento,
+                data: movimientosData[tipoMovimiento],
+                backgroundColor: colors[index % colors.length]
+            };
+        });
+
+        new Chart(movimientosCtx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
                 },
-                options: {
-                    responsive: true,
-                    scales: {
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Mes'
-                            }
-                        },
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Cantidad'
-                            }
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Mes'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Cantidad de movimientos'
                         }
                     }
                 }
-            });
+            }
         });
-    </script>
-@endsection
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const residuosCtx = document.getElementById('residuosChart').getContext('2d');
+        const residuosData = @json($residuosFormattedData);
+
+        new Chart(residuosCtx, {
+            type: 'bar',
+            data: {
+                labels: ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP',
+                    'OCT', 'NOV', 'DIC'
+                ],
+                datasets: [{
+                    label: 'Residuos en stock',
+                    data: residuosData,
+                    backgroundColor: 'rgba(255, 99, 132, 0.8)'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Mes'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Cantidad en stock'
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
