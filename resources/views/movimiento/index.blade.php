@@ -31,7 +31,7 @@
                 <div class="text-center">
                     <p>Añadir al stock</p>
                     <button type="submit" class="btn btn-primary rounded-3 btn-xxl"><i
-                            class="bi bi-house-add fs-5"></i></button>
+                            class="bi bi-house-add fs-5" onclick="asignarTodosMovimientos()"></i></button>
                 </div>
                 <div class="text-center">
                     <p>Agregar</p>
@@ -178,5 +178,24 @@
         const eliminarBtn = document.querySelector(`#eliminar-${movimientoId}`);
         if (editarBtn) editarBtn.style.display = 'none';
         if (eliminarBtn) eliminarBtn.style.display = 'none';
+    }
+
+    function asignarTodosMovimientos() {
+        fetch("{{ route('movimientos.asignarTodos') }}", {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.success);
+                    location.reload(); // Recargar la página para ver los cambios
+                } else if (data.error) {
+                    alert(data.error);
+                }
+            })
+            .catch(error => console.error('Error:', error));
     }
 </script>

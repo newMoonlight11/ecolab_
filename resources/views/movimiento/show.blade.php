@@ -115,7 +115,7 @@
                         <select name="reactivo_id" id="reactivo_id" class="form-control">
                             <option value="">Seleccione un reactivo</option>
                             @foreach ($reactivos as $reactivo)
-                                <option value="{{ $reactivo->id }}">{{ $reactivo->nombre }}</option>
+                                <option value="{{ $reactivo->id }}">{{ $reactivo->nombre }}-{{ $reactivo->marca ? $reactivo->marca->nombre : 'Sin marca' }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -140,8 +140,19 @@
                         </select>
                     </div>
                 </div>
+                <div id="alertContainer" class="d-none">
+                    <div class="alert alert-success d-flex align-items-center" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img"
+                            aria-label="Info:">
+                            <use xlink:href="#info-fill" />
+                        </svg>
+                        <div>
+                            El ítem se ha guardado correctamente.
+                        </div>
+                    </div>
+                </div>
                 <div class="text-center">
-                    <button type="button" class="btn btn-primary" onclick="submitItemForm()">Guardar Ítem</button>
+                    <button type="button" class="btn btn-primary" onclick="submitItemForm()">GUARDAR</button>
                 </div>
             </form>
         </div>
@@ -156,7 +167,13 @@
         // Función para mostrar el modal
         function showItemModal() {
             const itemModal = new bootstrap.Modal(document.getElementById('itemModal'));
+            document.getElementById('itemModal').addEventListener('hidden.bs.modal', function(event) {
+                document.body.classList.remove('modal-open');
+                document.querySelector('.modal-backdrop')?.remove();
+                location.reload();
+            });
             itemModal.show();
+
         }
 
         // Función para enviar el formulario de ítem por AJAX
@@ -173,10 +190,6 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        const itemModal = bootstrap.Modal.getInstance(document.getElementById('itemModal'));
-                        itemModal.hide();
-                        document.getElementById('itemForm').reset();
-
                         const itemList = document.getElementById('items-list');
                         const newRow = `
                             <tr>
@@ -197,12 +210,17 @@
                             </tr>
                         `;
                         itemList.insertAdjacentHTML('beforeend', newRow);
-                        location.reload();
                     } else {
                         alert("Hubo un error al añadir el ítem.");
                     }
                 })
                 .catch(error => console.error('Error:', error));
+            
+            document.getElementById('itemForm').reset();
+
+            // Mostrar alerta de éxito
+            const alertContainer = document.getElementById('alertContainer');
+            alertContainer.classList.remove('d-none');
         }
     </script>
 @endpush

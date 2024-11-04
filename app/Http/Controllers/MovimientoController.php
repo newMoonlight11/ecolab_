@@ -183,4 +183,48 @@ class MovimientoController extends Controller
 
         return response()->json(['success' => 'Movimiento asignado y stock actualizado'], 200);
     }
+
+    public function asignarTodosSinAsignar(): JsonResponse
+    {
+        $movimientos = Movimiento::where('estado', 'sin asignar')->with('items')->get();
+
+        foreach ($movimientos as $movimiento) {
+            // Verificar campos del movimiento
+            if (!$movimiento->fecha_movimiento || !$movimiento->descripcion || !$movimiento->tipo_movimiento || !$movimiento->usuario_id) {
+                continue; // Ignorar movimientos incompletos
+            }
+
+            // Verificar que el movimiento tenga al menos un ítem
+            if ($movimiento->items->isEmpty()) {
+                continue; // Ignorar movimientos sin ítems
+            }
+
+            // Actualizar el stock para cada ítem en el movimiento
+            foreach ($movimiento->items as $item) {
+                $stockReactivo = StockReactivo::firstOrCreate(
+                    [
+                        'reactivo_id' => $item->reactivo_id,
+                        'laboratorio_id' => $item->laboratorio_id,
+                        'unidad_id' => $item->unidad_id
+                    ],
+                    ['cantidad_existencia' => 0, 'fecha_stock' => now()]
+                );
+
+                if ($movimiento->tipo_movimiento == EnumsTipoMovimiento::COMPRA->getId()) {
+                    $stockReactivo->increment('cantidad_existencia', $item->cantidad);
+                } elseif ($movimiento->tipo_movimiento == EnumsTipoMovimiento::PRESTAMO->getId()) {
+                    if ($stockReactivo->cantidad_existencia >= $item->cantidad) {
+                        $stockReactivo->decrement('cantidad_existencia', $item->cantidad);
+                    } else {
+                        return response()->json(['error' => 'Cantidad insuficiente en stock para el préstamo de un movimiento'], 422);
+                    }
+                }
+            }
+
+            // Actualizar el estado a "asignado" para el movimiento
+            $movimiento->update(['estado' => 'asignado']);
+        }
+
+        return response()->json(['success' => 'Movimientos asignados y stock actualizado'], 200);
+    }
 }
