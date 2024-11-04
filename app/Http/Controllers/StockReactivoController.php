@@ -27,7 +27,9 @@ class StockReactivoController extends Controller
         $query = StockReactivo::with(['reactivo', 'laboratorio', 'unidad']);
 
         if ($request->filled('reactivo_id')) {
-            $query->where('reactivo_id', $request->input('reactivo_id'));
+            $query->whereHas('reactivo', function ($q) use ($request) {
+                $q->where('nombre', 'like', '%' . $request->input('reactivo_id') . '%');
+            });
         }
 
         if ($request->filled('laboratorio_id')) {
