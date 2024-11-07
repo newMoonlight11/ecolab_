@@ -16,8 +16,9 @@ return new class extends Migration
             $table->timestamps();
 
             $table->integer('cantidad');
-
-
+            $table->string('ubicacion')->nullable();
+            $table->string('codigoUNAB')->nullable();
+            $table->date('fechaVencimiento');
             $table->unsignedBigInteger('reactivo_id');
             $table->foreign('reactivo_id')->references('id')->on('reactivos');
 

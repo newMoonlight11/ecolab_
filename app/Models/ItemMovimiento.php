@@ -26,7 +26,7 @@ class ItemMovimiento extends Model
     use HasFactory;
     protected $table = 'item_movimiento';
 
-    protected $fillable = ['cantidad', 'reactivo_id', 'movimiento_id', 'laboratorio_id', 'unidad_id'];
+    protected $fillable = ['cantidad', 'ubicacion', 'codigoUNAB', 'fechaVencimiento', 'reactivo_id', 'movimiento_id', 'laboratorio_id', 'unidad_id'];
 
     public function movimiento()
     {

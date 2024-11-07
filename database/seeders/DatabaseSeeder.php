@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             TipoMovimientoSeeder::class,
             UnidadSeeder::class,
             ReactivoSeeder::class,
+            ResiduoSeeder::class,
         ]);
     }
 }

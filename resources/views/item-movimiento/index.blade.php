@@ -55,6 +55,8 @@
     <th>Movimiento</th>
     <th>Laboratorio</th>
     <th>Unidad</th>
+    <th>Ubicacion</th>
+    <th>Código UNAB</th>
 @endsection
 
 @section('table_content')
@@ -70,7 +72,9 @@
                 <td>{{ $itemMovimiento->reactivo_id ? $itemMovimiento->reactivo->nombre : 'Sin reactivo' }}</td>
                 <td>{{ $itemMovimiento->movimiento_id ? Str::limit($itemMovimiento->movimiento->descripcion, 50) : 'Sin movimiento' }}
                 <td>{{ $itemMovimiento->laboratorio_id ? $itemMovimiento->laboratorio->nombre : 'Sin laboratorio' }}
-                    <td>{{ $itemMovimiento->unidad_id ? $itemMovimiento->unidad->nombre : 'Sin laboratorio' }}
+                <td>{{ $itemMovimiento->unidad_id ? $itemMovimiento->unidad->nombre : 'Sin laboratorio' }}
+                <td>{{ $itemMovimiento->ubicacion }}</td>
+                <td>{{ $itemMovimiento->codigoUNAB }}</td>
                 </td>
                 <td class="text-end">
                     <form action="{{ route('item_movimiento.destroy', $itemMovimiento->id) }}" method="POST"
