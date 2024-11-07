@@ -68,7 +68,7 @@
 
 @section('pagination')
     <div class="d-flex justify-content-center">
-        {!! $familias->appends(request()->except('page'))->links() !!}
+        {!! $familias->appends(request()->except('page'))->links('vendor.pagination.custom') !!}
     </div>
 @endsection
 

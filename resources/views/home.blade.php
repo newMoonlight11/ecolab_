@@ -1,6 +1,7 @@
 @extends('layouts.app')
 <style>
     /* Contenedor general */
+
     .container {
         max-width: 1200px !important;
         margin: 0 auto !important;
@@ -13,6 +14,7 @@
         gap: 20px !important;
         flex-wrap: wrap !important;
         justify-content: space-between !important;
+        border: none;
     }
 
     /* Cada card */
@@ -96,12 +98,15 @@
     }
 </style>
 
+@section('color')
+style="background-color: #E4EFF9"
+@endsection
 @section('content')
     <div class="container">
         <h1 class="dashboard-title">Analíticas</h1>
         <p class="dashboard-periodo">Periodo: 2024</p>
 
-        <div class="summary-cards">
+        <div class="summary-cards border-0">
             <div class="card card-reactivos">
                 <p>Total reactivos</p>
                 <h2>{{ $totalReactivos }}</h2>

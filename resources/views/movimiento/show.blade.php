@@ -59,7 +59,7 @@
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody id="items-list">
+                    <tbody id="items-list" class="text-center">
                         @forelse ($movimiento->items as $index => $item)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
@@ -108,6 +108,24 @@
                         <label for="cantidad" class="form-label">Cantidad</label>
                         <input type="number" name="cantidad" id="cantidad" class="form-control"
                             placeholder="Cantidad">
+                    </div>
+
+                    <div class="form-group mb-2 mb20">
+                        <label for="ubicacion" class="form-label">Ubicación</label>
+                        <input type="text" name="ubicacion" id="ubicacion" class="form-control"
+                            placeholder="Ubicación">
+                    </div>
+
+                    <div class="form-group mb-2 mb20">
+                        <label for="codigoUNAB" class="form-label">Código UNAB</label>
+                        <input type="text" name="codigoUNAB" id="codigoUNAB" class="form-control"
+                            placeholder="Código UNAB">
+                    </div>
+
+                    <div class="form-group mb-2 mb20">
+                        <label for="fechaVencimiento" class="form-label">Fecha de vencimiento</label>
+                        <input type="date" name="fechaVencimiento" id="fechaVencimiento" class="form-control"
+                            placeholder="Fecha de vencimiento">
                     </div>
 
                     <div class="form-group mb-2 mb20">

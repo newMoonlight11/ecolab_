@@ -70,7 +70,7 @@
     <div>
         @include('layouts.navbar')
         <br>
-        <main class="py-4 bg-bground">
+        <main class="py-4 bg-bground" @yield('color')>
             @yield('content')
         </main>
     </div>

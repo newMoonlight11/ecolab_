@@ -55,6 +55,10 @@ class PrestamoController extends Controller
         $reactivos = Reactivo::all();
         $unidads = Unidad::all();
 
+        // $stocks = Reactivo::whereHas('stocks', function ($query) {
+        //     $query->where('cantidad_existencia', '>', 0);
+        // })->get();
+
         return view('prestamo.create', compact('prestamo', 'laboratorios', 'reactivos', 'unidads'));
     }
 

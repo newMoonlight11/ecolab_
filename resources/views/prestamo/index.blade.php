@@ -178,7 +178,7 @@
 
 @section('pagination')
     <div class="d-flex justify-content-center">
-        {!! $prestamos->appends(request()->except('page'))->links() !!}
+        {!! $prestamos->appends(request()->except('page'))->links('vendor.pagination.custom') !!}
     </div>
 @endsection
 

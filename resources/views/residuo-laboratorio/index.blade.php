@@ -95,7 +95,7 @@
 
 @section('pagination')
     <div class="d-flex justify-content-center">
-        {!! $residuoLaboratorios->appends(request()->except('page'))->links() !!}
+        {!! $residuoLaboratorios->appends(request()->except('page'))->links('vendor.pagination.custom') !!}
     </div>
 @endsection
 

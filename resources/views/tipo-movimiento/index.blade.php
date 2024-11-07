@@ -68,7 +68,7 @@
 
 @section('pagination')
     <div class="d-flex justify-content-center">
-        {!! $tipoMovimientos->appends(request()->except('page'))->links() !!}
+        {!! $tipoMovimientos->appends(request()->except('page'))->links('vendor.pagination.custom') !!}
     </div>
 @endsection
 

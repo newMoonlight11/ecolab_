@@ -70,7 +70,7 @@
 
 @section('pagination')
     <div class="d-flex justify-content-center">
-        {!! $claseResiduos->appends(request()->except('page'))->links() !!}
+        {!! $claseResiduos->appends(request()->except('page'))->links('vendor.pagination.custom') !!}
     </div>
 @endsection
 

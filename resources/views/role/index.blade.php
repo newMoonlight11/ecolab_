@@ -56,7 +56,7 @@
 
 @section('pagination')
     <div class="d-flex justify-content-center">
-        {!! $roles->appends(request()->except('page'))->links() !!}
+        {!! $roles->appends(request()->except('page'))->links('vendor.pagination.custom') !!}
     </div>
 @endsection
 

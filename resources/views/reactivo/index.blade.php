@@ -101,7 +101,7 @@
 
 @section('pagination')
     <div class="d-flex justify-content-center">
-        {!! $reactivos->appends(request()->except('page'))->links() !!}
+        {!! $reactivos->appends(request()->except('page'))->links('vendor.pagination.custom') !!}
     </div>
 @endsection
 

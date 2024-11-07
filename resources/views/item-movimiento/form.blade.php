@@ -15,7 +15,7 @@
         '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
     </div>
     <div class="form-group mb-2 mb20">
-        <labeubicacion" class="form-label">{{ __('Codigo') }}</label>
+        <labeubicacion" class="form-label">{{ __('Código UNAB') }}</label>
         <input type="text" name="codigoUNAB" class="form-control bg-white rounded-4 @error('codigoUNAB') is-invalid @enderror"
             value="{{ old('codigoUNAB', $itemMovimiento?->codigoUNAB) }}" id="codigoUNAB" placeholder="Código UNAB">
         {!! $errors->first('codigoUNAB', 

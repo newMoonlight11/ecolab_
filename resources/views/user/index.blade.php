@@ -104,7 +104,7 @@
 
 @section('pagination')
     <div class="d-flex justify-content-center">
-        {!! $users->appends(request()->except('page'))->links() !!}
+        {!! $users->appends(request()->except('page'))->links('vendor.pagination.custom') !!}
     </div>
 @endsection
 

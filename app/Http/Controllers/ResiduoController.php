@@ -39,8 +39,12 @@ class ResiduoController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): View
+    public function create(Request $request): View
     {
+        if ($request->has('from')) {
+            session(['previous_url' => $request->from]);
+        }
+
         $residuo = new Residuo();
         $claseResiduos = ClaseResiduo::all();
 
@@ -54,9 +58,13 @@ class ResiduoController extends Controller
     {
         Residuo::create($request->validated());
 
-        return Redirect::route('residuos.index')
-            ->with('success', 'Se ha registrado el residuo satisfactoriamente');
+        // Almacena la URL de redirección y luego la limpia de la sesión
+        $redirectUrl = session('previous_url', route('residuos.index'));
+        session()->forget('previous_url');
+
+        return redirect($redirectUrl)->with('success', 'Se ha registrado el residuo satisfactoriamente');
     }
+
 
     /**
      * Display the specified resource.

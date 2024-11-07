@@ -68,7 +68,13 @@ Route::middleware(['auth', 'can:gestionar_clases_residuo'])->group(function () {
     Route::resource('clase-residuos', ClaseResiduoController::class);
 });
 Route::middleware(['auth', 'can:gestionar_residuos'])->group(function () {
-    Route::resource('residuos', ResiduoController::class);
+    // Route::resource('residuos', ResiduoController::class);
+    Route::get('residuos', [ResiduoController::class, 'index'])->name('residuos.index');
+    Route::get('residuos/create', [ResiduoController::class, 'create'])->name('residuos.create');
+    Route::get('residuos/{id}/edit', [ResiduoController::class, 'edit'])->name('residuos.edit');
+    Route::post('residuos/store', [ResiduoController::class, 'store'])->name('residuos.store');
+    Route::get('residuos/{id}', [ResiduoController::class, 'destroy'])->name('residuos.destroy');
+
 });
 Route::middleware(['auth', 'can:gestionar_stock_residuos'])->group(function () {
     Route::resource('residuo-laboratorios', ResiduoLaboratorioController::class);

@@ -75,7 +75,7 @@
 
 @section('pagination')
     <div class="d-flex justify-content-center">
-        {!! $reactivosPaginated->appends(request()->except('page'))->links() !!}
+        {!! $reactivosPaginated->appends(request()->except('page'))->links('vendor.pagination.custom') !!}
     </div>
 @endsection
 
