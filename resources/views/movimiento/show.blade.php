@@ -39,6 +39,7 @@
                 <br>
                 <br>
             </div>
+            {{-- <p>Tipo de Movimiento ID: {{ $tipoMovimientoID }}</p> --}}
         </div>
     </div>
 @endsection
@@ -110,19 +111,19 @@
                             placeholder="Cantidad">
                     </div>
 
-                    <div class="form-group mb-2 mb20">
+                    <div class="form-group mb-2 mb20 compra-only">
                         <label for="ubicacion" class="form-label">Ubicación</label>
                         <input type="text" name="ubicacion" id="ubicacion" class="form-control"
                             placeholder="Ubicación">
                     </div>
 
-                    <div class="form-group mb-2 mb20">
+                    <div class="form-group mb-2 mb20 compra-only">
                         <label for="codigoUNAB" class="form-label">Código UNAB</label>
                         <input type="text" name="codigoUNAB" id="codigoUNAB" class="form-control"
                             placeholder="Código UNAB">
                     </div>
 
-                    <div class="form-group mb-2 mb20">
+                    <div class="form-group mb-2 mb20 compra-only">
                         <label for="fechaVencimiento" class="form-label">Fecha de vencimiento</label>
                         <input type="date" name="fechaVencimiento" id="fechaVencimiento" class="form-control"
                             placeholder="Fecha de vencimiento">
@@ -133,7 +134,9 @@
                         <select name="reactivo_id" id="reactivo_id" class="form-control">
                             <option value="">Seleccione un reactivo</option>
                             @foreach ($reactivos as $reactivo)
-                                <option value="{{ $reactivo->id }}">{{ $reactivo->nombre }}-{{ $reactivo->marca ? $reactivo->marca->nombre : 'Sin marca' }}</option>
+                                <option value="{{ $reactivo->id }}">
+                                    {{ $reactivo->nombre }}-{{ $reactivo->marca ? $reactivo->marca->nombre : 'Sin marca' }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -182,7 +185,7 @@
 
 @push('scripts')
     <script>
-        // Función para mostrar el modal
+         // Función para mostrar el modal
         function showItemModal() {
             const itemModal = new bootstrap.Modal(document.getElementById('itemModal'));
             document.getElementById('itemModal').addEventListener('hidden.bs.modal', function(event) {
@@ -193,7 +196,6 @@
             itemModal.show();
 
         }
-
         // Función para enviar el formulario de ítem por AJAX
         function submitItemForm() {
             const formData = new FormData(document.getElementById('itemForm'));
@@ -214,6 +216,9 @@
                                 <td>${data.item.id}</td>
                                 <td>${data.item.reactivo.nombre}</td>
                                 <td>${data.item.cantidad}</td>
+                                <td>${data.item.ubicacion ? data.item.ubicacion : 'N/A'}</td>
+                                <td>${data.item.codigoUNAB ? data.item.codigoUNAB : 'N/A'}</td>
+                                <td>${data.item.fechaVencimiento ? data.item.fechaVencimiento : 'N/A'}</td>
                                 <td>${data.item.laboratorio.nombre}</td>
                                 <td>${data.item.unidad.nombre}</td>
                                 <td class="text-center">
@@ -233,12 +238,29 @@
                     }
                 })
                 .catch(error => console.error('Error:', error));
-            
+
             document.getElementById('itemForm').reset();
 
             // Mostrar alerta de éxito
             const alertContainer = document.getElementById('alertContainer');
             alertContainer.classList.remove('d-none');
         }
+    </script>
+    <script defer>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Obtenemos el ID del tipo de movimiento desde Blade
+            const tipoMovimientoID = {{ $tipoMovimientoID }}; // Obtenido del controlador
+    
+            // Función para mostrar u ocultar campos dependiendo del tipo de movimiento
+            function toggleCompraFields(id) {
+                const compraFields = document.querySelectorAll('.compra-only');
+                compraFields.forEach(field => {
+                    field.style.display = (id === 1) ? 'block' : 'none'; // Cambia "1" si "COMPRA" tiene otro ID
+                });
+            }
+    
+            // Ejecuta la función al cargar el DOM
+            toggleCompraFields(tipoMovimientoID);
+        });
     </script>
 @endpush

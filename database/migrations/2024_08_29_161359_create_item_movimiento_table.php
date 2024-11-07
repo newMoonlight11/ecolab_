@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('cantidad');
             $table->string('ubicacion')->nullable();
             $table->string('codigoUNAB')->nullable();
-            $table->date('fechaVencimiento');
+            $table->date('fechaVencimiento')->nullable();
             $table->unsignedBigInteger('reactivo_id');
             $table->foreign('reactivo_id')->references('id')->on('reactivos');
 

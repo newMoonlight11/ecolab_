@@ -84,6 +84,9 @@ class ItemMovimientoController extends Controller
                 'item' => [
                     'id' => $item->id,
                     'cantidad' => $item->cantidad,
+                    'ubicacion'=> $item->ubicacion ?? '',
+                    'codigoUNAB'=> $item->codigoUNAB ?? '',
+                    'fechaVencimiento'=> $item->fechaVencimiento ?? '',
                     'reactivo' => [
                         'nombre' => $item->reactivo->nombre,
                     ],

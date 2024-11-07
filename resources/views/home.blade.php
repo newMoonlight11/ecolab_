@@ -98,9 +98,9 @@
     }
 </style>
 
-@section('color')
+{{-- @section('color')
 style="background-color: #E4EFF9"
-@endsection
+@endsection --}}
 @section('content')
     <div class="container">
         <h1 class="dashboard-title">Analíticas</h1>

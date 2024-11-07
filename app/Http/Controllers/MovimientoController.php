@@ -88,6 +88,7 @@ class MovimientoController extends Controller
     {
         $movimiento = Movimiento::with(['tipoMovimiento', 'items.reactivo', 'user'])->find($id);
         $tipoMovimientos = EnumsTipoMovimiento::fromId($movimiento->tipo_movimiento);
+        $tipoMovimientoID = $tipoMovimientos->getId();
         $users = User::all();
         $reactivos = Reactivo::all();
         $laboratorios = Laboratorio::all();
@@ -101,7 +102,7 @@ class MovimientoController extends Controller
             return response()->json($movimiento);
         }
 
-        return view('movimiento.show', compact('movimiento', 'tipoMovimientos', 'users', 'reactivos', 'laboratorios', 'unidads'));
+        return view('movimiento.show', compact('movimiento', 'tipoMovimientos', 'users', 'reactivos', 'laboratorios', 'unidads', 'tipoMovimientoID'));
     }
 
     /**
