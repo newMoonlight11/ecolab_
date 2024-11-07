@@ -80,6 +80,34 @@
             <img src="{{ asset('images/ecolab_blue1.png') }}" alt="Ecolab" style="height: 25px;">
         </a>
         <div class="dropdown ms-auto me-3">
+            <!-- Botón del dropdown que muestra el nombre del usuario -->
+            @auth
+                <button class="dropbtn btn btn-light bg-white  dropdown-toggle" aria-expanded="false" data-bs-auto-close="true">{{ Auth::user()->name }}</button>
+                <!-- Contenido del dropdown -->
+                <div class="dropdown-content">
+                    <a href="{{ route('logout') }}"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </div>
+            @else
+                <!-- Mostrar el link de inicio de sesión si el usuario no está autenticado -->
+                <div class="d-flex me-0">
+                    @if (Route::has('login'))
+                        <a class="nav-link me-3 pb-2 pt-2" href="{{ route('login') }}">{{ __('Inicia sesión') }}</a>
+                        <!-- Add margin end -->
+                    @endif
+                    <br>
+                    @if (Route::has('register'))
+                        <a class="nav-link pb-2 pt-2" href="{{ route('register') }}">{{ __('Regístrate') }}</a>
+                    @endif
+                </div>
+            @endauth
+        </div>
+      {{--   <div class="dropdown ms-auto me-3">
             @auth
                 <button class="btn btn-light bg-white dropdown-toggle" type="button" id="userMenu"
                     data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="true">
@@ -109,6 +137,6 @@
                     @endif
                 </div>
             @endauth
-        </div>
+        </div> --}}
     </div>
 </nav>
