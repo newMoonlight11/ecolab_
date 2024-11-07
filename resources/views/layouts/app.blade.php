@@ -76,6 +76,19 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    {{-- <script>document.addEventListener('DOMContentLoaded', function () {
+        var logoutLink = document.querySelector('.dropdown-item');
+        if (logoutLink) {
+            logoutLink.addEventListener('click', function (event) {
+                event.preventDefault();
+                var form = document.getElementById('logout-form');
+                if (form) form.submit();
+            });
+        }
+    });
+    </script> --}}
 </body>
 
 </html>
+
+

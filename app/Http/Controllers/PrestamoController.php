@@ -6,6 +6,7 @@ use App\Models\Prestamo;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\PrestamoRequest;
+use App\Models\ItemMovimiento;
 use App\Models\Laboratorio;
 use App\Models\Reactivo;
 use App\Models\Unidad;
@@ -65,12 +66,36 @@ class PrestamoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    // public function store(PrestamoRequest $request): RedirectResponse
+    // {
+    //     Prestamo::create($request->validated());
+
+    //     return redirect()->back()->with('success', 'Préstamo solicitado exitosamente.');
+    // }
     public function store(PrestamoRequest $request): RedirectResponse
     {
+        $reactivoId = $request->input('reactivo_id');
+        $unidadId = $request->input('unidad_id');
+        $laboratorioId = $request->input('laboratorio_id');
+        $cantidadSolicitada = $request->input('cantidad');
+
+        $item = ItemMovimiento::where('reactivo_id', $reactivoId)
+            ->where('unidad_id', $unidadId)
+            ->where('laboratorio_id', $laboratorioId)
+            ->first();
+
+        // Verifica si el reactivo tiene suficiente cantidad en stock
+        if (!$item || $item->cantidad < $cantidadSolicitada) {
+            return redirect()->back()->withErrors(['cantidad' => 'Cantidad insuficiente en stock o reactivo no disponible.']);
+        }
+
+        // Registra el préstamo
         Prestamo::create($request->validated());
 
+        // Redirige con un mensaje de éxito
         return redirect()->back()->with('success', 'Préstamo solicitado exitosamente.');
     }
+
 
     /**
      * Display the specified resource.
@@ -78,7 +103,7 @@ class PrestamoController extends Controller
     public function show($id)
     {
         $prestamo = Prestamo::with(['laboratorio', 'reactivo', 'unidad'])->find($id);
-        if(!$prestamo){
+        if (!$prestamo) {
             return response()->json(['error' => 'Préstamo no encontrado'], 404);
         }
         return response()->json($prestamo);

@@ -97,3 +97,4 @@ Route::middleware(['auth', 'can:eliminar_prestamo'])->group(function () {
 Route::get('send-email', [EmailController::class, 'sendTestEmail'])->name('sendEmail');
 Route::post('/movimientos/{movimiento}/asignar', [MovimientoController::class, 'asignar'])->name('movimientos.asignar');
 Route::post('/movimientos/asignarTodos', [MovimientoController::class, 'asignarTodosSinAsignar'])->name('movimientos.asignarTodos');
+

@@ -81,11 +81,14 @@
         </div>
     </form>
 </div>
-
 <script>
-    // Limpiar formulario tras el envío exitoso
     if (document.querySelector('.alert-success')) {
         document.getElementById('prestamoForm').reset();
     }
 </script>
 @endsection
+
+{{-- @push('scripts')
+
+@endpush --}}
+

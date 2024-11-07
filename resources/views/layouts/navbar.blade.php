@@ -69,8 +69,7 @@
                             </li>
                         @elseif(Auth::user()->hasRole('general'))
                             <li class="nav-item">
-                                <a class="nav-link"
-                                    href="{{ route('prestamos.create') }}">{{ __('Préstamos') }}</a>
+                                <a class="nav-link" href="{{ route('prestamos.create') }}">{{ __('Préstamos') }}</a>
                             </li>
                         @endif
                     @endauth
@@ -83,7 +82,7 @@
         <div class="dropdown ms-auto me-3">
             @auth
                 <button class="btn btn-light bg-white dropdown-toggle" type="button" id="userMenu"
-                    data-bs-toggle="dropdown" aria-expanded="false">
+                    data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="true">
                     {{ Auth::user()->name }}
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end bg-white" aria-labelledby="userMenu">
@@ -93,10 +92,10 @@
                             {{ __('Logout') }}
                         </a>
                     </li>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
                 </ul>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
             @else
                 <!-- Mostrar el link de inicio de sesión si el usuario no está autenticado -->
                 <div class="d-flex me-0">

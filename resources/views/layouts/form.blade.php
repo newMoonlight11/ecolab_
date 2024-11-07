@@ -5,6 +5,7 @@
         <div class="text-center">
             <button type="@yield('button_type')" class="btn btn-primary rounded-4">{{ __('GUARDAR') }}</button>
         </div>
+        @stack('scripts')
     </div>
 </div>
 
