@@ -77,6 +77,7 @@ class MovimientoController extends Controller
         $validatedData['estado'] = 'sin asignar';
 
         $movimiento =  Movimiento::create($validatedData);
+        // dd($movimiento);
         return Redirect::route('movimientos.show', $movimiento->id)
             ->with('success', 'Se ha registrado el movimiento satisfactoriamente');
     }

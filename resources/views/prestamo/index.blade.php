@@ -116,6 +116,12 @@
                         <i class="bi bi-sort-down-alt fs-5"></i>
                     </button>
                 </div>
+                {{-- <div class="text-center">
+                    <p>Añadir a movimientos</p>
+                    <button type="submit" class="btn btn-primary rounded-3 btn-xxl">
+                        <i class="bi bi-file-earmark-plus-fill fs-5"></i>
+                    </button>
+                </div> --}}
                 <div class="text-center">
                     <p>Agregar</p>
                     <a href="{{ route('prestamos.create') }}" class="btn btn-primary rounded-3 btn-xxl">

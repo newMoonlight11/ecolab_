@@ -8,10 +8,15 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PrestamoRequest;
 use App\Models\ItemMovimiento;
 use App\Models\Laboratorio;
+use App\Models\Movimiento;
 use App\Models\Reactivo;
 use App\Models\Unidad;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Enums\TipoMovimiento as EnumsTipoMovimiento;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
 
 class PrestamoController extends Controller
 {
@@ -78,6 +83,8 @@ class PrestamoController extends Controller
         $unidadId = $request->input('unidad_id');
         $laboratorioId = $request->input('laboratorio_id');
         $cantidadSolicitada = $request->input('cantidad');
+        $fechaPrestamo = $request->input('fecha');
+        $userId = Auth::id();
 
         $item = ItemMovimiento::where('reactivo_id', $reactivoId)
             ->where('unidad_id', $unidadId)
@@ -91,6 +98,25 @@ class PrestamoController extends Controller
 
         // Registra el préstamo
         Prestamo::create($request->validated());
+
+        $movimiento = Movimiento::create([
+            'fecha_movimiento' => $fechaPrestamo,
+            'descripcion' => 'Préstamo solicitado por usuario general',
+            'tipo_movimiento' => EnumsTipoMovimiento::PRESTAMO->getId(),
+            'usuario_id' => $userId, // Asume que el usuario general tiene el ID 1, o usa el ID autenticado
+            'estado' => 'sin asignar', // Puedes ajustar el estado según sea necesario
+        ]);
+
+        ItemMovimiento::create([
+            'cantidad' => $cantidadSolicitada,
+            'ubicacion' => $item->ubicacion, // Asume que se usa la misma ubicación del stock actual
+            'codigoUNAB' => $item->codigoUNAB, // O asigna algún valor si es necesario
+            'fechaVencimiento' => $item->fechaVencimiento, // Asume que usa la misma fecha
+            'reactivo_id' => $reactivoId,
+            'movimiento_id' => $movimiento->id, // Relaciona con el movimiento creado
+            'laboratorio_id' => $laboratorioId,
+            'unidad_id' => $unidadId,
+        ]);
 
         // Redirige con un mensaje de éxito
         return redirect()->back()->with('success', 'Préstamo solicitado exitosamente.');

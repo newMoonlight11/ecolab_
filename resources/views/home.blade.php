@@ -36,28 +36,28 @@
 
     /* Colores personalizados */
     .card-reactivos {
-        background-color: #004E98 !important;
+        background-color: #1168ba !important;
         color: #fff !important;
     }
 
     .card-laboratorios {
-        background-color: #5B8DD2 !important;
-        color: #000 !important;
+        background-color: rgb(113, 57, 225) !important;
+        color: #fff !important;
     }
 
     .card-marcas {
-        background-color: #AAD5FF !important;
-        color: #000 !important;
+        background-color: rgb(247, 138, 30) !important;
+        color: #fff !important;
     }
 
     .card-familias {
-        background-color: #FFBA8B !important;
-        color: #000 !important;
+        background-color: rgb(54, 187, 187) !important;
+        color: #fff !important;
     }
 
     .card-residuos {
-        background-color: #FFDBC2 !important;
-        color: #000 !important;
+        background-color: rgb(54, 163, 235) !important;
+        color: #fff !important;
     }
 
     /* Tipografía */

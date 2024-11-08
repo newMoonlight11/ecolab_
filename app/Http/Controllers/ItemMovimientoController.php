@@ -72,37 +72,79 @@ class ItemMovimientoController extends Controller
      */
     public function store(ItemMovimientoRequest $request): RedirectResponse
     {
-        $item = ItemMovimiento::create($request->validated());
+        // $item = ItemMovimiento::create($request->validated());
 
         // Cargar relaciones necesarias para devolver datos completos
-        $item->load('reactivo', 'laboratorio', 'unidad');
+        // $item->load('reactivo', 'laboratorio', 'unidad');
+
+        
 
         // Si la solicitud es AJAX, devolver JSON para el modal
-        if ($request->ajax()) {
-            return response()->json([
-                'success' => true,
-                'item' => [
-                    'id' => $item->id,
-                    'cantidad' => $item->cantidad,
-                    'ubicacion'=> $item->ubicacion ?? '',
-                    'codigoUNAB'=> $item->codigoUNAB ?? '',
-                    'fechaVencimiento'=> $item->fechaVencimiento ?? '',
-                    'reactivo' => [
-                        'nombre' => $item->reactivo->nombre,
-                    ],
-                    'laboratorio' => [
-                        'nombre' => $item->laboratorio->nombre,
-                    ],
-                    'unidad' => [
-                        'nombre' => $item->unidad->nombre,
-                    ]
-                ]
-            ]);
-        }
+        // if ($request->ajax()) {
+        //     return response()->json([
+        //         'success' => true,
+        //         'item' => [
+        //             'id' => $item->id,
+        //             'cantidad' => $item->cantidad,
+        //             'ubicacion'=> $item->ubicacion ?? '',
+        //             'codigoUNAB'=> $item->codigoUNAB ?? '',
+        //             'fechaVencimiento'=> $item->fechaVencimiento ?? '',
+        //             'reactivo' => [
+        //                 'nombre' => $item->reactivo->nombre,
+        //             ],
+        //             'laboratorio' => [
+        //                 'nombre' => $item->laboratorio->nombre,
+        //             ],
+        //             'unidad' => [
+        //                 'nombre' => $item->unidad->nombre,
+        //             ]
+        //         ]
+        //     ]);
+        // }
 
-        // Si no es AJAX, redirigir como en una solicitud normal
-        return Redirect::route('item_movimiento.index')
-            ->with('success', 'Item de movimiento creado satisfactoriamente');
+        // // Si no es AJAX, redirigir como en una solicitud normal
+        // return Redirect::route('item_movimiento.index')
+        //     ->with('success', 'Item de movimiento creado satisfactoriamente');
+
+        try {
+            $item = ItemMovimiento::create($request->validated());
+    
+            // Cargar relaciones necesarias para devolver datos completos
+            $item->load('reactivo', 'laboratorio', 'unidad');
+    
+            // Si la solicitud es AJAX, devolver JSON para el modal
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'item' => [
+                        'id' => $item->id,
+                        'cantidad' => $item->cantidad,
+                        'ubicacion' => $item->ubicacion ?? '',
+                        'codigoUNAB' => $item->codigoUNAB ?? '',
+                        'fechaVencimiento' => $item->fechaVencimiento ?? '',
+                        'reactivo' => [
+                            'nombre' => $item->reactivo->nombre,
+                        ],
+                        'laboratorio' => [
+                            'nombre' => $item->laboratorio->nombre,
+                        ],
+                        'unidad' => [
+                            'nombre' => $item->unidad->nombre,
+                        ]
+                    ]
+                ]);
+            }
+    
+            // Si no es AJAX, redirigir como en una solicitud normal
+            return Redirect::route('item_movimiento.index')
+                ->with('success', 'Item de movimiento creado satisfactoriamente');
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al crear el ítem',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**

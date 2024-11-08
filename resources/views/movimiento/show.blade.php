@@ -185,7 +185,7 @@
 
 @push('scripts')
     <script>
-         // Función para mostrar el modal
+        // Función para mostrar el modal
         function showItemModal() {
             const itemModal = new bootstrap.Modal(document.getElementById('itemModal'));
             document.getElementById('itemModal').addEventListener('hidden.bs.modal', function(event) {
@@ -246,21 +246,17 @@
             alertContainer.classList.remove('d-none');
         }
     </script>
-    <script defer>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Obtenemos el ID del tipo de movimiento desde Blade
-            const tipoMovimientoID = {{ $tipoMovimientoID }}; // Obtenido del controlador
-    
-            // Función para mostrar u ocultar campos dependiendo del tipo de movimiento
-            function toggleCompraFields(id) {
-                const compraFields = document.querySelectorAll('.compra-only');
-                compraFields.forEach(field => {
-                    field.style.display = (id === 1) ? 'block' : 'none'; // Cambia "1" si "COMPRA" tiene otro ID
-                });
-            }
-    
-            // Ejecuta la función al cargar el DOM
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tipoMovimientoID = {{ $tipoMovimientoID }}; // Asumiendo que se pasa desde el servidor
             toggleCompraFields(tipoMovimientoID);
         });
-    </script>
+
+        function toggleCompraFields(id) {
+            const compraFields = document.querySelectorAll('.compra-only');
+            compraFields.forEach(field => {
+                field.style.display = (id === 1) ? 'block' : 'none'; // Cambia el ID según tu tipo de "COMPRA"
+            });
+        }
+    </script> --}}
 @endpush
