@@ -171,7 +171,7 @@
         </div>
     </div>
 
-    <div class="container mt-5">
+    {{-- <div class="container mt-5">
         <div class="card shadow-sm" style="background-color: white; border-radius: 10px;">
             <div class="card-body">
                 <h5 class="card-title text-center">Reactivos que van a vencer</h5>
@@ -193,7 +193,7 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 
