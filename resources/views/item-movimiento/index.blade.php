@@ -51,12 +51,13 @@
 @section('table_header')
     <th class="col-md-1">#</th>
     <th>Cantidad</th>
+    <th>Ubicacion</th>
+    <th>Código UNAB</th>
+    <th>Fecha V.</th>
     <th>Reactivo</th>
     <th>Movimiento</th>
     <th>Laboratorio</th>
     <th>Unidad</th>
-    <th>Ubicacion</th>
-    <th>Código UNAB</th>
 @endsection
 
 @section('table_content')
@@ -69,12 +70,13 @@
             <tr>
                 <td class="col-sm-1">{{ ++$i }}</td>
                 <td>{{ $itemMovimiento->cantidad }}</td>
-                <td>{{ $itemMovimiento->reactivo_id ? $itemMovimiento->reactivo->nombre : 'Sin reactivo' }}</td>
-                <td>{{ $itemMovimiento->movimiento_id ? Str::limit($itemMovimiento->movimiento->descripcion, 50) : 'Sin movimiento' }}
-                <td>{{ $itemMovimiento->laboratorio_id ? $itemMovimiento->laboratorio->nombre : 'Sin laboratorio' }}
-                <td>{{ $itemMovimiento->unidad_id ? $itemMovimiento->unidad->nombre : 'Sin laboratorio' }}
                 <td>{{ $itemMovimiento->ubicacion }}</td>
                 <td>{{ $itemMovimiento->codigoUNAB }}</td>
+                <td>{{ $itemMovimiento->fechaVencimiento }}</td>
+                <td>{{ $itemMovimiento->reactivo_id ? $itemMovimiento->reactivo->nombre : 'Sin reactivo' }}</td>
+                <td>{{ $itemMovimiento->movimiento_id ? Str::limit($itemMovimiento->movimiento->descripcion, 25) : 'Sin movimiento' }}
+                <td>{{ $itemMovimiento->laboratorio_id ? Str::limit($itemMovimiento->laboratorio->nombre, 25) : 'Sin laboratorio' }}
+                <td>{{ $itemMovimiento->unidad_id ? $itemMovimiento->unidad->nombre : 'Sin unidad' }}
                 </td>
                 <td class="text-end">
                     <form action="{{ route('item_movimiento.destroy', $itemMovimiento->id) }}" method="POST"
@@ -83,8 +85,13 @@
                             onclick="mostrarModalItemMovimiento({ 
                             id: {{ json_encode($itemMovimiento->id) }},
                             cantidad: '{{ $itemMovimiento->cantidad }}',
+                            ubicacion: '{{ $itemMovimiento->ubicacion }}',
+                            codigoUNAB: '{{ $itemMovimiento->codigoUNAB }}',
+                            fechaVencimiento: '{{ $itemMovimiento->fechaVencimiento }}',
                             reactivo: {{ $itemMovimiento->reactivo ? json_encode($itemMovimiento->reactivo) : 'null' }},
-                            movimiento: {{ $itemMovimiento->movimiento ? json_encode($itemMovimiento->movimiento) : 'null' }}
+                            movimiento: {{ $itemMovimiento->movimiento ? json_encode($itemMovimiento->movimiento) : 'null' }},
+                            laboratorio: {{ $itemMovimiento->laboratorio ? json_encode($itemMovimiento->laboratorio) : 'null' }},
+                            unidad: {{ $itemMovimiento->unidad ? json_encode($itemMovimiento->unidad) : 'null' }}
                         })"
                             data-bs-toggle="modal" data-bs-target="#itemMovimientoModal">
                             <i class="bi bi-search text-primary fs-5"></i>
@@ -126,11 +133,26 @@
                     <strong>Cantidad:</strong>
                     <span id="modalCantidad"></span>
                     <br>
+                    <strong>Ubicación:</strong>
+                    <span id="modalUbicacion"></span>
+                    <br>
+                    <strong>Código UNAB:</strong>
+                    <span id="modalCodigoUNAB"></span>
+                    <br>
+                    <strong>Fecha de vencimiento:</strong>
+                    <span id="modalFechaVencimiento"></span>
+                    <br>
                     <strong>Reactivo:</strong>
                     <span id="modalReactivo"></span>
                     <br>
                     <strong>Movimiento:</strong>
                     <span id="modalMovimiento"></span>
+                    <br>
+                    <strong>Laboratorio:</strong>
+                    <span id="modalLaboratorio"></span>
+                    <br>
+                    <strong>Unidad:</strong>
+                    <span id="modalUnidad"></span>
                     <br>
                 </div>
             </div>
@@ -143,10 +165,18 @@
     function mostrarModalItemMovimiento(itemMovimiento) {
         // Asegúrate de que el itemMovimiento contiene todas las propiedades necesarias.
         document.getElementById('modalCantidad').textContent = itemMovimiento.cantidad;
+        document.getElementById('modalUbicacion').textContent = itemMovimiento.ubicacion;
+        document.getElementById('modalCodigoUNAB').textContent = itemMovimiento.codigoUNAB;
+        document.getElementById('modalFechaVencimiento').textContent = itemMovimiento.fechaVencimiento;
         document.getElementById('modalReactivo').textContent = itemMovimiento.reactivo ? itemMovimiento.reactivo
             .nombre : 'Sin reactivo';
         document.getElementById('modalMovimiento').textContent = itemMovimiento.movimiento ? itemMovimiento.movimiento
             .descripcion : 'Sin movimiento';
+        document.getElementById('modalLaboratorio').textContent = itemMovimiento.laboratorio ? itemMovimiento
+            .laboratorio
+            .nombre : 'Sin laboratorio';
+        document.getElementById('modalUnidad').textContent = itemMovimiento.unidad ? itemMovimiento.unidad
+            .nombre : 'Sin unidad';
 
         var itemMovimientoModal = new bootstrap.Modal(document.getElementById('itemMovimientoModal'));
 

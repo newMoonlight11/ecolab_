@@ -67,6 +67,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('prestamos.index') }}">{{ __('Préstamos') }}</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('alertas') }}">{{ __('Alertas') }}</a>
+                            </li>
                         @elseif(Auth::user()->hasRole('general'))
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('prestamos.create') }}">{{ __('Préstamos') }}</a>
