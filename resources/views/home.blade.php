@@ -98,16 +98,7 @@
     }
 </style>
 
-{{-- @section('color')
-style="background-color: #E4EFF9"
-@endsection --}}
 @section('content')
-    {{-- <div class="col-10 offset-md-8 pe-2">
-        <div class="alert alert-success alert-dismissible fade show col-4 ps-4" role="alert">
-            <strong>Bienvenid@</strong> Has iniciado sesión correctamente
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    </div> --}}
     <div class="container">
         <h1 class="dashboard-title">Analíticas</h1>
         <p class="dashboard-periodo">Periodo: 2024</p>

@@ -6,12 +6,6 @@
 
 @section('content')
     <section class="container">
-        {{-- <div class="col-10 offset-md-8 pe-4">
-            <div class="alert alert-success alert-dismissible fade show col-4" role="alert">
-                <strong>Bienvenid@</strong> Has iniciado sesión correctamente
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        </div> --}}
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card bg-white border-0 rounded-4">
