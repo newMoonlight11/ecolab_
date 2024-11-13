@@ -29,7 +29,7 @@
                         style="text-align: center;" placeholder="---" value="{{ request()->get('Laboratorio_id') }}">
                 </div>
                 <div class="col-md-1 text-center">
-                    <p>unidad</p>
+                    <p>Unidad</p>
                     <input type="text" name="unidad_id" class="form-control bg-white rounded-4"
                         style="text-align: center;" placeholder="---" value="{{ request()->get('unidad_id') }}">
                 </div>

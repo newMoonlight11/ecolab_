@@ -27,6 +27,12 @@ class ItemMovimientoController extends Controller
             $query->where('cantidad', $request->input('cantidad'));
         }
 
+        if ($request->filled('reactivo_id')) {
+            $query->whereHas('reactivo', function ($q) use ($request) {
+                $q->where('nombre', 'like', '%' . $request->input('reactivo_id') . '%');
+            });
+        }
+
         // Filtro por nombre del movimiento con búsqueda parcial (LIKE)
         if ($request->filled('movimiento_id')) {
             $query->whereHas('movimiento', function ($q) use ($request) {
