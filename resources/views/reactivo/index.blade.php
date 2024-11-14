@@ -43,7 +43,7 @@
                     <a href="{{ route('reactivos.create') }}" class="btn btn-primary rounded-3 btn-xxl"
                         data-placement="center"><i class="bi bi-plus-circle fs-5"></i></a>
                 </div>
-            </div> 
+            </div>
         </div>
     </form>
 @endsection
@@ -151,7 +151,8 @@
         document.getElementById('modalReferenciaFabricante').textContent = reactivo.referencia_fabricante;
         document.getElementById('modalLote').textContent = reactivo.lote;
         document.getElementById('modalRegistroInvima').textContent = reactivo.num_registro_invima;
-        document.getElementById('modalFamilia').textContent = reactivo.familia ? reactivo.familia.nombre : 'Sin familia';
+        document.getElementById('modalFamilia').textContent = reactivo.familia ? reactivo.familia.nombre :
+            'Sin familia';
         document.getElementById('modalMarca').textContent = reactivo.marca ? reactivo.marca.nombre : 'Sin marca';
         var reactivoModal = new bootstrap.Modal(document.getElementById('reactivoModal'));
         document.getElementById('reactivoModal').addEventListener('hidden.bs.modal', function(event) {

@@ -43,6 +43,15 @@ class LoginController extends Controller
         return '/home';
     }
 
+    protected function authenticated(Request $request, $user)
+    {
+        // Establece una variable de sesión para indicar el inicio de sesión exitoso
+        session(['login_success' => true]);
+
+        // Redirecciona según el rol
+        return redirect()->intended($this->redirectTo());
+    }
+
     /**
      * Create a new controller instance.
      *
